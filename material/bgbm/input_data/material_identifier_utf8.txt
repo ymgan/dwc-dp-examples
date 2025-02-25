@@ -1,0 +1,8 @@
+﻿"identifier","materialEntityID","identifier_type"
+"http://herbarium.bgbm.org/object/B100356094","B 10 0356094","GUID"
+"http://herbarium.bgbm.org/object/B100242900","B 10 0242900","GUID"
+"http://herbarium.bgbm.org/object/B101088912","B 10 1088912","GUID"
+"http://herbarium.bgbm.org/object/B100479552","B 10 0479552","GUID"
+"http://herbarium.bgbm.org/object/BGT0004898","B GT 0004898","GUID"
+"http://dnabank.bgbm.org/object/DB5634","DB 5634","GUID"
+"http://dnabank.bgbm.org/object/DB16392","DB 16392","GUID"

@@ -16,7 +16,7 @@ The process to create the output dataset for the DwC-DP publishing model is as f
 (Subsequent times) ```dropdb conabio_bees && createdb conabio_bees && psql conabio_bees -f ../../gbif/dwc_dp_schema.sql && psql conabio_bees -f ./schema_input_conabio_bees.sql```
 
 ## Load the input data into the conabio_bees database:
-```	```
+```psql conabio_bees -f load_input_conabio_bees.sql```
 
 ## Run the script to produce the publishing model tables within the same database:
 ```psql conabio_bees -f map_conabio_bees_input.sql```

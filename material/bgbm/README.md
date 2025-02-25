@@ -1,0 +1,24 @@
+# BGBM test dataset for the DwCA-DP publishing model
+
+This is dataset is an example of a herbarium collection with media and genetic sequences.
+
+Original data were shared via https://dwc2-ipt.gbif-uat.org/manage/resource?r=test_joerg. A copy of those data was made in the [input data folder](../input_data).
+
+The process to create the output dataset for the DwC-DP publishing model is as follows:
+
+## Create a postgreSQL database to hold the input data and the output data mapped to the DwC-DP publishing model:
+```cd material/bgbm```
+
+(First time) ```createdb bgbm && psql bgbm -f ../../gbif/dwc_dp_schema.sql && psql bgbm -f ./schema_input_bgbm.sql```
+
+(Subsequent times) ```dropdb bgbm && createdb bgbm && psql bgbm -f ../../gbif/dwc_dp_schema.sql && psql bgbm -f ./schema_input_bgbm.sql```
+
+## Load the input data into the bgbm database:
+```psql bgbm -f load_input_bgbm.sql```
+
+## Run the script to produce the publishing model tables within the same database:
+```psql bgbm -f map_bgbm_input.sql```
+
+## Run the script to export the publishing model tables as TSV files:
+```psql bgbm -f export_bgbm_tsvs.sql```
+

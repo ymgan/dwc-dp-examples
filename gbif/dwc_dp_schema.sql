@@ -146,7 +146,7 @@ CREATE TABLE occurrence (
   identificationRemarks TEXT,
   taxon_id TEXT,
   kingdom TEXT,
-  scientific_name TEXT NOT NULL,
+  scientific_name TEXT,
   taxon_rank TEXT,
   taxon_remarks TEXT
 );
@@ -179,7 +179,7 @@ CREATE TABLE identification (
   identification_remarks TEXT,
   taxon_id TEXT,
   kingdom TEXT,
-  scientific_name TEXT NOT NULL,
+  scientific_name TEXT,
   taxon_rank TEXT,
   taxon_remarks TEXT
 );
@@ -231,6 +231,7 @@ CREATE TABLE material (
   material_entity_remarks TEXT,
   evidence_for_occurrence_id TEXT,
   derived_from_material_entity_id TEXT,
+  derivation_event_id TEXT,
   derivation_type TEXT,
   derivation_type_iri TEXT,
   derivation_type_vocabulary TEXT,
@@ -246,7 +247,7 @@ CREATE TABLE material (
   identification_remarks TEXT,
   taxon_id TEXT,
   kingdom TEXT,
-  scientific_name TEXT NOT NULL,
+  scientific_name TEXT,
   taxon_rank TEXT,
   taxon_remarks TEXT  
 );
@@ -269,7 +270,7 @@ CREATE TABLE collection (
   institution_name TEXT,
   institution_code TEXT,
   institution_id TEXT
-  );
+);
 
 -- GeneticSequence
 --   A digital representation of a nucleotide sequence.

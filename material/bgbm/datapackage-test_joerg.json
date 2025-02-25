@@ -1,0 +1,19 @@
+{
+  "title": "Herbarium Berolinense",
+  "version": "2",
+  "profile": "data-package",
+  "description": "The herbarium of the Botanic Garden and Botanical Museum Berlin-Dahlem (herbarium acronym: B) is the largest in Germany and holds a collection of more than 3.5 million preserved specimens. All plant groups – flowering plants, ferns, mosses, liverworts, and algae, as well as fungi and lichens – are represented in the collections which are worldwide in scope. Associated with the general herbarium are special collections of dried fruits and seeds, wood samples, and specimens preserved in alcohol. The collections of the herbarium are growing constantly through field research conducted by staff, and through gifts, acquisitions, and exchanges of specimens from other herbaria",
+  "created": "2025-02-24T09:10:08Z",
+  "contributors": [
+
+  ],
+  "licenses": [
+    {
+      "name": "CC-BY",
+      "title": "Creative Commons Attribution (CC-BY 4.0)"
+    }
+  ],
+  "sources": [
+
+  ]
+}
