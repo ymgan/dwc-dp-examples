@@ -1,4 +1,4 @@
-# BGBM test dataset for the DwCA-DP publishing model
+# BGBM test dataset for the DwC-DP publishing model
 
 This is dataset is an example of a herbarium collection with media and genetic sequences.
 
@@ -13,7 +13,7 @@ The process to create the output dataset for the DwC-DP publishing model is as f
 
 (Subsequent times) ```dropdb bgbm && createdb bgbm && psql bgbm -f ../../gbif/dwc_dp_schema.sql && psql bgbm -f ./schema_input_bgbm.sql```
 
-## Load the input data into the bgbm database:
+## Load the input data into the input tables in the database:
 ```psql bgbm -f load_input_bgbm.sql```
 
 ## Run the script to produce the publishing model tables within the same database:

@@ -1,5 +1,5 @@
 ---
--- Schema for input data to be mapped to dwca_v2 publishing model.
+-- Schema for input data to be mapped to dwc-dp publishing model.
 --
 
 CREATE TABLE ecoab_interaction_data (

@@ -370,7 +370,7 @@ CREATE INDEX ON survey(event_id);
 --   A specification of a characteristic of dwc:Occurrence that was included or excluded in a Survey.
 
 CREATE TABLE survey_target (
-  survey_target_id TEXT PRIMARY KEY,
+  survey_target_id TEXT NOT NULL,
   survey_id TEXT,
   survey_target_type TEXT,
   survey_target_type_iri TEXT,
@@ -568,7 +568,7 @@ UNIQUE (agent_id, genetic_sequence_id, agent_role, agent_role_iri, agent_role_da
 
 CREATE TABLE identification_agent_role (
   agent_id TEXT REFERENCES agent ON DELETE CASCADE DEFERRABLE NOT NULL,
-  identification_id TEXT REFERENCES event ON DELETE CASCADE DEFERRABLE NOT NULL,
+  identification_id TEXT REFERENCES identification ON DELETE CASCADE DEFERRABLE NOT NULL,
   agent_role TEXT,
   agent_role_iri TEXT,
   agent_role_vocabulary TEXT,

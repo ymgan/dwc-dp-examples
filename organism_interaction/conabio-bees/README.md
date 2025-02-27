@@ -1,4 +1,4 @@
-# CONABIO Bees dataset for the DwCA-DP publishing model
+# CONABIO Bees test dataset for the DwC-DP publishing model
 
 This is dataset is an example of dwc:Organism interactions, with collected bees and observations for the plants they visited.
 
@@ -15,7 +15,7 @@ The process to create the output dataset for the DwC-DP publishing model is as f
 
 (Subsequent times) ```dropdb conabio_bees && createdb conabio_bees && psql conabio_bees -f ../../gbif/dwc_dp_schema.sql && psql conabio_bees -f ./schema_input_conabio_bees.sql```
 
-## Load the input data into the conabio_bees database:
+## Load the input data into the input tables in the database:
 ```psql conabio_bees -f load_input_conabio_bees.sql```
 
 ## Run the script to produce the publishing model tables within the same database:
