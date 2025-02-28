@@ -1,0 +1,98 @@
+{
+  "profile" : "data-package",
+  "title" : "Herbarium Berolinense",
+  "description" : "The herbarium of the Botanic Garden and Botanical Museum Berlin-Dahlem (herbarium acronym: B) is the largest in Germany and holds a collection of more than 3.5 million preserved specimens. All plant groups – flowering plants, ferns, mosses, liverworts, and algae, as well as fungi and lichens – are represented in the collections which are worldwide in scope. Associated with the general herbarium are special collections of dried fruits and seeds, wood samples, and specimens preserved in alcohol. The collections of the herbarium are growing constantly through field research conducted by staff, and through gifts, acquisitions, and exchanges of specimens from other herbaria",
+  "licenses" : [ {
+    "name" : "CC-BY",
+    "title" : "Creative Commons Attribution (CC-BY 4.0)"
+  } ],
+  "version" : "4",
+  "created" : "2025-02-27T09:33:44Z",
+  "resources" : [ {
+    "name" : "agent",
+    "profile" : "tabular-data-resource",
+    "format" : "csv",
+    "encoding" : "UTF-8",
+    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/agent.json",
+    "path" : "agent.csv"
+  }, {
+    "name" : "collection",
+    "profile" : "tabular-data-resource",
+    "format" : "csv",
+    "encoding" : "UTF-8",
+    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/collection.json",
+    "path" : "collection.csv"
+  }, {
+    "name" : "event",
+    "profile" : "tabular-data-resource",
+    "format" : "csv",
+    "encoding" : "UTF-8",
+    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/event.json",
+    "path" : "event.csv"
+  }, {
+    "name" : "genetic-sequence",
+    "profile" : "tabular-data-resource",
+    "format" : "csv",
+    "encoding" : "UTF-8",
+    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/genetic-sequence.json",
+    "path" : "genetic-sequence.csv"
+  }, {
+    "name" : "identification",
+    "profile" : "tabular-data-resource",
+    "format" : "csv",
+    "encoding" : "UTF-8",
+    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/identification.json",
+    "path" : "identification.csv"
+  }, {
+    "name" : "material",
+    "profile" : "tabular-data-resource",
+    "format" : "csv",
+    "encoding" : "UTF-8",
+    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/material.json",
+    "path" : "material.csv"
+  }, {
+    "name" : "material-assertion",
+    "profile" : "tabular-data-resource",
+    "format" : "csv",
+    "encoding" : "UTF-8",
+    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/material-assertion.json",
+    "path" : "material-assertion.csv"
+  }, {
+    "name" : "material-identifier",
+    "profile" : "tabular-data-resource",
+    "format" : "csv",
+    "encoding" : "UTF-8",
+    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/material-identifier.json",
+    "path" : "material-identifier.csv"
+  }, {
+    "name" : "material-media",
+    "profile" : "tabular-data-resource",
+    "format" : "csv",
+    "encoding" : "UTF-8",
+    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/material-media.json",
+    "path" : "material-media.csv"
+  }, {
+    "name" : "media",
+    "profile" : "tabular-data-resource",
+    "format" : "csv",
+    "encoding" : "UTF-8",
+    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/media.json",
+    "path" : "media.csv"
+  }, {
+    "name" : "occurrence",
+    "profile" : "tabular-data-resource",
+    "format" : "csv",
+    "encoding" : "UTF-8",
+    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/occurrence.json",
+    "path" : "occurrence.csv"
+  }, {
+    "name" : "occurrence-media",
+    "profile" : "tabular-data-resource",
+    "format" : "csv",
+    "encoding" : "UTF-8",
+    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/occurrence-media.json",
+    "path" : "occurrence-media.csv"
+  } ],
+  "contributors" : [ ],
+  "sources" : [ ]
+}

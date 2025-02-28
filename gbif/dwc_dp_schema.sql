@@ -130,7 +130,7 @@ CREATE TABLE occurrence (
   dataGeneralizations TEXT,
   occurrence_remarks TEXT,
   organism_id TEXT,
-  organism_scope TEXT DEFAULT 'multicellular organism' NOT NULL,
+  organism_scope TEXT DEFAULT 'multicellular organism',
   organism_scope_iri TEXT,
   organism_scope_vocabulary TEXT,
   organism_name TEXT,
@@ -274,7 +274,6 @@ CREATE TABLE collection (
 
 -- GeneticSequence
 --   A digital representation of a nucleotide sequence.
-
 CREATE TABLE genetic_sequence (
   genetic_sequence_id TEXT PRIMARY KEY,
   event_id TEXT REFERENCES event ON DELETE CASCADE DEFERRABLE NOT NULL,

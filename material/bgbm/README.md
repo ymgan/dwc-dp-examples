@@ -22,3 +22,16 @@ The process to create the output dataset for the DwC-DP publishing model is as f
 ## Run the script to export the publishing model tables as TSV files:
 ```psql bgbm -f export_bgbm_tsvs.sql```
 
+The Darwin Core Data Package from the IPT was also copied and can be found in the [data package download folder](../input/datapackage-download).
+
+Do the following to test the integrity of the IPT-produced Darwin Core Data Package directly against the [database schema](../../gbif/dwc_dp_schema.sql):
+
+## Create a postgreSQL database to hold the DwC-DP data and the output data mapped to the DwC-DP publishing model:
+```cd material/bgbm```
+
+(First time) ```createdb bgbm && psql bgbm -f ../../gbif/dwc_dp_schema.sql```
+
+(Subsequent times) ```dropdb bgbm && createdb bgbm && psql bgbm -f ../../gbif/dwc_dp_schema.sql```
+
+## Load the DwC-DP data directly into the tables in the database:
+```psql bgbm -f load_dwc-dp_bgbm.sql```
