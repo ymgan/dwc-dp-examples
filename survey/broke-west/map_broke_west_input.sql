@@ -159,14 +159,14 @@ FROM input_agent
 
 -- Fill the agent_agent_role table.
 /* NOTE: table is missing related_agent_id
-INSERT INTO agnet_agent_role (
+INSERT INTO agent_agent_role (
     agent_id,
     related_agent_id,
     agent_role
 )
 (SELECT
     agentID AS identification_id,
-    realtedAgentID AS agent_id,
+    relatedAgentID AS agent_id,
     agentRole AS agent_role
 FROM input_identification_agent_role
 );
