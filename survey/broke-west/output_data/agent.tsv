@@ -1,3 +1,2 @@
 agent_id	agent_type	agent_type_iri	agent_type_vocabulary	preferred_agent_name
-AVdP_collector	person			Anton Van de Putte
-AVdP_specimen_identifier	person			Anton Van de Putte
+https://orcid.org/0000-0003-1336-5554	person			Anton Van de Putte
