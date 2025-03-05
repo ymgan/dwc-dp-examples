@@ -1,6 +1,18 @@
 ---
--- Schema for NEON_fish input data to be mapped to dwca_v2 publishing model.
+-- Schema for NEON_fish input data to be mapped to dwc-dp publishing model.
 --
+
+CREATE TABLE variables (
+    _table TEXT,
+    fieldName TEXT,
+    description TEXT,
+    dataType TEXT,
+    units TEXT,
+    downloadPkg TEXT,
+    pubFormat TEXT,
+    primaryKey TEXT,
+    categoricalCodeName TEXT
+);
 
 CREATE TABLE fsh_bulkCount (
     uid TEXT PRIMARY KEY,

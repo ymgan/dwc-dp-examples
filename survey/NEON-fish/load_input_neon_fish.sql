@@ -2,6 +2,7 @@
 BEGIN;
 SET CONSTRAINTS ALL DEFERRED;
 
+\copy public.variables FROM './input_data/NEON_fish/variables.csv' WITH DELIMITER E',' CSV HEADER;
 \copy public.fsh_bulkCount FROM './input_data/NEON_fish/fsh_bulkCount.csv' WITH DELIMITER E',' CSV HEADER;
 \copy public.fsh_fieldData FROM './input_data/NEON_fish/fsh_fieldData.csv' WITH DELIMITER E',' CSV HEADER;
 \copy public.fsh_invertBycatch FROM './input_data/NEON_fish/fsh_invertBycatch.csv' WITH DELIMITER E',' CSV HEADER;

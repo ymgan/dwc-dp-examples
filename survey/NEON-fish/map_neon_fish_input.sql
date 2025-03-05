@@ -112,7 +112,7 @@ SELECT
   NULL AS field_notes,
   'NEON (National Ecological Observatory Network). Fish electrofishing, gill netting, and fyke netting counts (DP1.20107.001), RELEASE-2025. https://doi.org/10.48443/ap3d-rp07. Dataset accessed from https://data.neonscience.org/data-products/DP1.20107.001/RELEASE-2025 on March 3, 2025.' AS event_citation,
   NULL AS event_remarks,
-  'BIGC' AS location_id,
+  NULL AS location_id,
   NULL AS higher_geography_id,
   NULL AS higher_geography,
   'North America' AS continent,
@@ -269,7 +269,7 @@ SELECT
   NULL AS field_notes,
   NULL AS event_citation,
   NULL AS event_remarks,
-  'BIGC' AS location_id,
+  NULL AS location_id,
   NULL AS higher_geography_id,
   NULL AS higher_geography,
   'North America' AS continent,
@@ -308,7 +308,7 @@ SELECT
   NULL AS georeference_remarks,
   NULL AS information_withheld,
   NULL AS data_generalizations,
-  'point-radius' AS preferredSpatialRepresentation;
+  'point-radius' AS preferred_spatial_representation;
 -- n=1 rows added
 -- n=2 rows total
 
@@ -324,7 +324,6 @@ INSERT INTO event (
   event_date, 
   year, 
   habitat,
-  location_id,
   continent,
   water_body,
   country,
@@ -338,7 +337,8 @@ INSERT INTO event (
   decimal_longitude,
   geodetic_datum,
   coordinate_uncertainty_in_meters,
-  coordinate_precision
+  coordinate_precision,
+  preferred_spatial_representation
 )
 SELECT DISTINCT
   namedLocation AS event_id, 
@@ -351,7 +351,6 @@ SELECT DISTINCT
   '2019-04-22/2019-10-24' AS event_date,  
   2019 AS year, 
   'stream' AS habitat,
-  namedLocation AS location_id,
   'North America' AS continent,
   'Upper Big Creek' AS water_body,
   'United States' AS country,
@@ -365,7 +364,8 @@ SELECT DISTINCT
   NULLIF(decimalLongitude, '')::numeric AS decimal_longitude,
   geodeticDatum AS geodetic_datum,
   coordinateUncertainty::numeric AS coordinate_uncertainty_in_meters,
-  0.000001 AS coordinate_precision
+  0.000001 AS coordinate_precision,
+  'point-radius' AS preferred_spatial_representation
   FROM fsh_fieldData;
 -- n=6 rows added
 -- n=8 rows total
@@ -422,7 +422,8 @@ INSERT INTO event (
   decimal_longitude,
   geodetic_datum,
   coordinate_uncertainty_in_meters,
-  coordinate_precision
+  coordinate_precision,
+  preferred_spatial_representation
 )
 SELECT 
   a.reachID AS event_id, 
@@ -441,7 +442,7 @@ SELECT
     WHEN remarks = 'NA' THEN NULL 
     ELSE remarks 
   END AS event_remarks,
-  namedLocation AS location_id,
+  NULL AS location_id,
   'North America' AS continent,
   'Upper Big Creek' AS water_body,
   'United States' AS country,
@@ -455,7 +456,8 @@ SELECT
   NULLIF(decimalLongitude, '')::numeric AS decimal_longitude,
   geodeticDatum AS geodetic_datum,
   coordinateUncertainty::numeric AS coordinate_uncertainty_in_meters,
-  0.000001 AS coordinate_precision
+  0.000001 AS coordinate_precision,
+  'point-radius' AS preferred_spatial_representation
   FROM fsh_fieldData a
   JOIN temp_reach_collectors b ON a.reachID=b.reachID;
 -- n=12 rows added
@@ -489,7 +491,8 @@ INSERT INTO event (
   decimal_longitude,
   geodetic_datum,
   coordinate_uncertainty_in_meters,
-  coordinate_precision
+  coordinate_precision,
+  preferred_spatial_representation
 )
 SELECT 
   a.eventID AS event_id, 
@@ -498,17 +501,28 @@ SELECT
   'Fish electrofishing, gill netting, and fyke netting counts' AS dataset_name,
   'https://data.neonscience.org/data-products/DP1.20107.001' AS dataset_id,
   c.collectors AS event_conducted_by,
-  REPLACE(a.passStartTime, ' ', 'T') || '/' || 
-    REPLACE(a.passEndTime, ' ', 'T') AS event_date,  
-  SUBSTRING(a.passStartTime FROM 1 FOR 4)::smallint AS year, 
-  SUBSTRING(a.passStartTime FROM 6 FOR 2)::smallint AS month, 
-  SUBSTRING(a.passStartTime FROM 9 FOR 2)::smallint AS day, 
+  CASE WHEN samplerType = 'electrofisher' 
+    THEN REPLACE(a.passStartTime, ' ', 'T') || '/' || REPLACE(a.passEndTime, ' ', 'T')
+    ELSE REPLACE(a.netSetTime, ' ', 'T') || '/' || REPLACE(a.netEndTime, ' ', 'T')
+    END AS event_date,
+  CASE WHEN samplerType = 'electrofisher' 
+    THEN SUBSTRING(a.passStartTime FROM 1 FOR 4)::smallint
+    ELSE SUBSTRING(a.netSetTime FROM 1 FOR 4)::smallint
+    END AS year,
+  CASE WHEN samplerType = 'electrofisher' 
+    THEN SUBSTRING(a.passStartTime FROM 6 FOR 2)::smallint
+    ELSE SUBSTRING(a.netSetTime FROM 6 FOR 2)::smallint
+    END AS month,
+  CASE WHEN samplerType = 'electrofisher' 
+    THEN SUBSTRING(a.passStartTime FROM 9 FOR 2)::smallint
+    ELSE SUBSTRING(a.netSetTime FROM 9 FOR 2)::smallint
+    END AS day,
   'Habitat: ' || habitatType || ' Subdominant Habitat: ' || subdominantHabitatType AS habitat,
   CASE 
     WHEN a.remarks = 'NA' THEN NULL 
     ELSE a.remarks 
   END AS event_remarks,  
-  a.namedLocation AS locationID,
+  NULL AS locationID,
   'North America' AS continent,
   'Upper Big Creek' AS water_body,
   'United States' AS country,
@@ -522,13 +536,15 @@ SELECT
   NULLIF(b.decimalLongitude, '')::numeric AS decimal_longitude,
   geodeticDatum AS geodetic_datum,
   coordinateUncertainty::numeric AS coordinate_uncertainty_in_meters,
-  0.000001 AS coordinate_precision
+  0.000001 AS coordinate_precision,
+  'point-radius' AS preferred_spatial_representation
   FROM fsh_perPass a
   JOIN fsh_fieldData b on a.reachID=b.reachID
   JOIN temp_reach_collectors c ON a.reachID=c.reachID;
 -- n=24 rows added
 -- n=44 rows total
 
+/*
 -- Create year, month, day records for perFish Occurrences.
 CREATE TABLE temp_ymd AS
 SELECT 
@@ -551,7 +567,9 @@ SELECT
 FROM fsh_perFish;
 -- n=672 rows added
 -- n=672 rows total
+*/
 
+/*
 -- Create year, month, day records for bulkCount Occurrences.
 CREATE TABLE temp_bulk_ymd AS
 SELECT 
@@ -574,6 +592,7 @@ SELECT
 FROM fsh_bulkCount;
 -- n=4 rows added
 -- n=4 rows total
+*/
 
 -- Create the occurrence table from perFish records.
 INSERT INTO occurrence (
@@ -934,14 +953,14 @@ INSERT INTO event_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   reachID AS event_id,
-  'measuredReachLength' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
   NULL AS assertion_effective_date,
   NULL AS assertion_value,
   measuredReachLength::NUMERIC AS assertion_value_numeric,
-  'm' AS assertion_unit,
+  b.units AS assertion_unit,
   NULL AS assertion_unit_iri,
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
@@ -950,8 +969,13 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_fieldData
-WHERE measuredReachLength <> 'NA';
+FROM 
+  fsh_fieldData a,
+  variables b
+WHERE 
+  _table = 'fsh_fieldData' AND
+  fieldName = 'measuredReachLength' AND
+  measuredReachLength <> 'NA';
 -- n=12 rows
 -- n=12 rows total
 
@@ -979,7 +1003,7 @@ INSERT INTO event_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   reachID AS event_id,
-  'fixedRandomReach' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
@@ -995,8 +1019,13 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_fieldData
-WHERE fixedRandomReach <> 'NA';
+FROM 
+  fsh_fieldData a,
+  variables b
+WHERE 
+  _table = 'fsh_fieldData' AND
+  fieldName = 'fixedRandomReach' AND
+  fixedRandomReach <> 'NA';
 -- n=12 rows
 -- n=24 rows total
 
@@ -1024,7 +1053,7 @@ INSERT INTO event_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   eventID AS event_id,
-  'passNumber' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
@@ -1040,8 +1069,13 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perPass
-WHERE passNumber <> 'NA';
+FROM 
+  fsh_perFish a,
+  variables b
+WHERE 
+  _table = 'fsh_perFish' AND
+  fieldName = 'passNumber' AND
+  passNumber <> 'NA';
 -- n=24 rows
 -- n=48 rows total
 
@@ -1069,14 +1103,14 @@ INSERT INTO event_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   eventID AS event_id,
-  'waterTemp' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
   NULL AS assertion_effective_date,
   NULL AS assertion_value,
   waterTemp::NUMERIC AS assertion_value_numeric,
-  'C' AS assertion_unit,
+  b.units AS assertion_unit,
   NULL AS assertion_unit_iri,
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
@@ -1085,8 +1119,13 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perPass
-WHERE waterTemp <> 'NA';
+FROM 
+  fsh_perPass a,
+  variables b
+WHERE 
+  _table = 'fsh_perPass' AND
+  fieldName = 'waterTemp' AND
+  waterTemp <> 'NA';
 -- n=24 rows
 -- n=72 rows total
 
@@ -1114,14 +1153,14 @@ INSERT INTO event_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   eventID AS event_id,
-  'dissolvedOxygen' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
   NULL AS assertion_effective_date,
   NULL AS assertion_value,
   dissolvedOxygen::NUMERIC AS assertion_value_numeric,
-  '%' AS assertion_unit,
+  b.units AS assertion_unit,
   NULL AS assertion_unit_iri,
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
@@ -1130,8 +1169,13 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perPass
-WHERE dissolvedOxygen <> 'NA';
+FROM 
+  fsh_perPass a,
+  variables b
+WHERE 
+  _table = 'fsh_perPass' AND
+  fieldName = 'dissolvedOxygen' AND
+  dissolvedOxygen <> 'NA';
 -- n=24 rows
 -- n=96 rows total
 
@@ -1159,14 +1203,14 @@ INSERT INTO event_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   eventID AS event_id,
-  'specificConductance' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
   NULL AS assertion_effective_date,
   NULL AS assertion_value,
   specificConductance::NUMERIC AS assertion_value_numeric,
-  'cm^-1 Ω^-1' AS assertion_unit,
+  b.units AS assertion_unit,
   NULL AS assertion_unit_iri,
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
@@ -1175,8 +1219,13 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perPass
-WHERE specificConductance <> 'NA';
+FROM 
+  fsh_perPass a,
+  variables b
+WHERE 
+  _table = 'fsh_perPass' AND
+  fieldName = 'specificConductance' AND
+  specificConductance <> 'NA';
 -- n=24 rows
 -- n=120 rows total
 
@@ -1204,7 +1253,7 @@ INSERT INTO event_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   eventID AS event_id,
-  'samplerType' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
@@ -1220,8 +1269,13 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perPass
-WHERE samplerType <> 'NA';
+FROM 
+  fsh_perPass a,
+  variables b
+WHERE 
+  _table = 'fsh_perPass' AND
+  fieldName = 'samplerType' AND
+  samplerType <> 'NA';
 -- n=24 rows
 -- n=144 rows total
 
@@ -1249,14 +1303,14 @@ INSERT INTO event_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   eventID AS event_id,
-  'initialFrequency' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
   NULL AS assertion_effective_date,
   NULL AS assertion_value,
   initialFrequency::NUMERIC AS assertion_value_numeric,
-  'Hz' AS assertion_unit,
+  b.units AS assertion_unit,
   NULL AS assertion_unit_iri,
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
@@ -1265,8 +1319,13 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perPass
-WHERE initialFrequency <> 'NA';
+FROM 
+  fsh_perPass a,
+  variables b
+WHERE 
+  _table = 'fsh_perPass' AND
+  fieldName = 'initialFrequency' AND
+  initialFrequency <> 'NA';
 -- n=24 rows
 -- n=168 rows total
 
@@ -1294,14 +1353,14 @@ INSERT INTO event_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   eventID AS event_id,
-  'initialDutyCycle' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
   NULL AS assertion_effective_date,
   NULL AS assertion_value,
   initialDutyCycle::NUMERIC AS assertion_value_numeric,
-  '%' AS assertion_unit,
+  b.units AS assertion_unit,
   NULL AS assertion_unit_iri,
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
@@ -1310,8 +1369,13 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perPass
-WHERE initialDutyCycle <> 'NA';
+FROM 
+  fsh_perPass a,
+  variables b
+WHERE 
+  _table = 'fsh_perPass' AND
+  fieldName = 'initialDutyCycle' AND
+  initialDutyCycle <> 'NA';
 -- n=24 rows
 -- n=192 rows total
 
@@ -1339,14 +1403,14 @@ INSERT INTO event_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   eventID AS event_id,
-  'initialVoltage' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
   NULL AS assertion_effective_date,
   NULL AS assertion_value,
   initialVoltage::NUMERIC AS assertion_value_numeric,
-  'V' AS assertion_unit,
+  b.units AS assertion_unit,
   NULL AS assertion_unit_iri,
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
@@ -1355,8 +1419,13 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perPass
-WHERE initialVoltage <> 'NA';
+FROM 
+  fsh_perPass a,
+  variables b
+WHERE 
+  _table = 'fsh_perPass' AND
+  fieldName = 'initialVoltage' AND
+  initialVoltage <> 'NA';
 -- n=24 rows
 -- n=216 rows total
 
@@ -1384,14 +1453,14 @@ INSERT INTO event_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   eventID AS event_id,
-  'finalFrequency' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
   NULL AS assertion_effective_date,
   NULL AS assertion_value,
   finalFrequency::NUMERIC AS assertion_value_numeric,
-  'Hz' AS assertion_unit,
+  b.units AS assertion_unit,
   NULL AS assertion_unit_iri,
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
@@ -1400,8 +1469,13 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perPass
-WHERE finalFrequency <> 'NA';
+FROM 
+  fsh_perPass a,
+  variables b
+WHERE 
+  _table = 'fsh_perPass' AND
+  fieldName = 'finalFrequency' AND
+  finalFrequency <> 'NA';
 -- n=24 rows
 -- n=240 rows total
 
@@ -1429,14 +1503,14 @@ INSERT INTO event_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   eventID AS event_id,
-  'finalDutyCycle' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
   NULL AS assertion_effective_date,
   NULL AS assertion_value,
   finalDutyCycle::SMALLINT AS assertion_value_numeric,
-  '%' AS assertion_unit,
+  b.units AS assertion_unit,
   NULL AS assertion_unit_iri,
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
@@ -1445,8 +1519,13 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perPass
-WHERE finalDutyCycle <> 'NA';
+FROM 
+  fsh_perPass a,
+  variables b
+WHERE 
+  _table = 'fsh_perPass' AND
+  fieldName = 'finalDutyCycle' AND
+  finalDutyCycle <> 'NA';
 -- n=24 rows
 -- n=264 rows total
 
@@ -1474,14 +1553,14 @@ INSERT INTO event_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   eventID AS event_id,
-  'finalVoltage' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
   NULL AS assertion_effective_date,
   NULL AS assertion_value,
   finalVoltage::NUMERIC AS assertion_value_numeric,
-  'V' AS assertion_unit,
+  b.units AS assertion_unit,
   NULL AS assertion_unit_iri,
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
@@ -1490,8 +1569,13 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perPass
-WHERE finalVoltage <> 'NA';
+FROM 
+  fsh_perPass a,
+  variables b
+WHERE 
+  _table = 'fsh_perPass' AND
+  fieldName = 'finalVoltage' AND
+  finalVoltage <> 'NA';
 -- n=24 rows
 -- n=288 rows total
 
@@ -1519,14 +1603,14 @@ INSERT INTO event_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   eventID AS event_id,
-  'efTime' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
   NULL AS assertion_effective_date,
   NULL AS assertion_value,
   efTime::INTEGER AS assertion_value_numeric,
-  NULL AS assertion_unit,
+  b.units AS assertion_unit,
   NULL AS assertion_unit_iri,
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
@@ -1535,8 +1619,13 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perPass
-WHERE efTime <> 'NA';
+FROM 
+  fsh_perPass a,
+  variables b
+WHERE 
+  _table = 'fsh_perPass' AND
+  fieldName = 'efTime' AND
+  efTime <> 'NA';
 -- n=24 rows
 -- n=312 rows total
 
@@ -1564,14 +1653,14 @@ INSERT INTO event_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   eventID AS event_id,
-  'settingsChanged' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
   NULL AS assertion_effective_date,
   NULL AS assertion_value,
   settingsChanged::SMALLINT AS assertion_value_numeric,
-  NULL AS assertion_unit,
+  b.units AS assertion_unit,
   NULL AS assertion_unit_iri,
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
@@ -1580,8 +1669,13 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perPass
-WHERE settingsChanged <> 'NA';
+FROM 
+  fsh_perPass a,
+  variables b
+WHERE 
+  _table = 'fsh_perPass' AND
+  fieldName = 'settingsChanged' AND
+  settingsChanged <> 'NA';
 -- n=22 rows
 -- n=334 rows total
 
@@ -1609,7 +1703,7 @@ INSERT INTO event_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   eventID AS event_id,
-  'netIntegrity' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
@@ -1625,8 +1719,13 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perPass
-WHERE netIntegrity <> 'NA';
+FROM 
+  fsh_perPass a,
+  variables b
+WHERE 
+  _table = 'fsh_perPass' AND
+  fieldName = 'netIntegrity' AND
+  netIntegrity <> 'NA';
 -- n=22 rows
 -- n=358 rows total
 
@@ -1654,7 +1753,7 @@ INSERT INTO event_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   eventID AS event_id,
-  'targetTaxaPresent' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
@@ -1670,12 +1769,17 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perPass
-WHERE targetTaxaPresent <> 'NA';
+FROM 
+  fsh_perPass a,
+  variables b
+WHERE 
+  _table = 'fsh_perPass' AND
+  fieldName = 'targetTaxaPresent' AND
+  targetTaxaPresent <> 'NA';
 -- n=22 rows
 -- n=382 rows total
 
--- Add fishTotalLength from fsh_perFidh to the assertion table.
+-- Add fishTotalLength from fsh_perFish to the assertion table.
 INSERT INTO occurrence_assertion (
   assertion_id,
   occurrence_id,
@@ -1699,14 +1803,14 @@ INSERT INTO occurrence_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   uid AS occurrence_id,
-  'fishTotalLength' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
   NULL AS assertion_effective_date,
   NULL AS assertion_value,
   fishTotalLength::NUMERIC AS assertion_value_numeric,
-  'mm' AS assertion_unit,
+  b.units AS assertion_unit,
   NULL AS assertion_unit_iri,
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
@@ -1715,12 +1819,17 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perFish
-WHERE fishTotalLength <> 'NA';
+FROM 
+  fsh_perFish a,
+  variables b
+WHERE 
+  _table = 'fsh_perFish' AND
+  fieldName = 'fishTotalLength' AND
+  fishTotalLength <> 'NA';
 -- n=671 rows
 -- n=1053 rows total
 
--- Add fishWeight from fsh_perFidh to the assertion table.
+-- Add fishWeight from fsh_perFish to the assertion table.
 INSERT INTO occurrence_assertion (
   assertion_id,
   occurrence_id,
@@ -1744,14 +1853,14 @@ INSERT INTO occurrence_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   uid AS occurrence_id,
-  'fishWeight' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
   NULL AS assertion_effective_date,
   NULL AS assertion_value,
   fishWeight::NUMERIC AS assertion_value_numeric,
-  'g' AS assertion_unit,
+  b.units AS assertion_unit,
   NULL AS assertion_unit_iri,
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
@@ -1760,12 +1869,17 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perFish
-WHERE fishTotalLength <> 'NA';
+FROM 
+  fsh_perFish a,
+  variables b
+WHERE 
+  _table = 'fsh_perFish' AND
+  fieldName = 'fishWeight' AND
+  fishWeight <> 'NA';
 -- n=671 rows
 -- n=1724 rows total
 
--- Add delt from fsh_perFidh to the assertion table.
+-- Add delt from fsh_perFish to the assertion table.
 INSERT INTO occurrence_assertion (
   assertion_id,
   occurrence_id,
@@ -1789,12 +1903,12 @@ INSERT INTO occurrence_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   uid AS occurrence_id,
-  'delt' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
   NULL AS assertion_effective_date,
-  'delt' AS assertion_value,
+  delt AS assertion_value,
   NULL AS assertion_value_numeric,
   NULL AS assertion_unit,
   NULL AS assertion_unit_iri,
@@ -1805,12 +1919,17 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perFish
-WHERE delt <> 'NA';
+FROM 
+  fsh_perFish a,
+  variables b
+WHERE 
+  _table = 'fsh_perFish' AND
+  fieldName = 'delt' AND
+  delt <> 'NA';
 -- n=3 rows
 -- n=1727 rows total
 
--- Add efMortality from fsh_perFidh to the assertion table.
+-- Add efMortality from fsh_perFish to the assertion table.
 INSERT INTO occurrence_assertion (
   assertion_id,
   occurrence_id,
@@ -1834,12 +1953,12 @@ INSERT INTO occurrence_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   uid AS occurrence_id,
-  'efMortality' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
   NULL AS assertion_effective_date,
-  'efMortality' AS assertion_value,
+  efMortality AS assertion_value,
   NULL AS assertion_value_numeric,
   NULL AS assertion_unit,
   NULL AS assertion_unit_iri,
@@ -1850,12 +1969,17 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perFish
-WHERE efMortality <> 'NA';
+FROM 
+  fsh_perFish a,
+  variables b
+WHERE 
+  _table = 'fsh_perFish' AND
+  fieldName = 'efMortality' AND
+  efMortality <> 'NA';
 -- n=8 rows
 -- n=1735 rows total
 
--- Add efInjury from fsh_perFidh to the assertion table.
+-- Add efInjury from fsh_perFish to the assertion table.
 INSERT INTO occurrence_assertion (
   assertion_id,
   occurrence_id,
@@ -1879,12 +2003,12 @@ INSERT INTO occurrence_assertion (
 SELECT
   gen_random_uuid() AS assertion_id,
   uid AS occurrence_id,
-  'efInjury' AS assertion_type,
+  b.description AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
   NULL AS assertion_effective_date,
-  'efInjury' AS assertion_value,
+  efInjury AS assertion_value,
   NULL AS assertion_value_numeric,
   NULL AS assertion_unit,
   NULL AS assertion_unit_iri,
@@ -1895,22 +2019,63 @@ SELECT
   NULL AS assertion_protocol_id,
   NULL AS assertion_citation,
   NULL AS assertion_remarks
-FROM fsh_perFish
-WHERE efInjury <> 'NA';
+FROM 
+  fsh_perFish a,
+  variables b
+WHERE 
+  _table = 'fsh_perFish' AND
+  fieldName = 'efInjury' AND
+  efInjury <> 'NA';
 -- n=1 rows
 -- n=1736 rows total
 
--- Create the Identifier table
-INSERT INTO occurrence_identifier (
-  identifier, 
-  occurrence_id, 
-  identifier_type
+-- Add specimenNumber from fsh_perFish to the assertion table.
+INSERT INTO occurrence_assertion (
+  assertion_id,
+  occurrence_id,
+  assertion_type,
+  assertion_type_iri,
+  assertion_type_vocabulary,
+  assertion_made_date,
+  assertion_effective_date,
+  assertion_value,
+  assertion_value_numeric,
+  assertion_unit,
+  assertion_unit_iri,
+  assertion_unit_vocabulary,
+  assertion_by, 
+  assertion_by_id,
+  assertion_protocol,
+  assertion_protocol_id,
+  assertion_citation,
+  assertion_remarks
 )
 SELECT
-  specimenNumber AS identifier, 
+  gen_random_uuid() AS assertion_id,
   uid AS occurrence_id,
-  'specimenNumber' AS identifier_type
-  FROM fsh_perFish;
+  b.description AS assertion_type,
+  NULL AS assertion_type_iri,
+  NULL AS assertion_type_vocabulary,
+  NULL AS assertion_made_date,
+  NULL AS assertion_effective_date,
+  specimenNumber AS assertion_value,
+  NULL AS assertion_value_numeric,
+  NULL AS assertion_unit,
+  NULL AS assertion_unit_iri,
+  NULL AS assertion_unit_vocabulary,
+  NULL AS assertion_by,
+  NULL AS assertion_by_id,
+  NULL AS assertion_protocol,
+  NULL AS assertion_protocol_id,
+  NULL AS assertion_citation,
+  NULL AS assertion_remarks
+FROM 
+  fsh_perFish a,
+  variables b
+WHERE 
+  _table = 'fsh_perFish' AND
+  fieldName = 'specimenNumber' AND
+  specimenNumber <> 'NA';
 -- n=672 rows
 -- n=672 rows total
 

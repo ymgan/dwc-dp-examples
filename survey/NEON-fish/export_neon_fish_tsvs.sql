@@ -6,5 +6,4 @@
 \COPY material TO './output_data/material.tsv' WITH (FORMAT TEXT, DELIMITER E'\t', NULL '', HEADER);
 \COPY occurrence TO './output_data/occurrence.tsv' WITH (FORMAT TEXT, DELIMITER E'\t', NULL '', HEADER);
 \COPY occurrence_assertion TO './output_data/occurrence_assertion.tsv' WITH (FORMAT TEXT, DELIMITER E'\t', NULL '', HEADER);
-\COPY occurrence_identifier TO './output_data/occurrence_identifier.tsv' WITH (FORMAT TEXT, DELIMITER E'\t', NULL '', HEADER);
 \COPY survey TO './output_data/survey.tsv' WITH (FORMAT TEXT, DELIMITER E'\t', NULL '', HEADER);
