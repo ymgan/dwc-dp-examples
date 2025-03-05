@@ -30,7 +30,7 @@ CREATE TABLE event (
   event_type_iri TEXT,
   event_type_vocabulary TEXT,
   dataset_name TEXT,
-  datasetID TEXT,
+  dataset_id TEXT,
   field_number TEXT,
   event_conducted_by TEXT,
   event_conducted_by_id TEXT,
@@ -95,8 +95,8 @@ CREATE TABLE event (
   georeference_protocol_id TEXT,
   georeference_sources TEXT,
   georeference_remarks TEXT,
-  informationWithheld TEXT,
-  dataGeneralizations TEXT,
+  information_withheld TEXT,
+  data_generalizations TEXT,
   preferred_spatial_representation TEXT
 );
 CREATE INDEX ON event(parent_event_id);
@@ -104,12 +104,91 @@ CREATE INDEX ON event(event_conducted_by_id);
 CREATE INDEX ON event(georeferenced_by_id);
 CREATE INDEX ON event(georeference_protocol_id);
 
+-- Survey
+--   A biotic survey.
+
+CREATE TABLE survey (
+  survey_id TEXT PRIMARY KEY,
+  event_id TEXT REFERENCES event ON DELETE CASCADE DEFERRABLE NOT NULL,
+  site_count SMALLINT CHECK (site_count >= 1),
+  site_nesting_description TEXT,
+  verbatim_site_descriptions TEXT,
+  verbatim_site_names TEXT,
+  geospatial_scope_area_value NUMERIC CHECK (geospatial_scope_area_value >= 0),
+  geospatial_scope_area_unit TEXT,
+  total_area_sampled_value NUMERIC CHECK (total_area_sampled_value >= 0),
+  total_area_sampled_unit TEXT,
+  reported_weather TEXT,
+  reported_extreme_conditions TEXT,
+  event_duration_value NUMERIC CHECK (event_duration_value >= 0),
+  event_duration_unit TEXT,
+  taxon_completeness_reported TAXON_COMPLETENESS_REPORTED DEFAULT 'not reported' NOT NULL,
+  taxon_completeness_protocols TEXT,
+  is_taxonomic_scope_fully_reported BOOLEAN,
+  is_absence_reported BOOLEAN,
+  absent_taxa TEXT,
+  has_non_target_taxa BOOLEAN,
+  non_target_taxa TEXT,
+  are_non_target_taxa_fully_reported BOOLEAN,
+  has_non_target_organisms BOOLEAN,
+  verbatim_target_scope TEXT,
+  identified_by TEXT,
+  identified_by_id TEXT,
+  identification_references TEXT,
+  compilation_types TEXT,
+  compilation_source_types TEXT,
+  inventory_types TEXT,
+  protocol_names TEXT,
+  protocol_descriptions TEXT,
+  protocol_references TEXT,
+  is_abundance_reported BOOLEAN,
+  is_abundance_cap_reported BOOLEAN,
+  abundance_cap SMALLINT CHECK (abundance_cap >= 0),
+  is_vegetation_cover_reported BOOLEAN,
+  is_least_specific_target_category_quantity_inclusive BOOLEAN,
+  has_vouchers BOOLEAN,
+  voucher_institutions TEXT,
+  has_material_samples BOOLEAN,
+  material_sample_types TEXT,
+  sampling_performed_by TEXT,
+  sampling_performed_by_id TEXT,
+  is_sampling_effort_reported BOOLEAN,
+  sampling_effort_protocol TEXT,
+  sampling_effort_protocol_id TEXT,
+  sampling_effort_value NUMERIC CHECK (sampling_effort_value >= 0),
+  sampling_effort_unit TEXT,
+  information_withheld TEXT,
+  data_generalizations TEXT
+);
+CREATE INDEX ON survey(event_id);
+
+-- SurveyTarget
+--   A specification of a characteristic of dwc:Occurrence that was included or excluded in a Survey.
+
+CREATE TABLE survey_target (
+  survey_target_id TEXT NOT NULL,
+  survey_id TEXT,
+  survey_target_type TEXT,
+  survey_target_type_iri TEXT,
+  survey_target_type_vocabulary TEXT,
+  survey_target_value TEXT,
+  survey_target_value_iri TEXT,
+  survey_target_value_vocabulary TEXT,
+  survey_target_unit TEXT,
+  survey_target_unit_iri TEXT,
+  survey_target_unit_vocabulary TEXT,
+  include_or_exclude INCLUDE_OR_EXCLUDE DEFAULT 'include' NOT NULL,
+  is_survey_target_fully_reported BOOLEAN
+);
+CREATE INDEX ON survey_target(survey_id);
+
 -- Occurrence (https://dwc.tdwg.org/terms/#occurrence)
 --   The state of a dwc:Organism at some location during some time.
 
 CREATE TABLE occurrence (
   occurrence_id TEXT PRIMARY KEY,
   event_id TEXT REFERENCES event ON DELETE CASCADE DEFERRABLE NOT NULL,
+  survey_target_id TEXT,
   recorded_by TEXT,
   recorded_by_id TEXT,
   organism_quantity TEXT,
@@ -126,8 +205,8 @@ CREATE TABLE occurrence (
   degree_of_establishment TEXT,
   pathway TEXT,
   occurrence_status OCCURRENCE_STATUS DEFAULT 'present' NOT NULL,
-  informationWithheld TEXT,
-  dataGeneralizations TEXT,
+  information_withheld TEXT,
+  data_generalizations TEXT,
   occurrence_remarks TEXT,
   organism_id TEXT,
   organism_scope TEXT DEFAULT 'multicellular organism',
@@ -136,6 +215,7 @@ CREATE TABLE occurrence (
   organism_name TEXT,
   organism_remarks TEXT,
   verbatim_identification TEXT,
+  taxon_formula TEXT DEFAULT 'A' NOT NULL,
   identified_by TEXT,
   identified_by_id TEXT,
   date_identified TEXT,
@@ -151,6 +231,7 @@ CREATE TABLE occurrence (
   taxon_remarks TEXT
 );
 CREATE INDEX ON occurrence(event_id);
+CREATE INDEX ON survey_target(survey_target_id);
 
 -- Identification (https://dwc.tdwg.org/terms/#identification)
 --    A taxonomic determination (i.e., the assignment of dwc:Taxa to dwc:Organisms).
@@ -207,6 +288,7 @@ CREATE TABLE identification_taxon (
 CREATE TABLE material (
   material_entity_id TEXT PRIMARY KEY,
   event_id TEXT REFERENCES event ON DELETE CASCADE DEFERRABLE NOT NULL,
+  material_category TEXT NOT NULL,
   material_entity_type TEXT NOT NULL,
   material_entity_type_iri TEXT,
   material_entity_type_vocabulary TEXT,
@@ -226,8 +308,8 @@ CREATE TABLE material (
   verbatim_label TEXT,
   associated_sequences TEXT,
   material_citation TEXT,
-  informationWithheld TEXT,
-  dataGeneralizations TEXT,
+  information_withheld TEXT,
+  data_generalizations TEXT,
   material_entity_remarks TEXT,
   evidence_for_occurrence_id TEXT,
   derived_from_material_entity_id TEXT,
@@ -237,6 +319,7 @@ CREATE TABLE material (
   derivation_type_vocabulary TEXT,
   part_of_material_entity_id TEXT,
   verbatim_identification TEXT,
+  taxon_formula TEXT DEFAULT 'A' NOT NULL,
   identified_by TEXT,
   identified_by_id TEXT,
   date_identified TEXT,
@@ -306,84 +389,6 @@ CREATE TABLE organism_interaction (
 );
 CREATE INDEX ON organism_interaction(subject_occurrence_id);
 CREATE INDEX ON organism_interaction(related_occurrence_id);
-
--- Survey
---   A biotic survey.
-
-CREATE TABLE survey (
-  survey_id TEXT PRIMARY KEY,
-  event_id TEXT REFERENCES event ON DELETE CASCADE DEFERRABLE NOT NULL,
-  site_count SMALLINT CHECK (site_count >= 1),
-  site_nesting_description TEXT,
-  verbatim_site_descriptions TEXT,
-  verbatim_site_names TEXT,
-  geospatial_scope_area_value NUMERIC CHECK (geospatial_scope_area_value >= 0),
-  geospatial_scope_area_unit TEXT,
-  total_area_sampled_value NUMERIC CHECK (total_area_sampled_value >= 0),
-  total_area_sampled_unit TEXT,
-  reported_weather TEXT,
-  reported_extreme_conditions TEXT,
-  event_duration_value NUMERIC CHECK (event_duration_value >= 0),
-  event_duration_unit TEXT,
-  taxon_completeness_reported TAXON_COMPLETENESS_REPORTED DEFAULT 'not reported' NOT NULL,
-  taxon_completeness_protocols TEXT,
-  is_taxonomic_scope_fully_reported BOOLEAN,
-  is_absence_reported BOOLEAN,
-  absent_taxa TEXT,
-  has_non_target_taxa BOOLEAN,
-  non_target_taxa TEXT,
-  are_non_target_taxa_fully_reported BOOLEAN,
-  has_non_target_organisms BOOLEAN,
-  verbatim_target_scope TEXT,
-  identified_by TEXT,
-  identified_by_id TEXT,
-  identification_references TEXT,
-  compilation_types TEXT,
-  compilation_source_types TEXT,
-  inventory_types TEXT,
-  protocol_names TEXT,
-  protocol_descriptions TEXT,
-  protocol_references TEXT,
-  is_abundance_reported BOOLEAN,
-  is_abundance_cap_reported BOOLEAN,
-  abundance_cap SMALLINT CHECK (abundance_cap >= 0),
-  is_vegetation_cover_reported BOOLEAN,
-  is_least_specific_target_category_quantity_inclusive BOOLEAN,
-  has_vouchers BOOLEAN,
-  voucher_institutions TEXT,
-  has_material_samples BOOLEAN,
-  material_sample_types TEXT,
-  sampling_performed_by TEXT,
-  sampling_performed_by_id TEXT,
-  is_sampling_effort_reported BOOLEAN,
-  sampling_effort_protocol TEXT,
-  sampling_effort_protocol_id TEXT,
-  sampling_effort_value NUMERIC CHECK (sampling_effort_value >= 0),
-  sampling_effort_unit TEXT,
-  informationWithheld TEXT,
-  dataGeneralizations TEXT
-);
-CREATE INDEX ON survey(event_id);
-
--- SurveyTarget
---   A specification of a characteristic of dwc:Occurrence that was included or excluded in a Survey.
-
-CREATE TABLE survey_target (
-  survey_target_id TEXT NOT NULL,
-  survey_id TEXT,
-  survey_target_type TEXT,
-  survey_target_type_iri TEXT,
-  survey_target_type_vocabulary TEXT,
-  survey_target_value TEXT,
-  survey_target_value_iri TEXT,
-  survey_target_value_vocabulary TEXT,
-  survey_target_unit TEXT,
-  survey_target_unit_iri TEXT,
-  survey_target_unit_vocabulary TEXT,
-  include_or_exclude INCLUDE_OR_EXCLUDE DEFAULT 'include' NOT NULL,
-  is_survey_target_fully_reported BOOLEAN
-);
-CREATE INDEX ON survey_target(survey_id);
 
 -- ChronometricAge (https://tdwg.github.io/chrono/terms/#chronometricage)
 --   An approximations of temporal position (in the sense conveyed by 
