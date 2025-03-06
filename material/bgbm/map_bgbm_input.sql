@@ -55,6 +55,7 @@ FROM input_event
 INSERT INTO material (
     material_entity_id,
     event_id,
+    material_category,
     evidence_for_occurrence_id,
     material_entity_type,
     preparations,
@@ -74,6 +75,7 @@ INSERT INTO material (
 SELECT 
     materialEntityID AS material_entity_id,
     eventID AS event_id,
+    'preserved' AS material_category,
     evidenceForOccurrenceID AS evidence_for_occurrence_id,
     materialEntityType AS material_entity_type,
     preparations,

@@ -67,6 +67,7 @@ JOIN temp_material b ON a.occurrenceID=b.material_entity_id
 INSERT INTO material (
     material_entity_id,
     event_id,
+    material_category,
     material_entity_type,
     institution_code,
     collection_code,
@@ -86,6 +87,7 @@ INSERT INTO material (
 SELECT 
     b.material_entity_id AS material_entity_id,
     b.event_id AS event_id,
+    'preserved' AS material_category,
     'Organism' AS material_entity_type,
     'ECOSUR-SC' AS institution_code,
     collectionCode AS collection_code,

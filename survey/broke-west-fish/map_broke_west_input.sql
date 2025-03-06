@@ -60,6 +60,7 @@ FROM input_event
 INSERT INTO material (
     material_entity_id,
     event_id,
+    material_category,
     material_entity_type,
     collected_by,
     collected_by_id,
@@ -319,7 +320,6 @@ INSERT INTO event_assertion (
 FROM input_event_assertion
 );
 -- n = 1619
-
 
 -- Fill the protocol table.
 INSERT INTO protocol (
