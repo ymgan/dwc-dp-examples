@@ -3,8 +3,6 @@
 BEGIN;
 SET CONSTRAINTS ALL DEFERRED;
 
--- missing relatedAgentID in agent_agent_role table.
---\copy public.input_agent_agent_role FROM './input_data/agent_agent_role.txt' WITH (FORMAT CSV, HEADER);
 \copy public.input_agent_identifier FROM './input_data/agent_identifier.txt' WITH (DELIMITER E'\t', FORMAT CSV, HEADER);
 \copy public.input_agent FROM './input_data/agent.txt' WITH (DELIMITER E'\t', FORMAT CSV, HEADER);
 \copy public.input_event_assertion FROM './input_data/event_assertion.txt' WITH (DELIMITER E'\t', FORMAT CSV, HEADER);

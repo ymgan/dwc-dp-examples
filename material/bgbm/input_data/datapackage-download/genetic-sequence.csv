@@ -1,7 +1,2 @@
 geneticSequenceID,eventID,derivedFromMaterialEntityID,geneticSequenceType,geneticSequenceTypeIRI,geneticSequenceTypeVocabulary,geneticSequence,geneticSequenceCitation,geneticSequenceRemarks
-1608607033,B 10 0242900,A,,,,,,
-1608763793,B 10 0242900,A,,,,O. E. Schulz,,1923
-1608525325,B 10 0242900,A,type,,,,,
-1608444764,B 10 0356094,A,,,,Th. Raus,,2009
-1608442019,B 10 0479552,A,,,,G. Mansion,,
-1608552075,B 10 1088912,A,,,,E.Willing,,
+11622,B 10 0479552,DB 16392,petD,,,,https://www.ncbi.nlm.nih.gov/nucleotide/JX914919,

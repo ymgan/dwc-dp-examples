@@ -1,5 +1,4 @@
 -- Export the output table to TSV files
-\COPY agent_agent_role TO './output_data/agent_agent_role.tsv' WITH (FORMAT TEXT, DELIMITER E'\t', NULL '', HEADER);
 \COPY agent_identifier TO './output_data/agent_identifier.tsv' WITH (FORMAT TEXT, DELIMITER E'\t', NULL '', HEADER);
 \COPY agent TO './output_data/agent.tsv' WITH (FORMAT TEXT, DELIMITER E'\t', NULL '', HEADER);
 \COPY event_assertion TO './output_data/event_assertion.tsv' WITH (FORMAT TEXT, DELIMITER E'\t', NULL '', HEADER);

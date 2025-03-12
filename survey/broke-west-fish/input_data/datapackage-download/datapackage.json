@@ -1,13 +1,13 @@
 {
   "profile" : "data-package",
-  "title" : "Herbarium Berolinense",
-  "description" : "The herbarium of the Botanic Garden and Botanical Museum Berlin-Dahlem (herbarium acronym: B) is the largest in Germany and holds a collection of more than 3.5 million preserved specimens. All plant groups – flowering plants, ferns, mosses, liverworts, and algae, as well as fungi and lichens – are represented in the collections which are worldwide in scope. Associated with the general herbarium are special collections of dried fruits and seeds, wood samples, and specimens preserved in alcohol. The collections of the herbarium are growing constantly through field research conducted by staff, and through gifts, acquisitions, and exchanges of specimens from other herbaria",
+  "title" : "Distribution of squid and fish in the pelagic zone of the Cosmonaut Sea and Prydz Bay region during the BROKE-West campaign - data",
+  "description" : "Fish data collected by a RMT net. Samples were collected during the BROKE-west cruise of RV ‘‘Aurora Australis’’ (05/06 V3) in 20 the CCAMLR statistical subarea 58.4.2, between January 2 and March 17, 2006. The sampling grid consisted of eleven longitudinal transects between 30° and 80° E and 58°S south to the Antarctic coastline. Fish were caught using Rectangular Midwater Trawl nets (RMT 8 + 1), consisting of a RMT 1 mounted above a RMT 8 with a mouth area of 1 and 8 m² and a cod end mesh size of 0.33 and 0.85 mm, respectively. Two types of methods were used: target trawls and routine trawls. Target trawls were not pre-planned and were aimed at acoustically detected aggregations. The net was lowered to the depth of the aggregation, and opened and closed remotely. Routine hauls consisted of a standard double oblique tow from the surface down to 200 5 m and back again to the surface. Towing speed was approximately 2.5 knots (4.5 km h-1).",
   "licenses" : [ {
     "name" : "CC-BY",
-    "title" : "Creative Commons Attribution (CC-BY 4.0)"
+    "title" : ""
   } ],
-  "version" : "9",
-  "created" : "2025-03-12T13:11:04Z",
+  "version" : "2",
+  "created" : "2025-03-08T05:34:58Z",
   "resources" : [ {
     "name" : "agent",
     "profile" : "tabular-data-resource",
@@ -16,12 +16,12 @@
     "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/agent.json",
     "path" : "agent.csv"
   }, {
-    "name" : "collection",
+    "name" : "agent-identifier",
     "profile" : "tabular-data-resource",
     "format" : "csv",
     "encoding" : "UTF-8",
-    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/collection.json",
-    "path" : "collection.csv"
+    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/agent-identifier.json",
+    "path" : "agent-identifier.csv"
   }, {
     "name" : "event",
     "profile" : "tabular-data-resource",
@@ -30,12 +30,12 @@
     "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/event.json",
     "path" : "event.csv"
   }, {
-    "name" : "genetic-sequence",
+    "name" : "event-assertion",
     "profile" : "tabular-data-resource",
     "format" : "csv",
     "encoding" : "UTF-8",
-    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/genetic-sequence.json",
-    "path" : "genetic-sequence.csv"
+    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/event-assertion.json",
+    "path" : "event-assertion.csv"
   }, {
     "name" : "identification",
     "profile" : "tabular-data-resource",
@@ -58,13 +58,6 @@
     "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/material-assertion.json",
     "path" : "material-assertion.csv"
   }, {
-    "name" : "material-identifier",
-    "profile" : "tabular-data-resource",
-    "format" : "csv",
-    "encoding" : "UTF-8",
-    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/material-identifier.json",
-    "path" : "material-identifier.csv"
-  }, {
     "name" : "material-media",
     "profile" : "tabular-data-resource",
     "format" : "csv",
@@ -86,12 +79,33 @@
     "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/occurrence.json",
     "path" : "occurrence.csv"
   }, {
-    "name" : "occurrence-media",
+    "name" : "protocol",
     "profile" : "tabular-data-resource",
     "format" : "csv",
     "encoding" : "UTF-8",
-    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/occurrence-media.json",
-    "path" : "occurrence-media.csv"
+    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/protocol.json",
+    "path" : "protocol.csv"
+  }, {
+    "name" : "survey",
+    "profile" : "tabular-data-resource",
+    "format" : "csv",
+    "encoding" : "UTF-8",
+    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/survey.json",
+    "path" : "survey.csv"
+  }, {
+    "name" : "survey-protocol",
+    "profile" : "tabular-data-resource",
+    "format" : "csv",
+    "encoding" : "UTF-8",
+    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/survey-protocol.json",
+    "path" : "survey-protocol.csv"
+  }, {
+    "name" : "survey-target",
+    "profile" : "tabular-data-resource",
+    "format" : "csv",
+    "encoding" : "UTF-8",
+    "schema" : "http://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/survey-target.json",
+    "path" : "survey-target.csv"
   } ],
   "contributors" : [ ],
   "sources" : [ ]
