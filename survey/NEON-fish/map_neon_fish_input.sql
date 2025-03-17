@@ -719,6 +719,7 @@ INSERT INTO identification (
   is_accepted_identification,
   taxon_formula,
   identified_by_id,
+  date_identified,
   taxon_id,
   kingdom,
   scientific_name,
@@ -731,6 +732,7 @@ SELECT
   TRUE AS is_accepted_identification,
   'A' AS taxon_formula,
   b.identifiedBy AS identified_by_id,
+  c.event_date AS date_identified,
   b.taxonID AS taxon_id,
   'Animalia' AS kingdom,
   CASE 
@@ -739,7 +741,8 @@ SELECT
   END AS scientific_name,
   taxonRank AS taxon_rank
 FROM occurrence a
-JOIN fsh_perFish b on a.occurrence_id=b.uid;
+JOIN fsh_perFish b ON a.occurrence_id=b.uid
+JOIN event c ON a.event_id=c.event_id;
 -- n=672 rows
 -- n=672 rows total
 
@@ -751,6 +754,7 @@ INSERT INTO identification (
   is_accepted_identification,
   taxon_formula,
   identified_by_id,
+  date_identified,
   taxon_id,
   kingdom,
   scientific_name,
@@ -763,6 +767,7 @@ SELECT
   TRUE AS is_accepted_identification,
   'A' AS taxon_formula,
   b.identifiedBy AS identified_by_id,
+  c.event_date AS date_identified,
   b.taxonID AS taxon_id,
   'Animalia' AS kingdom,
   CASE 
@@ -771,7 +776,9 @@ SELECT
   END AS scientific_name,
   taxonRank AS taxon_rank
 FROM material a
-JOIN fsh_perFish b on a.material_entity_id=b.voucherSampleID;
+JOIN fsh_perFish b on a.material_entity_id=b.voucherSampleID
+JOIN event c ON a.event_id=c.event_id;
+;
 -- n=18 rows
 -- n=690 rows total
 
@@ -815,6 +822,7 @@ INSERT INTO identification (
   is_accepted_identification,
   taxon_formula,
   identified_by_id,
+  date_identified,
   taxon_id,
   kingdom,
   scientific_name,
@@ -827,6 +835,7 @@ SELECT
   TRUE AS is_accepted_identification,
   'A' AS taxon_formula,
   b.identifiedBy AS identified_by_id,
+  c.event_date AS date_identified,
   b.taxonID AS taxon_id,
   'Animalia' AS kingdom,
   CASE 
@@ -835,7 +844,8 @@ SELECT
   END AS scientific_name,
   'species' AS taxon_rank
 FROM occurrence a
-JOIN fsh_bulkCount b on a.occurrence_id=b.uid;
+JOIN fsh_bulkCount b on a.occurrence_id=b.uid
+JOIN event c ON a.event_id=c.event_id;
 -- n=4 rows
 -- n=705 rows total
 
