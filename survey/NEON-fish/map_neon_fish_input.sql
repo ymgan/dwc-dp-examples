@@ -544,56 +544,6 @@ SELECT
 -- n=24 rows added
 -- n=44 rows total
 
-/*
--- Create year, month, day records for perFish Occurrences.
-CREATE TABLE temp_ymd AS
-SELECT 
-    uid,
-    CASE 
-        WHEN SUBSTRING(passStartTime FROM 1 FOR 4) = SUBSTRING(passEndTime FROM 1 FOR 4) 
-        THEN SUBSTRING(passStartTime FROM 1 FOR 4)::smallint
-        ELSE NULL
-    END AS year,
-    CASE 
-        WHEN SUBSTRING(passStartTime FROM 6 FOR 2) = SUBSTRING(passEndTime FROM 6 FOR 2) 
-        THEN SUBSTRING(passStartTime FROM 6 FOR 2)::smallint
-        ELSE NULL
-    END AS month,
-    CASE 
-        WHEN SUBSTRING(passStartTime FROM 9 FOR 2) = SUBSTRING(passEndTime FROM 9 FOR 2) 
-        THEN SUBSTRING(passStartTime FROM 9 FOR 2)::smallint
-        ELSE NULL
-    END AS day
-FROM fsh_perFish;
--- n=672 rows added
--- n=672 rows total
-*/
-
-/*
--- Create year, month, day records for bulkCount Occurrences.
-CREATE TABLE temp_bulk_ymd AS
-SELECT 
-    uid,
-    CASE 
-        WHEN SUBSTRING(passStartTime FROM 1 FOR 4) = SUBSTRING(passEndTime FROM 1 FOR 4) 
-        THEN SUBSTRING(passStartTime FROM 1 FOR 4)::smallint
-        ELSE NULL
-    END AS year,
-    CASE 
-        WHEN SUBSTRING(passStartTime FROM 6 FOR 2) = SUBSTRING(passEndTime FROM 6 FOR 2) 
-        THEN SUBSTRING(passStartTime FROM 6 FOR 2)::smallint
-        ELSE NULL
-    END AS month,
-    CASE 
-        WHEN SUBSTRING(passStartTime FROM 9 FOR 2) = SUBSTRING(passEndTime FROM 9 FOR 2) 
-        THEN SUBSTRING(passStartTime FROM 9 FOR 2)::smallint
-        ELSE NULL
-    END AS day
-FROM fsh_bulkCount;
--- n=4 rows added
--- n=4 rows total
-*/
-
 -- Create the occurrence table from perFish records.
 INSERT INTO occurrence (
   occurrence_id,
@@ -756,7 +706,7 @@ SELECT
   taxonRank AS taxon_rank
 FROM fsh_perFish
 WHERE dnaSampleID<>'NA';
--- n=18 rows
+-- n=11 rows
 -- n=29 rows total
 
 -- All vouchers and DNA samples have now been added to the material table.
@@ -825,6 +775,38 @@ JOIN fsh_perFish b on a.material_entity_id=b.voucherSampleID;
 -- n=18 rows
 -- n=690 rows total
 
+-- Add identifications from perFish genetic sequences.
+INSERT INTO identification (
+  identification_id,
+  identification_based_on_genetic_sequence_id,
+  identification_type,
+  is_accepted_identification,
+  taxon_formula,
+  identified_by_id,
+  taxon_id,
+  kingdom,
+  scientific_name,
+  taxon_rank
+)
+SELECT
+  gen_random_uuid() AS identification_id,
+  b.dnaSampleID AS identification_based_on_genetic_sequence_id,
+  'GeneticSequence' AS identification_type,
+  TRUE AS is_accepted_identification,
+  'A' AS taxon_formula,
+  b.identifiedBy AS identified_by_id,
+  b.taxonID AS taxon_id,
+  'Animalia' AS kingdom,
+  CASE 
+    WHEN RIGHT(scientificName, 4) = ' sp.' THEN LEFT(scientificName, LENGTH(scientificName) - 4)
+    ELSE scientificName
+  END AS scientific_name,
+  taxonRank AS taxon_rank
+FROM material a
+JOIN fsh_perFish b on a.material_entity_id=b.dnaSampleID;
+-- n=11 rows
+-- n=701 rows total
+
 -- Add identifications from bulkCount observations.
 INSERT INTO identification (
   identification_id,
@@ -855,7 +837,7 @@ SELECT
 FROM occurrence a
 JOIN fsh_bulkCount b on a.occurrence_id=b.uid;
 -- n=4 rows
--- n=694 rows total
+-- n=705 rows total
 
 -- Create the survey table for the Project.
 INSERT INTO survey (
@@ -929,7 +911,7 @@ FROM dwcav1_event;
 -- n=44 rows
 -- n=44 rows total
 
--- Create the assertion table with measuredReachLength from fsh_fieldData table.
+-- Create the event_assertion table with measuredReachLength from fsh_fieldData table.
 INSERT INTO event_assertion (
   assertion_id,
   event_id,
@@ -979,7 +961,7 @@ WHERE
 -- n=12 rows
 -- n=12 rows total
 
--- Add fixedRandomReach from fsh_fieldData to the assertion table.
+-- Add fixedRandomReach from fsh_fieldData to the event_assertion table.
 INSERT INTO event_assertion (
   assertion_id,
   event_id,
@@ -1029,7 +1011,7 @@ WHERE
 -- n=12 rows
 -- n=24 rows total
 
--- Add passNumber from fsh_perPass to the assertion table.
+-- Add passNumber from fsh_perPass to the event_assertion table.
 INSERT INTO event_assertion (
   assertion_id,
   event_id,
@@ -1076,10 +1058,10 @@ WHERE
   _table = 'fsh_perFish' AND
   fieldName = 'passNumber' AND
   passNumber <> 'NA';
--- n=24 rows
--- n=48 rows total
+-- n=672 rows
+-- n=696 rows total
 
--- Add waterTemp from fsh_perPass to the assertion table.
+-- Add waterTemp from fsh_perPass to the event_assertion table.
 INSERT INTO event_assertion (
   assertion_id,
   event_id,
@@ -1127,9 +1109,9 @@ WHERE
   fieldName = 'waterTemp' AND
   waterTemp <> 'NA';
 -- n=24 rows
--- n=72 rows total
+-- n=720 rows total
 
--- Add dissolvedOxygen from fsh_perPass to the assertion table.
+-- Add dissolvedOxygen from fsh_perPass to the event_assertion table.
 INSERT INTO event_assertion (
   assertion_id,
   event_id,
@@ -1177,9 +1159,9 @@ WHERE
   fieldName = 'dissolvedOxygen' AND
   dissolvedOxygen <> 'NA';
 -- n=24 rows
--- n=96 rows total
+-- n=744 rows total
 
--- Add specificConductance from fsh_perPass to the assertion table.
+-- Add specificConductance from fsh_perPass to the event_assertion table.
 INSERT INTO event_assertion (
   assertion_id,
   event_id,
@@ -1227,9 +1209,9 @@ WHERE
   fieldName = 'specificConductance' AND
   specificConductance <> 'NA';
 -- n=24 rows
--- n=120 rows total
+-- n=768 rows total
 
--- Add samplerType from fsh_perPass to the assertion table.
+-- Add samplerType from fsh_perPass to the event_assertion table.
 INSERT INTO event_assertion (
   assertion_id,
   event_id,
@@ -1277,9 +1259,9 @@ WHERE
   fieldName = 'samplerType' AND
   samplerType <> 'NA';
 -- n=24 rows
--- n=144 rows total
+-- n=792 rows total
 
--- Add initialFrequency from fsh_perPass to the assertion table.
+-- Add initialFrequency from fsh_perPass to the event_assertion table.
 INSERT INTO event_assertion (
   assertion_id,
   event_id,
@@ -1327,9 +1309,9 @@ WHERE
   fieldName = 'initialFrequency' AND
   initialFrequency <> 'NA';
 -- n=24 rows
--- n=168 rows total
+-- n=816 rows total
 
--- Add initialDutyCycle from fsh_perPass to the assertion table.
+-- Add initialDutyCycle from fsh_perPass to the event_assertion table.
 INSERT INTO event_assertion (
   assertion_id,
   event_id,
@@ -1377,9 +1359,9 @@ WHERE
   fieldName = 'initialDutyCycle' AND
   initialDutyCycle <> 'NA';
 -- n=24 rows
--- n=192 rows total
+-- n=840 rows total
 
--- Add initialVoltage from fsh_perPass to the assertion table.
+-- Add initialVoltage from fsh_perPass to the event_assertion table.
 INSERT INTO event_assertion (
   assertion_id,
   event_id,
@@ -1427,9 +1409,9 @@ WHERE
   fieldName = 'initialVoltage' AND
   initialVoltage <> 'NA';
 -- n=24 rows
--- n=216 rows total
+-- n=864 rows total
 
--- Add finalFrequency from fsh_perPass to the assertion table.
+-- Add finalFrequency from fsh_perPass to the event_assertion table.
 INSERT INTO event_assertion (
   assertion_id,
   event_id,
@@ -1477,9 +1459,9 @@ WHERE
   fieldName = 'finalFrequency' AND
   finalFrequency <> 'NA';
 -- n=24 rows
--- n=240 rows total
+-- n=888 rows total
 
--- Add finalDutyCycle from fsh_perPass to the assertion table.
+-- Add finalDutyCycle from fsh_perPass to the event_assertion table.
 INSERT INTO event_assertion (
   assertion_id,
   event_id,
@@ -1527,9 +1509,9 @@ WHERE
   fieldName = 'finalDutyCycle' AND
   finalDutyCycle <> 'NA';
 -- n=24 rows
--- n=264 rows total
+-- n=912 rows total
 
--- Add finalVoltage from fsh_perPass to the assertion table.
+-- Add finalVoltage from fsh_perPass to the event_assertion table.
 INSERT INTO event_assertion (
   assertion_id,
   event_id,
@@ -1577,9 +1559,9 @@ WHERE
   fieldName = 'finalVoltage' AND
   finalVoltage <> 'NA';
 -- n=24 rows
--- n=288 rows total
+-- n=936 rows total
 
--- Add efTime from fsh_perPass to the assertion table.
+-- Add efTime from fsh_perPass to the event_assertion table.
 INSERT INTO event_assertion (
   assertion_id,
   event_id,
@@ -1627,9 +1609,9 @@ WHERE
   fieldName = 'efTime' AND
   efTime <> 'NA';
 -- n=24 rows
--- n=312 rows total
+-- n=960 rows total
 
--- Add settingsChanged from fsh_perPass to the assertion table.
+-- Add settingsChanged from fsh_perPass to the event_assertion table.
 INSERT INTO event_assertion (
   assertion_id,
   event_id,
@@ -1677,9 +1659,9 @@ WHERE
   fieldName = 'settingsChanged' AND
   settingsChanged <> 'NA';
 -- n=22 rows
--- n=334 rows total
+-- n=982 rows total
 
--- Add netIntegrity from fsh_perPass to the assertion table.
+-- Add netIntegrity from fsh_perPass to the event_assertion table.
 INSERT INTO event_assertion (
   assertion_id,
   event_id,
@@ -1726,10 +1708,10 @@ WHERE
   _table = 'fsh_perPass' AND
   fieldName = 'netIntegrity' AND
   netIntegrity <> 'NA';
--- n=22 rows
--- n=358 rows total
+-- n=24 rows
+-- n=1006 rows total
 
--- Add targetTaxaPresent from fsh_perPass to the assertion table.
+-- Add targetTaxaPresent from fsh_perPass to the event_assertion table.
 INSERT INTO event_assertion (
   assertion_id,
   event_id,
@@ -1776,10 +1758,10 @@ WHERE
   _table = 'fsh_perPass' AND
   fieldName = 'targetTaxaPresent' AND
   targetTaxaPresent <> 'NA';
--- n=22 rows
--- n=382 rows total
+-- n=24 rows
+-- n=1030 rows total
 
--- Add fishTotalLength from fsh_perFish to the assertion table.
+-- Add fishTotalLength from fsh_perFish to the occurrence_assertion table.
 INSERT INTO occurrence_assertion (
   assertion_id,
   occurrence_id,
@@ -1827,7 +1809,7 @@ WHERE
   fieldName = 'fishTotalLength' AND
   fishTotalLength <> 'NA';
 -- n=671 rows
--- n=1053 rows total
+-- n=671 rows total
 
 -- Add fishWeight from fsh_perFish to the assertion table.
 INSERT INTO occurrence_assertion (
@@ -1876,8 +1858,8 @@ WHERE
   _table = 'fsh_perFish' AND
   fieldName = 'fishWeight' AND
   fishWeight <> 'NA';
--- n=671 rows
--- n=1724 rows total
+-- n=672 rows
+-- n=1343 rows total
 
 -- Add delt from fsh_perFish to the assertion table.
 INSERT INTO occurrence_assertion (
@@ -1927,7 +1909,7 @@ WHERE
   fieldName = 'delt' AND
   delt <> 'NA';
 -- n=3 rows
--- n=1727 rows total
+-- n=1346 rows total
 
 -- Add efMortality from fsh_perFish to the assertion table.
 INSERT INTO occurrence_assertion (
@@ -1977,7 +1959,7 @@ WHERE
   fieldName = 'efMortality' AND
   efMortality <> 'NA';
 -- n=8 rows
--- n=1735 rows total
+-- n=1354 rows total
 
 -- Add efInjury from fsh_perFish to the assertion table.
 INSERT INTO occurrence_assertion (
@@ -2027,7 +2009,7 @@ WHERE
   fieldName = 'efInjury' AND
   efInjury <> 'NA';
 -- n=1 rows
--- n=1736 rows total
+-- n=1355 rows total
 
 -- Add specimenNumber from fsh_perFish to the assertion table.
 INSERT INTO occurrence_assertion (
@@ -2077,7 +2059,7 @@ WHERE
   fieldName = 'specimenNumber' AND
   specimenNumber <> 'NA';
 -- n=672 rows
--- n=672 rows total
+-- n=2027 rows total
 
 -- Create the GeneticSequence table
 INSERT INTO genetic_sequence (
@@ -2091,15 +2073,13 @@ INSERT INTO genetic_sequence (
 )
 SELECT
   gen_random_uuid() AS genetic_sequence_id,
-  c.event_id,
-  material_entity_id AS derived_from_material_entity_id,
+  b.eventID AS event_id,
+  voucherSampleID AS derived_from_material_entity_id,
   target_gene AS genetic_sequence_type,
   DNA_sequence AS genetic_sequence,
   url AS genetic_sequence_citation,
   NULL AS genetic_sequence_remarks
 FROM dwcav1_dna_derived_data a
-JOIN material b ON a.samp_name=b.material_entity_id
-JOIN occurrence c ON c.occurrence_id=a.occurrenceID
-WHERE DNA_sequence IS NOT NULL AND DNA_sequence <> '';
--- n=4 rows
--- n=4 rows total
+JOIN fsh_perFish b ON a.occurrenceID=b.uid;
+-- n=11 rows
+-- n=11 rows total
