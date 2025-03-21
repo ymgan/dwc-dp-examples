@@ -9,8 +9,8 @@ CREATE TYPE INCLUDE_OR_EXCLUDE AS ENUM (
 );
 
 CREATE TYPE OCCURRENCE_STATUS AS ENUM (
-  'present',
-  'absent'
+  'detected',
+  'not detected'
 );
 
 CREATE TYPE TAXON_COMPLETENESS_REPORTED AS ENUM (
@@ -27,8 +27,6 @@ CREATE TABLE event (
   parent_event_id TEXT REFERENCES event ON DELETE CASCADE DEFERRABLE,
   preferred_event_name TEXT,
   event_type TEXT NOT NULL,
-  event_type_iri TEXT,
-  event_type_vocabulary TEXT,
   dataset_name TEXT,
   dataset_id TEXT,
   field_number TEXT,
@@ -192,8 +190,6 @@ CREATE TABLE occurrence (
   recorded_by_id TEXT,
   organism_quantity TEXT,
   organism_quantity_type TEXT,
-  organism_quantity_type_iri TEXT,
-  organism_quantity_type_vocabulary TEXT,
   sex TEXT,
   life_stage TEXT,
   reproductive_condition TEXT,
@@ -203,15 +199,13 @@ CREATE TABLE occurrence (
   establishment_means TEXT,
   degree_of_establishment TEXT,
   pathway TEXT,
-  occurrence_status OCCURRENCE_STATUS DEFAULT 'present' NOT NULL,
+  occurrence_status OCCURRENCE_STATUS DEFAULT 'detected' NOT NULL,
   occurrence_citation TEXT,
   information_withheld TEXT,
   data_generalizations TEXT,
   occurrence_remarks TEXT,
   organism_id TEXT,
   organism_scope TEXT DEFAULT 'multicellular organism',
-  organism_scope_iri TEXT,
-  organism_scope_vocabulary TEXT,
   organism_name TEXT,
   organism_remarks TEXT,
   verbatim_identification TEXT,
@@ -221,8 +215,6 @@ CREATE TABLE occurrence (
   date_identified TEXT,
   identification_references TEXT,
   identification_verification_status TEXT,
-  identification_verification_status_iri TEXT,
-  identificationVerificationStatusVocabulary TEXT,
   identificationRemarks TEXT,
   taxon_id TEXT,
   kingdom TEXT,
@@ -243,10 +235,8 @@ CREATE TABLE identification (
   identification_based_on_genetic_sequence_id TEXT,
   identification_based_on_media_id TEXT,
   identification_type TEXT,
-  identification_type_iri TEXT,
-  identification_type_vocabulary TEXT,
   verbatim_identification TEXT,
-  is_accepted_identification BOOLEAN DEFAULT TRUE,
+  is_accepted_identification BOOLEAN,
   taxon_formula TEXT DEFAULT 'A',
   type_status TEXT,
   type_designation_type TEXT,
@@ -255,8 +245,6 @@ CREATE TABLE identification (
   date_identified TEXT,
   identification_references TEXT,
   identification_verification_status TEXT,
-  identification_verification_status_iri TEXT,
-  identificationVerificationStatusVocabulary TEXT,
   identification_remarks TEXT,
   taxon_id TEXT,
   kingdom TEXT,
@@ -288,10 +276,8 @@ CREATE TABLE identification_taxon (
 CREATE TABLE material (
   material_entity_id TEXT PRIMARY KEY,
   event_id TEXT REFERENCES event ON DELETE CASCADE DEFERRABLE NOT NULL,
-  material_category TEXT,
-  material_entity_type TEXT NOT NULL,
-  material_entity_type_iri TEXT,
-  material_entity_type_vocabulary TEXT,
+  material_category TEXT NOT NULL,
+  material_entity_type TEXT,
   institution_code TEXT,
   institution_id TEXT, 
   owner_institution_code TEXT,
@@ -316,8 +302,6 @@ CREATE TABLE material (
   derived_from_material_entity_id TEXT,
   derivation_event_id TEXT,
   derivation_type TEXT,
-  derivation_type_iri TEXT,
-  derivation_type_vocabulary TEXT,
   part_of_material_entity_id TEXT,
   verbatim_identification TEXT,
   taxon_formula TEXT DEFAULT 'A',
@@ -326,8 +310,6 @@ CREATE TABLE material (
   date_identified TEXT,
   identification_references TEXT,
   identification_verification_status TEXT,
-  identification_verification_status_iri TEXT,
-  identificationVerificationStatusVocabulary TEXT,
   identification_remarks TEXT,
   taxon_id TEXT,
   kingdom TEXT,
@@ -347,8 +329,6 @@ CREATE INDEX ON material(part_of_material_entity_id);
 CREATE TABLE collection (
   collection_id TEXT PRIMARY KEY,
   collection_type TEXT,
-  collection_type_iri TEXT,
-  collection_type_vocabulary TEXT,
   collection_name TEXT,
   collection_code TEXT,
   institution_name TEXT,
@@ -363,8 +343,6 @@ CREATE TABLE genetic_sequence (
   event_id TEXT REFERENCES event ON DELETE CASCADE DEFERRABLE NOT NULL,
   derived_from_material_entity_id TEXT,
   genetic_sequence_type TEXT,
-  genetic_sequence_type_iri TEXT,
-  genetic_sequence_type_vocabulary TEXT,
   genetic_sequence TEXT,
   genetic_sequence_citation TEXT,
   genetic_sequence_remarks TEXT
@@ -379,12 +357,11 @@ CREATE INDEX ON genetic_sequence(derived_from_material_entity_id);
 
 CREATE TABLE organism_interaction (
   organism_interaction_id TEXT PRIMARY KEY,
+  event_id TEXT REFERENCES event ON DELETE CASCADE DEFERRABLE NOT NULL,
   organism_interaction_description TEXT,
   subject_occurrence_id TEXT REFERENCES occurrence ON DELETE CASCADE DEFERRABLE NOT NULL,
   subject_organism_part TEXT,
   organism_interaction_type TEXT,
-  organism_interaction_type_iri TEXT,
-  organism_interaction_type_vocabulary TEXT,
   related_occurrence_id TEXT REFERENCES occurrence ON DELETE CASCADE DEFERRABLE NOT NULL,
   related_organism_part TEXT
 );
@@ -608,8 +585,6 @@ UNIQUE (agent_id, material_entity_id, agent_role, agent_role_iri, agent_role_dat
 CREATE TABLE media (
   media_id TEXT PRIMARY KEY,
   media_type TEXT,
-  media_type_iri TEXT,
-  media_type_vocabulary TEXT,
   access_uri TEXT,
   web_statement TEXT,
   format TEXT,
@@ -1454,22 +1429,21 @@ CREATE TABLE survey_protocol (
 );
 CREATE INDEX ON survey_protocol(survey_id);
 
--- COMMON_TARGETS
+-- RELATIONSHIP_TARGETS
 --    Resource types for the subject resource and related resource in a Relationship.
-CREATE TYPE COMMON_TARGETS AS ENUM (
+CREATE TYPE RELATIONSHIP_TARGETS AS ENUM (
   'Event',
   'Occurrence',
   'Identification',
   'Material',
   'Collection',
-  'Genetic Sequence',
-  'Organism Interaction',
+  'GeneticSequence',
+  'OrganismInteraction',
   'Survey',
-  'Survey Target',
-  'Chronometric Age',
-  'Geological Context',
-  'Phylogenetic Tree',
-  'Phylogenetic Tree Tip',
+  'ChronometricAge',
+  'GeologicalContext',
+  'PhylogeneticTree',
+  'PhylogeneticTreeTip',
   'Agent',
   'Media',
   'Protocol',
@@ -1482,14 +1456,14 @@ CREATE TYPE COMMON_TARGETS AS ENUM (
 CREATE TABLE relationship (
   relationship_id TEXT PRIMARY KEY,
   subject_resource_id TEXT NOT NULL,
-  subject_resource_type COMMON_TARGETS NOT NULL,
+  subject_resource_type RELATIONSHIP_TARGETS NOT NULL,
   subject_resource_type_iri TEXT,
   subject_resource_type_vocabulary TEXT,
   relationship_type TEXT,
   relationship_type_iri TEXT,
   relationship_type_vocabulary TEXT,
   related_resource_id TEXT NOT NULL,
-  related_resource_type COMMON_TARGETS NOT NULL,
+  related_resource_type RELATIONSHIP_TARGETS NOT NULL,
   related_resource_type_iri TEXT,
   related_resource_type_vocabulary TEXT,
   relationship_order SMALLINT NOT NULL DEFAULT 1 CHECK (relationship_order >= 1),
