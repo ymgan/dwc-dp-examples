@@ -135,7 +135,7 @@ INSERT INTO occurrence (
     '1' AS organism_quantity,
     'individuals' AS organism_quantity_type,
     sex,
-    'present' AS occurrence_status,
+    'detected' AS occurrence_status,
     occurrenceID as organism_id,
     'multicellular organism' AS organism_scope,
     identifiedBy AS identified_by,
@@ -174,7 +174,7 @@ INSERT INTO occurrence (
     recordedByID AS recorded_by_id,
     '1' AS organism_quantity,
     'individuals' AS organism_quantity_type,
-    'present' AS occurrence_status,
+    'detected' AS occurrence_status,
     'multicellular organism' AS organism_scope,
     recordedBy AS identified_by,
     recordedByID AS identified_by_id,
@@ -194,24 +194,108 @@ JOIN ecoab_occurrence_taxa c ON c.taxonID=d.relatedResourceID
 -- Make OrganismInteractions
 INSERT INTO organism_interaction (
     organism_interaction_id,
+    event_id,
     organism_interaction_description,
     subject_occurrence_id,
     organism_interaction_type,
-    organism_interaction_type_iri,
-    organism_interaction_type_vocabulary,
     related_occurrence_id,
     related_organism_part
 )
 (SELECT
     a.organism_interaction_id,
+    a.event_id,
     relationshipOfResource AS organism_interaction_description,
     a.subject_occurrence_id,
     relationshipOfResource AS organism_interaction_type,
-    relationshipOfResourceID AS organism_interaction_type_iri,
-    'https://obofoundry.org/ontology/ro.html' AS organism_interaction_type_vocabulary,
     a.related_occurrence_id,
     'flowers' AS related_organism_part
 FROM temp_material a
 JOIN ecoab_interaction_data b ON a.material_entity_id=b.occurrenceID
 );
 -- n = 17265
+
+-- Make OrganismInteractionAssertions with organismInteractionTypeIRIs
+INSERT INTO organism_interaction_assertion (
+  assertion_id,
+  organism_interaction_id,
+  assertion_type,
+  assertion_type_iri,
+  assertion_type_vocabulary,
+  assertion_made_date,
+  assertion_effective_date,
+  assertion_value,
+  assertion_value_numeric,
+  assertion_unit,
+  assertion_unit_iri,
+  assertion_unit_vocabulary,
+  assertion_by, 
+  assertion_by_id,
+  assertion_protocol,
+  assertion_protocol_id,
+  assertion_citation,
+  assertion_remarks
+)
+SELECT
+  gen_random_uuid() AS assertion_id,
+  organism_interaction_id,
+  'organismInteractionTypeIRI' AS assertion_type,
+  NULL AS assertion_type_iri,
+  NULL AS assertion_type_vocabulary,
+  NULL AS assertion_made_date,
+  NULL AS assertion_effective_date,
+  b.relationshipOfResourceID AS assertion_value,
+  NULL AS assertion_value_numeric,
+  NULL AS assertion_unit,
+  NULL AS assertion_unit_iri,
+  NULL AS assertion_unit_vocabulary,
+  NULL AS assertion_by,
+  NULL AS assertion_by_id,
+  NULL AS assertion_protocol,
+  NULL AS assertion_protocol_id,
+  NULL AS assertion_citation,
+  NULL AS assertion_remarks
+FROM temp_material a
+JOIN ecoab_interaction_data b ON a.material_entity_id=b.occurrenceID;
+
+-- Add organismInteractionTypeVocabulary to OrganismInteractionAssertions
+INSERT INTO organism_interaction_assertion (
+  assertion_id,
+  organism_interaction_id,
+  assertion_type,
+  assertion_type_iri,
+  assertion_type_vocabulary,
+  assertion_made_date,
+  assertion_effective_date,
+  assertion_value,
+  assertion_value_numeric,
+  assertion_unit,
+  assertion_unit_iri,
+  assertion_unit_vocabulary,
+  assertion_by, 
+  assertion_by_id,
+  assertion_protocol,
+  assertion_protocol_id,
+  assertion_citation,
+  assertion_remarks
+)
+SELECT
+  gen_random_uuid() AS assertion_id,
+  organism_interaction_id,
+  'organismInteractionTypeVocabulary' AS assertion_type,
+  NULL AS assertion_type_iri,
+  NULL AS assertion_type_vocabulary,
+  NULL AS assertion_made_date,
+  NULL AS assertion_effective_date,
+  'https://obofoundry.org/ontology/ro.html' AS assertion_value,
+  NULL AS assertion_value_numeric,
+  NULL AS assertion_unit,
+  NULL AS assertion_unit_iri,
+  NULL AS assertion_unit_vocabulary,
+  NULL AS assertion_by,
+  NULL AS assertion_by_id,
+  NULL AS assertion_protocol,
+  NULL AS assertion_protocol_id,
+  NULL AS assertion_citation,
+  NULL AS assertion_remarks
+FROM temp_material a
+JOIN ecoab_interaction_data b ON a.material_entity_id=b.occurrenceID
