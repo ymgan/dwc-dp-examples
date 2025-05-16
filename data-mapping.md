@@ -83,21 +83,25 @@ You can use the list below to quickly make a checklist of the tables you want to
 
 You can see that, for a given dataset, you are likely end up with a very much shorter checklist of tables that you will actually populate. Proceed to populate them successively in the order you find them on the list, as tables further down the list depend on one or more tables above them on the list to have been populated.
 
-[1. Protocol](#1-protocol)
+[1. Protocol](#1-protocol)<br>
 [2. Agent](#2-agent)
 - [2.1 AgentIdentifier](#21-agentidentifier)
-- [2.2 AgentAgentRole](#22-agentagentrole)
+- [2.2 AgentAgentRole](#22-agentagentrole)<br>
+
 [3. Media](#3-media)
 - [3.1 MediaAssertion](#31-mediaassertion)
 - [3.2 MediaIdentifier](#32-mediaidentifier)
 - [3.3 MediaAgentRole](#33-mediaagentrole)
-- [3.4 AgentMedia](#34-agentmedia)
+- [3.4 AgentMedia](#34-agentmedia)<br>
+
 [4. Collection](#4-collection)
 - [4.1 CollectionAssertion](#41-collectionassertion)
 - [4.2 CollectionAgentRole](#42-collectionagentrole)
-- [4.3 CollectionMedia](#43-collectionmedia)
+- [4.3 CollectionMedia](#43-collectionmedia)<br>
+
 [5. Reference](#5-reference)
-- [5.1 ProtocolReference](#51-protocolreference)
+- [5.1 ProtocolReference](#51-protocolreference)<br>
+
 [6. Event](#6-event)
 - [6.1 EventAssertion](#61-eventassertion)
 - [6.2 EventIdentifier](#62-eventidentifier)
@@ -131,24 +135,30 @@ You can see that, for a given dataset, you are likely end up with a very much sh
     - [6.10.7.1 OrganismInteractionAssertion](#61071-organisminteractionassertion)
     - [6.10.7.2 OrganismInteractionAgentRole](#61072-organisminteractionagentrole)
     - [6.10.7.3 OrganismInteractionMedia](#61073-organisminteractionmedia)
-    - [6.10.7.4 OrganismInteractionReference](#61074-organisminteractionreference)
+    - [6.10.7.4 OrganismInteractionReference](#61074-organisminteractionreference)<br>
+    
 [7. Material](#7-material)
 - [7.1 MaterialAssertion](#71-materialassertion)
 - [7.2 MaterialIdentifier](#72-materialidentifier)
 - [7.3 MaterialAgentRole](#73-materialagentrole)
 - [7.4 MaterialMedia](#74-materialmedia)
 - [7.5 MaterialProtocol](#75-materialprotocol)
-- [7.6 MaterialReference](#76-materialreference)
-[8. NucleotideSequence](#8-nucleotidesequence)
+- [7.6 MaterialReference](#76-materialreference)<br>
+
+[8. NucleotideSequence](#8-nucleotidesequence)<br>
+
 [9. MolecularProtocol](#9-molecularprotocol)
 - [9.1 MolecularProtocolAssertion](#91-molecularprotocolassertion)
 - [9.2 MolecularProtocolAgentRole](#92-molecularprotocolagentrole)
-- [9.3 MolecularProtocolReference](#93-molecularprotocolreference)
+- [9.3 MolecularProtocolReference](#93-molecularprotocolreference)<br>
+
 [10. NucleotideAnalysis](#10-nucleotideanalysis)
-- [10.1 NucleotideAnalysisAssertion](#101-nucleotideanalysisassertion)
+- [10.1 NucleotideAnalysisAssertion](#101-nucleotideanalysisassertion)<br>
+
 [11. Identification](#11-identification)
 - [11.1 IdentificationAgentRole](#111-identificationagentrole)
 - [11.2 IdentificationTaxon](#112-identificationtaxon)
+
 [12. PhylogeneticTree](#12-phylogenetictree)
 - [12.1 PhylogeneticTreeAssertion](#121-phylogenetictreeassertion)
 - [12.2 PhylogeneticTreeIdentifier](#122-phylogenetictreeidentifier)
@@ -156,7 +166,8 @@ You can see that, for a given dataset, you are likely end up with a very much sh
 - [12.4 PhylogeneticTreeProtocol](#124-phylogenetictreeprotocol)
 - [12.5 PhylogeneticTreeReference](#125-phylogenetictreereference)
 - [12.6 PhylogeneticTreeTip](#126-phylogenetictreetip)
-- [12.6.1 PhylogeneticTreeTipAssertion](#1261-phylogenetictreetipassertion)
+- [12.6.1 PhylogeneticTreeTipAssertion](#1261-phylogenetictreetipassertion)<br>
+
 [13. Relationship](#13-relationship)
 
 ## 1. Protocol
