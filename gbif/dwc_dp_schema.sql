@@ -1449,20 +1449,6 @@ CREATE INDEX ON identification(based_on_nucleotide_analysis_id);
 CREATE INDEX ON identification(based_on_media_id);
 CREATE INDEX ON identification(identified_by_id);
 
--- IdentificationTaxon
---    The components and positions of dwc:scientificNames in dwc:Identifications.
-
-CREATE TABLE identification_taxon (
-  identification_id TEXT REFERENCES identification ON DELETE CASCADE DEFERRABLE NOT NULL,
-  taxon_id TEXT,
-  taxon_order SMALLINT CHECK (taxon_order >= 1),
-  higher_classification_name TEXT,
-  higher_classification_rank TEXT,
-  scientific_name TEXT NOT NULL,
-  taxon_rank TEXT,
-  taxon_remarks TEXT
-);
-
 -- IdentificationAgentRole
 --    A role filled by an Agent with respect to a dwc:Identification.
 
@@ -1479,6 +1465,20 @@ CREATE INDEX ON identification_agent_role(agent_id);
 CREATE INDEX ON identification_agent_role(identification_id);
 ALTER TABLE identification_agent_role ADD CONSTRAINT identification_agent_role_unique_key 
 UNIQUE (agent_id, identification_id, agent_role, agent_role_iri, agent_role_date);
+
+-- IdentificationTaxon
+--    The components and positions of dwc:scientificNames in dwc:Identifications.
+
+CREATE TABLE identification_taxon (
+  identification_id TEXT REFERENCES identification ON DELETE CASCADE DEFERRABLE NOT NULL,
+  taxon_id TEXT,
+  taxon_order SMALLINT CHECK (taxon_order >= 1),
+  higher_classification_name TEXT,
+  higher_classification_rank TEXT,
+  scientific_name TEXT NOT NULL,
+  taxon_rank TEXT,
+  taxon_remarks TEXT
+);
 
 -- PhylogeneticTree
 --    A branching diagram that shows the evolutionary relationships between dwc:Organisms.
