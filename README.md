@@ -1,5 +1,5 @@
 # Data Publishing using Darwin Core Data Package (dwc-dp)
-This repository provides examples of datasets structured to take advantage of the expanded capabilities of Darwin Core Data Package publishing model. There are folders for mapping examples for distinct basic types of datasets (material_gathering, observation, organism-interaction, and survey).
+This repository provides examples of datasets structured to take advantage of the expanded capabilities of [Darwin Core Data Package](https://github.com/gbif/dwc-dp/blob/master/README.md) publishing model. There are folders for mapping examples for distinct basic types of datasets (material_gathering, observation, organism-interaction, and survey).
 
 The postgreSQL [database schema](./gbif/dwc_dp_schema.sql) provides the structure within which to test use cases supported by dwc-dp. 
 

@@ -1,6 +1,6 @@
 # iNaturalist organism interaction test dataset for the DwC-DP publishing model
 
-This is dataset is an example of dwc:Organism interactions, with observations captured by the iNaturalist Project 18530.
+This is dataset is an example of dwc:Organism interactions, with observations captured by the iNaturalist California Pollination Project.
 
 The process to create the output dataset for the DwC-DP publishing model is as follows:
 
@@ -18,5 +18,5 @@ The process to create the output dataset for the DwC-DP publishing model is as f
 ```psql inat_18530 -f map_inat_input.sql```
 
 ## Run the script to export the publishing model tables as TSV files:
-```psql conabio_bees -f export_conabio_bees_tsvs.sql```
+```psql inat_18530 -f export_inat_18530_tsvs.sql```
 
