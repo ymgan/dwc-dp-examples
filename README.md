@@ -5,4 +5,4 @@ The postgreSQL [database schema](./gbif/dwc_dp_schema.sql) provides the structur
 
 Within each basic dataset type folder is a folder for each separate dataset of that type that has been mapped. Within the dataset folders are scripts and instructions to create a copy of the database, load the input files (from the ./input_data folder), transform the data into the dwc-dp structure, and write the output files (to the ./output_data folder).
 
-Guidance on how to approach mapping a dataset to DwC-DP is given in [Data Mapping](../data-mapping.md).
+Guidance on how to approach mapping a dataset to DwC-DP is given in [Data Mapping](data-mapping.md).

@@ -7,6 +7,7 @@
  - [Implicit Data](#implicit-data)
  - [Rearranging Data](#rearranging-data)
  - [Identifiers](#identifiers)
+ - [Strictly controlled vocabularies](#strictly-controlled-vocabularies)
  - [Agents and Their Roles](#agents-and-their-roles)<br>
  
 [Suggested Mapping Order](#suggested-mapping-order)
