@@ -10,7 +10,9 @@ CREATE TYPE INCLUDE_OR_EXCLUDE AS ENUM (
 
 CREATE TYPE OCCURRENCE_STATUS AS ENUM (
   'detected',
-  'not detected'
+  'present',
+  'not detected',
+  'absent'
 );
 
 CREATE TYPE TAXON_COMPLETENESS_REPORTED AS ENUM (

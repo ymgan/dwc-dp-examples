@@ -8,19 +8,20 @@
  - [Rearranging Data](#rearranging-data)
  - [Identifiers](#identifiers)
  - [Agents and Their Roles](#agents-and-their-roles)<br>
+ 
 [Suggested Mapping Order](#suggested-mapping-order)
 
 ## Introduction
 
 The Darwin Core Data Package ("DwC-DP" hereafter) is highly normalized and it may seem overwhelming at first. That is understandable. Remember that the DwC-DP is meant to be a comprehensive representation that accommodates all use cases. It may not seem the simplest way to represent the data you'll be mapping, but that is because it has to cover other perspectives as well. 
 
-Your task is to populate a postgresql database using the DwC-DP structure we have provided in the creation script [dwc_dp_schema.sql](./gbif/dwc_dp_schema.sql), using data from your database as a source. This will require "mapping" between your structure and that of DwC-DP. 
+This guide is targeted at preparing CSV files that comply with the structure of the table schemas of DwC-DP. The resulting table can be used to map in a DwC-D-enabled instance of the Integrated Publishing toolkit (e.g., https://dwcdp-ipt.gbif-test.org/) or to populate a postgresql database using the DwC-DP structure we have provided in the creation script [dwc_dp_schema.sql](./gbif/dwc_dp_schema.sql), using data from your database as a source. This will require "mapping" between your structure and that of DwC-DP. 
 
 ## General Considerations
 
 ### Diagrams
 
-In this document we will use figures to illustrate the structure of the DwC-DP. These figures take the form of Entity-Relationship (ER) diagrams. In these diagrams, concepts or classes are implemented as tables and are denoted by boxes with labels in UpperCamelCase. The properties (fields) for these tables are listed within the box for the concept they are properties of, and are in lowerCamelCase. The figures do not necessarily show the full set of fields for the tables they represent, nor do they show data types and other constraints. For that detailed information, you should consult either the [table schemas](https://github.com/gbif/dwc-dp/tree/master/dwc-dp/0.1/table-schemas) or the [DwC-DP Quick Reference Guide](https://gbif.github.io/dwc-dp/qrg/dwc_dp_qrg.html) At times we will show snippets of the schema (such as table definitions) for reference. The definitive version of the tables to populate is in [dwc_dp_schema.sql](./gbif/dwc_dp_schema.sql). The term names in the figures (e.g., `eventType`) correspond to their equivalents in lower_snake_case in the database (e.g., `event_type`).
+In this document we will use figures to illustrate the structure of the DwC-DP. These figures take the form of Entity-Relationship (ER) diagrams. In these diagrams, concepts or classes are implemented as tables and are denoted by boxes with labels in UpperCamelCase. The properties (fields) for these tables are listed within the box for the concept they are properties of, and are in lowerCamelCase. The figures do not necessarily show the full set of fields for the tables they represent, nor do they show data types and other constraints. For that detailed information, you should consult either the [table schemas](https://github.com/gbif/dwc-dp/tree/master/dwc-dp/0.1/table-schemas) or the [DwC-DP Quick Reference Guide](https://gbif.github.io/dwc-dp/qrg/). At times we will show snippets of the schema (such as table definitions) for reference. The definitive version of the tables to populate is in [dwc_dp_schema.sql](./gbif/dwc_dp_schema.sql). The term names in the figures (e.g., `eventType`) correspond to their equivalents in lower_snake_case in the database (e.g., `event_type`).
 
 ### Implicit Data
 
@@ -51,6 +52,19 @@ CREATE TABLE material_identifier (
 ```
 
 The `Identifier` and other "common model" tables are described in [GBIF Common Models document](https://docs.google.com/document/d/1ZTMt-V3U0D0761bqqogeN58MjuHhIs_Kisu6CRtl-uA/edit?usp=sharing) and will be discussed in context as we proceed through the [Suggested steps](#suggested-steps) for data mapping.
+
+### Strictly controlled vocabularies
+
+Some fields whose values are strictly controlled have TYPE ENUMS defined in the [database schema](./gbif/dwc_dp_schema.sql). For example, the term occurrence.occurrenceStatus MUST be populated with either 'detected', 'present', 'not detected', or 'absent'.
+
+```
+CREATE TYPE OCCURRENCE_STATUS AS ENUM (
+  'detected',
+  'present',
+  'not detected',
+  'absent'
+);
+```
 
 ### Agents and their roles
 
