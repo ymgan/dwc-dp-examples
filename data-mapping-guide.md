@@ -108,7 +108,7 @@ CREATE TABLE survey (
 
 No dataset will require all of the tables in DwC-DP, but every table will be required by some dataset. Below is a list of the steps we suggest to follow to map your data to DwC-DP. Each step has a link to a more detailed description of what to do. The order of these steps was designed to make sure that you will already have records for tables that will be linked to in subsequent steps of the mapping process. 
 
-You can use the list below to quickly make a checklist of the tables you want to populate. Basically, ask yourself, "Do I have data for this table?" If so, prepare that table before moving on to the next one on the list. If you encounter a table that you do not expect to populate, you can skip it and any other tables that are further indented below it. For example, if you do not have or need a separate Agent table, you can skip it plus the `AgentIdentifier` and `AgentAgentRole` tables without even looking at them. There might be additional tables in other sections of the list that you don't need to look at either. Continuing with `Media` as a second example, if you have no `Media` references in your data, you can skip the `Media` table plus the `MediaAssertion`, `MediaIdentifier`, `MediaAgentRole`, and `AgentMedia` tables (they are further indented below `Media`). You can also skip every other table in the list that has "Media" in its name (`CollectionMedia`, `EventMedia`, `ChronometricAgeMedia`, `GeologicalContextMedia`, `OccurrenceMedia`, `OrganismInteractionMedia`, `MaterialMedia`, and `PhylogeneticTreeMedia`).
+You can use the list below to quickly make a checklist of the tables you want to populate. Basically, ask yourself, "Do I have data for this table?" If so, prepare that table before moving on to the next one on the list. If you encounter a table that you do not expect to populate, you can skip it and any other tables that are further indented below it. For example, if you do not have or need a separate Agent table, you can skip it plus the `AgentIdentifier` and `AgentAgentRole` tables without even looking at them. There might be additional tables in other sections of the list that you don't need to look at either. Continuing with `Media` as a second example, if you have no `Media` references in your data, you can skip the `Media` table plus the `MediaAssertion`, `MediaIdentifier`, `MediaAgentRole`, and `AgentMedia` tables (they are further indented below `Media`). You can also skip every other table in the list that has "Media" in its name (`EventMedia`, `ChronometricAgeMedia`, `GeologicalContextMedia`, `OccurrenceMedia`, `OrganismInteractionMedia`, `MaterialMedia`, and `PhylogeneticTreeMedia`).
 
 You can see that, for a given dataset, you are likely end up with a very much shorter checklist of tables that you will actually populate. Proceed to populate them successively in the order you find them on the list, as tables further down the list depend on one or more tables above them on the list to have been populated.
 
@@ -123,81 +123,76 @@ You can see that, for a given dataset, you are likely end up with a very much sh
 - [3.3 MediaAgentRole](#33-mediaagentrole)
 - [3.4 AgentMedia](#34-agentmedia)<br>
 
-[4. Collection](#4-collection)
-- [4.1 CollectionAssertion](#41-collectionassertion)
-- [4.2 CollectionAgentRole](#42-collectionagentrole)
-- [4.3 CollectionMedia](#43-collectionmedia)<br>
+[4. Reference](#4-reference)
+- [4.1 ProtocolReference](#41-protocolreference)<br>
 
-[5. Reference](#5-reference)
-- [5.1 ProtocolReference](#51-protocolreference)<br>
-
-[6. Event](#6-event)
-- [6.1 EventAssertion](#61-eventassertion)
-- [6.2 EventIdentifier](#62-eventidentifier)
-- [6.3 EventAgentRole](#63-eventagentrole)
-- [6.4 EventMedia](#64-eventmedia)
-- [6.5 EventProtocol](#65-eventprotocol)
-- [6.6 EventReference](#66-eventreference)
-- [6.7 ChronometricAge](#67-chronometricage)
-  - [6.7.1 ChronometricAgeAssertion](#671-chronometricageassertion)
-  - [6.7.2 ChronometricAgeAgentRole](#672-chronometricageagentrole)
-  - [6.7.3 ChronometricAgeMedia](#673-chronometricagemedia)
-  - [6.7.4 ChronometricAgeProtocol](#674-chronometricageprotocol)
-  - [6.7.5 ChronometricAgeReference](#675-chronometricagereference)
-- [6.8 GeologicalContext](#68-geologicalcontext)
-  - [6.8.1 GeologicalContextMedia](#681-geologicalcontextmedia)
-- [6.9 Survey](#69-survey)
-  - [6.9.1 SurveyTarget](#691-surveytarget)
-  - [6.9.2 SurveyAssertion](#692-surveyassertion)
-  - [6.9.3 SurveyIdentifier](#693-surveyidentifier)
-  - [6.9.4 SurveyAgentRole](#694-surveyagentrole)
-  - [6.9.5 SurveyProtocol](#695-surveyprotocol)
-  - [6.9.6 SurveyReference](#696-surveyreference)
-- [6.10 Occurrence](#610-occurrence)
-  - [6.10.1 OccurrenceAssertion](#6101-occurrenceassertion)
-  - [6.10.2 OccurrenceIdentifier](#6102-occurrenceidentifier)
-  - [6.10.3 OccurrenceAgentRole](#6103-occurrenceagentrole)
-  - [6.10.4 OccurrenceMedia](#6104-occurrencemedia)
-  - [6.10.5 OccurrenceProtocol](#6105-occurrenceprotocol)
-  - [6.10.6 OccurrenceReference](#6106-occurrencereference)
-  - [6.10.7 OrganismInteraction](#6107-organisminteraction)
-    - [6.10.7.1 OrganismInteractionAssertion](#61071-organisminteractionassertion)
-    - [6.10.7.2 OrganismInteractionAgentRole](#61072-organisminteractionagentrole)
-    - [6.10.7.3 OrganismInteractionMedia](#61073-organisminteractionmedia)
-    - [6.10.7.4 OrganismInteractionReference](#61074-organisminteractionreference)<br>
+[5. Event](#5-event)
+- [5.1 EventAssertion](#51-eventassertion)
+- [5.2 EventIdentifier](#52-eventidentifier)
+- [5.3 EventAgentRole](#53-eventagentrole)
+- [5.4 EventMedia](#54-eventmedia)
+- [5.5 EventProtocol](#55-eventprotocol)
+- [5.6 EventReference](#56-eventreference)
+- [5.7 ChronometricAge](#57-chronometricage)
+  - [5.7.1 ChronometricAgeAssertion](#571-chronometricageassertion)
+  - [5.7.2 ChronometricAgeAgentRole](#572-chronometricageagentrole)
+  - [5.7.3 ChronometricAgeMedia](#573-chronometricagemedia)
+  - [5.7.4 ChronometricAgeProtocol](#574-chronometricageprotocol)
+  - [5.7.5 ChronometricAgeReference](#575-chronometricagereference)
+- [5.8 GeologicalContext](#58-geologicalcontext)
+  - [5.8.1 GeologicalContextMedia](#581-geologicalcontextmedia)
+- [5.9 Survey](#59-survey)
+  - [5.9.1 SurveyTarget](#591-surveytarget)
+  - [5.9.2 SurveyAssertion](#592-surveyassertion)
+  - [5.9.3 SurveyIdentifier](#593-surveyidentifier)
+  - [5.9.4 SurveyAgentRole](#594-surveyagentrole)
+  - [5.9.5 SurveyProtocol](#595-surveyprotocol)
+  - [5.9.6 SurveyReference](#596-surveyreference)
+- [5.10 Occurrence](#510-occurrence)
+  - [5.10.1 OccurrenceAssertion](#5101-occurrenceassertion)
+  - [5.10.2 OccurrenceIdentifier](#5102-occurrenceidentifier)
+  - [5.10.3 OccurrenceAgentRole](#5103-occurrenceagentrole)
+  - [5.10.4 OccurrenceMedia](#5104-occurrencemedia)
+  - [5.10.5 OccurrenceProtocol](#5105-occurrenceprotocol)
+  - [5.10.6 OccurrenceReference](#5106-occurrencereference)
+  - [5.10.7 OrganismInteraction](#5107-organisminteraction)
+    - [5.10.7.1 OrganismInteractionAssertion](#51071-organisminteractionassertion)
+    - [5.10.7.2 OrganismInteractionAgentRole](#51072-organisminteractionagentrole)
+    - [5.10.7.3 OrganismInteractionMedia](#51073-organisminteractionmedia)
+    - [5.10.7.4 OrganismInteractionReference](#51074-organisminteractionreference)<br>
     
-[7. Material](#7-material)
-- [7.1 MaterialAssertion](#71-materialassertion)
-- [7.2 MaterialIdentifier](#72-materialidentifier)
-- [7.3 MaterialAgentRole](#73-materialagentrole)
-- [7.4 MaterialMedia](#74-materialmedia)
-- [7.5 MaterialProtocol](#75-materialprotocol)
-- [7.6 MaterialReference](#76-materialreference)<br>
+[6. Material](#6-material)
+- [6.1 MaterialAssertion](#61-materialassertion)
+- [6.2 MaterialIdentifier](#62-materialidentifier)
+- [6.3 MaterialAgentRole](#63-materialagentrole)
+- [6.4 MaterialMedia](#64-materialmedia)
+- [6.5 MaterialProtocol](#65-materialprotocol)
+- [6.6 MaterialReference](#66-materialreference)<br>
 
-[8. NucleotideSequence](#8-nucleotidesequence)<br>
+[7. NucleotideSequence](#7-nucleotidesequence)<br>
 
-[9. MolecularProtocol](#9-molecularprotocol)
-- [9.1 MolecularProtocolAssertion](#91-molecularprotocolassertion)
-- [9.2 MolecularProtocolAgentRole](#92-molecularprotocolagentrole)
-- [9.3 MolecularProtocolReference](#93-molecularprotocolreference)<br>
+[8. MolecularProtocol](#8-molecularprotocol)
+- [8.1 MolecularProtocolAssertion](#81-molecularprotocolassertion)
+- [8.2 MolecularProtocolAgentRole](#82-molecularprotocolagentrole)
+- [8.3 MolecularProtocolReference](#83-molecularprotocolreference)<br>
 
-[10. NucleotideAnalysis](#10-nucleotideanalysis)
-- [10.1 NucleotideAnalysisAssertion](#101-nucleotideanalysisassertion)<br>
+[9. NucleotideAnalysis](#9-nucleotideanalysis)
+- [9.1 NucleotideAnalysisAssertion](#91-nucleotideanalysisassertion)<br>
 
-[11. Identification](#11-identification)
-- [11.1 IdentificationAgentRole](#111-identificationagentrole)
-- [11.2 IdentificationTaxon](#112-identificationtaxon)
+[10. Identification](#10-identification)
+- [10.1 IdentificationAgentRole](#101-identificationagentrole)
+- [10.2 IdentificationTaxon](#102-identificationtaxon)
 
-[12. PhylogeneticTree](#12-phylogenetictree)
-- [12.1 PhylogeneticTreeAssertion](#121-phylogenetictreeassertion)
-- [12.2 PhylogeneticTreeIdentifier](#122-phylogenetictreeidentifier)
-- [12.3 PhylogeneticTreeMedia](#123-phylogenetictreemedia)
-- [12.4 PhylogeneticTreeProtocol](#124-phylogenetictreeprotocol)
-- [12.5 PhylogeneticTreeReference](#125-phylogenetictreereference)
-- [12.6 PhylogeneticTreeTip](#126-phylogenetictreetip)
-- [12.6.1 PhylogeneticTreeTipAssertion](#1261-phylogenetictreetipassertion)<br>
+[11. PhylogeneticTree](#11-phylogenetictree)
+- [11.1 PhylogeneticTreeAssertion](#111-phylogenetictreeassertion)
+- [11.2 PhylogeneticTreeIdentifier](#112-phylogenetictreeidentifier)
+- [11.3 PhylogeneticTreeMedia](#113-phylogenetictreemedia)
+- [11.4 PhylogeneticTreeProtocol](#114-phylogenetictreeprotocol)
+- [11.5 PhylogeneticTreeReference](#115-phylogenetictreereference)
+- [11.6 PhylogeneticTreeTip](#116-phylogenetictreetip)
+- [11.6.1 PhylogeneticTreeTipAssertion](#1161-phylogenetictreetipassertion)<br>
 
-[13. Relationship](#13-relationship)
+[12. Relationship](#12-relationship)
 
 ## 1. Protocol
 ## 2. Agent
@@ -208,69 +203,65 @@ You can see that, for a given dataset, you are likely end up with a very much sh
 ### 3.2 MediaIdentifier
 ### 3.3 MediaAgentRole
 ### 3.4 AgentMedia
-## 4. Collection
-### 4.1 CollectionAssertion
-### 4.2 CollectionAgentRole
-### 4.3 CollectionMedia
-## 5. Reference
-### 5.1 ProtocolReference
-## 6. Event
-### 6.1 EventAssertion
-### 6.2 EventIdentifier
-### 6.3 EventAgentRole
-### 6.4 EventMedia
-### 6.5 EventProtocol
-### 6.6 EventReference
-### 6.7 ChronometricAge
-#### 6.7.1 ChronometricAgeAssertion
-#### 6.7.2 ChronometricAgeAgentRole
-#### 6.7.3 ChronometricAgeMedia
-#### 6.7.4 ChronometricAgeProtocol
-#### 6.7.5 ChronometricAgeReference
-### 6.8 GeologicalContext
-#### 6.8.1 GeologicalContextMedia
-### 6.9 Survey
-#### 6.9.1 SurveyTarget
-#### 6.9.2 SurveyAssertion
-#### 6.9.3 SurveyIdentifier
-#### 6.9.4 SurveyAgentRole
-#### 6.9.5 SurveyProtocol
-#### 6.9.6 SurveyReference
-### 6.10 Occurrence
-#### 6.10.1 OccurrenceAssertion
-#### 6.10.2 OccurrenceIdentifier
-#### 6.10.3 OccurrenceAgentRole
-#### 6.10.4 OccurrenceMedia
-#### 6.10.5 OccurrenceProtocol
-#### 6.10.6 OccurrenceReference
-#### 6.10.7 OrganismInteraction
-##### 6.10.7.1 OrganismInteractionAssertion
-##### 6.10.7.2 OrganismInteractionAgentRole
-##### 6.10.7.3 OrganismInteractionMedia
-##### 6.10.7.4 OrganismInteractionReference
-## 7. Material
-### 7.1 MaterialAssertion
-### 7.2 MaterialIdentifier
-### 7.3 MaterialAgentRole
-### 7.4 MaterialMedia
-### 7.5 MaterialProtocol
-### 7.6 MaterialReference
-## 8. NucleotideSequence
-## 9. MolecularProtocol
-### 9.1 MolecularProtocolAssertion
-### 9.2 MolecularProtocolAgentRole
-### 9.3 MolecularProtocolReference
-## 10. NucleotideAnalysis
-### 10.1 NucleotideAnalysisAssertion
-## 11. Identification
-### 11.1 IdentificationAgentRole
-### 11.2 IdentificationTaxon
-## 12. PhylogeneticTree
-### 12.1 PhylogeneticTreeAssertion
-### 12.2 PhylogeneticTreeIdentifier
-### 12.3 PhylogeneticTreeMedia
-### 12.4 PhylogeneticTreeProtocol
-### 12.5 PhylogeneticTreeReference
-### 12.6 PhylogeneticTreeTip
-#### 12.6.1 PhylogeneticTreeTipAssertion
-## 13. Relationship
+## 4. Reference
+### 4.1 ProtocolReference
+## 5. Event
+### 5.1 EventAssertion
+### 5.2 EventIdentifier
+### 5.3 EventAgentRole
+### 5.4 EventMedia
+### 5.5 EventProtocol
+### 5.6 EventReference
+### 5.7 ChronometricAge
+#### 5.7.1 ChronometricAgeAssertion
+#### 5.7.2 ChronometricAgeAgentRole
+#### 5.7.3 ChronometricAgeMedia
+#### 5.7.4 ChronometricAgeProtocol
+#### 5.7.5 ChronometricAgeReference
+### 5.8 GeologicalContext
+#### 5.8.1 GeologicalContextMedia
+### 5.9 Survey
+#### 5.9.1 SurveyTarget
+#### 5.9.2 SurveyAssertion
+#### 5.9.3 SurveyIdentifier
+#### 5.9.4 SurveyAgentRole
+#### 5.9.5 SurveyProtocol
+#### 5.9.6 SurveyReference
+### 5.10 Occurrence
+#### 5.10.1 OccurrenceAssertion
+#### 5.10.2 OccurrenceIdentifier
+#### 5.10.3 OccurrenceAgentRole
+#### 5.10.4 OccurrenceMedia
+#### 5.10.5 OccurrenceProtocol
+#### 5.10.6 OccurrenceReference
+#### 5.10.7 OrganismInteraction
+##### 5.10.7.1 OrganismInteractionAssertion
+##### 5.10.7.2 OrganismInteractionAgentRole
+##### 5.10.7.3 OrganismInteractionMedia
+##### 5.10.7.4 OrganismInteractionReference
+## 6. Material
+### 6.1 MaterialAssertion
+### 6.2 MaterialIdentifier
+### 6.3 MaterialAgentRole
+### 6.4 MaterialMedia
+### 6.5 MaterialProtocol
+### 6.6 MaterialReference
+## 7. NucleotideSequence
+## 8. MolecularProtocol
+### 8.1 MolecularProtocolAssertion
+### 8.2 MolecularProtocolAgentRole
+### 8.3 MolecularProtocolReference
+## 9. NucleotideAnalysis
+### 9.1 NucleotideAnalysisAssertion
+## 10. Identification
+### 10.1 IdentificationAgentRole
+### 10.2 IdentificationTaxon
+## 11. PhylogeneticTree
+### 11.1 PhylogeneticTreeAssertion
+### 11.2 PhylogeneticTreeIdentifier
+### 11.3 PhylogeneticTreeMedia
+### 11.4 PhylogeneticTreeProtocol
+### 11.5 PhylogeneticTreeReference
+### 11.6 PhylogeneticTreeTip
+#### 11.6.1 PhylogeneticTreeTipAssertion
+## 12. Relationship
