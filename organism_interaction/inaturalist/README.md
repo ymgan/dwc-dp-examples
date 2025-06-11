@@ -20,3 +20,7 @@ The process to create the output dataset for the DwC-DP publishing model is as f
 ## Run the script to export the publishing model tables as TSV files:
 ```psql inat_18530 -f export_inat_18530_tsvs.sql```
 
+## Create datapackage.json
+From dwc_dp/tools run:
+make_dp.py path_to/dwc-dp-examples/organism_interaction/inaturalist/output_data/ "iNaturalist DwC-DP OrganismInteraction Example"
+

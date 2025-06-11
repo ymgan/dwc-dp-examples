@@ -112,46 +112,144 @@ WHERE quality_grade = 'research';
 INSERT INTO media (
   media_id,
   media_type,
-  access_uri,
-  web_statement,
-  format,
-  rights,
-  owner,
-  source,
-  creator,
-  creator_id,
-  create_date,
+  subtype_literal,
+  subtype,
+  title,
   modified,
-  media_language,
-  media_description
+  metadata_date,
+  metadata_language_literal,
+  metadata_language,
+  commenter_literal,
+  commenter,
+  comments,
+  reviewer_literal,
+  reviewer,
+  reviewer_comments,
+  available,
+  has_service_access_point,
+  rights,
+  rights_iri,
+  owner,
+  usage_terms,
+  web_statement,
+  license_logo_url,
+  credit,
+  attribution_logo_url,
+  attribution_link_url,
+  funding_attribution,
+  funding_attribution_id,
+  source,
+  source_iri,
+  creator,
+  creator_iri,
+  provider_literal,
+  provider,
+  metadata_creator_literal,
+  metadata_creator,
+  metadata_provider_literal,
+  metadata_provider,
+  description,
+  caption,
+  language,
+  language_iri,
+  create_date,
+  time_of_day,
+  capture_device,
+  resource_creation_technique,
+  collection_code,
+  collection_code_id,
+  derived_from,
+  access_uri,
+  format,
+  format_iri,
+  variant_literal,
+  variant,
+  variant_description,
+  further_information_url,
+  licensing_exception,
+  service_expectation,
+  hash_function,
+  hash_value,
+  pixel_x_dimension,
+  pixel_y_dimension,
+  feedback_url
 )
 (SELECT DISTINCT 
     image_url AS media_id,
     'StillImage' AS media_type,
-    image_url AS access_uri,
+    NULL AS subtype_literal,
+    NULL AS subtype,
+    NULL AS title,
+    NULL AS modified,
+    NULL AS metadata_date,
+    NULL AS metadata_language_literal,
+    NULL AS metadata_language,
+    NULL AS commenter_literal,
+    NULL AS commenter,
+    NULL AS comments,
+    NULL AS reviewer_literal,
+    NULL AS reviewer,
+    NULL AS reviewer_comments,
+    NULL AS available,
+    NULL AS has_service_access_point,
+    NULL AS rights,
+    NULL AS rights_iri,
+    user_name AS owner,
+    NULL AS usage_terms,
     CASE
       WHEN license = 'CC0' THEN 'https://creativecommons.org/publicdomain/zero/1.0/'
       WHEN license = 'CC-BY' THEN 'https://creativecommons.org/licenses/by/4.0/'
       WHEN license = 'CC-BY-NC' THEN 'https://creativecommons.org/licenses/by-nc/4.0/'
       ELSE NULL
     END AS web_statement,
-    'image/' || RIGHT(image_url, POSITION('.' IN REVERSE(image_url)) - 1) AS format,
-    '' AS rights,
-    user_name AS owner,
+    NULL AS license_logo_url,
+    NULL AS credit,
+    NULL AS attribution_logo_url,
+    NULL AS attribution_link_url,
+    NULL AS funding_attribution,
+    NULL AS funding_attribution_id,
     CASE
       WHEN image_url ILIKE '%/photos/%' THEN
         'https://www.inaturalist.org/photos/' || SUBSTRING('https://inaturalist-open-data.s3.amazonaws.com/photos/33820500/medium.jpeg' FROM '/photos/([0-9]+)/') 
       ELSE NULL
       END AS "source",
+    NULL AS source_iri,
     user_name AS creator,
-    user_id AS creator_id,
+    user_id AS creator_iri,
+    NULL AS provider_literal,
+    NULL AS provider,
+    NULL AS metadata_creator_literal,
+    NULL AS metadata_creator,
+    NULL AS metadata_provider_literal,
+    NULL AS metadata_provider,
+    NULL AS description,
+    NULL AS caption,
+    NULL AS language,
+    NULL AS language_iri,
     CASE WHEN time_observed_at IS NULL
       THEN ''
       ELSE SUBSTRING(time_observed_at FROM 1 FOR 10) || 'T' || SUBSTRING(time_observed_at FROM 12 FOR 8) || 'Z'
       END AS create_date,
-    NULL AS modified,
-    NULL AS media_language,
-    NULL AS media_description
+    NULL AS time_of_day,
+    NULL AS capture_device,
+    NULL AS resource_creation_technique,
+    NULL AS collection_code,
+    NULL AS collection_code_id,
+    NULL AS derived_from,
+    image_url AS access_uri,
+    'image/' || RIGHT(image_url, POSITION('.' IN REVERSE(image_url)) - 1) AS format,
+    NULL AS format_iri,
+    NULL AS variant_literal,
+    NULL AS variant,
+    NULL AS variant_description,
+    NULL AS further_information_url,
+    NULL AS licensing_exception,
+    NULL AS service_expectation,
+    NULL AS hash_function,
+    NULL AS hash_value,
+    NULL::INTEGER AS pixel_x_dimension,
+    NULL::INTEGER AS pixel_y_dimension,
+    NULL AS feedback_url
 FROM observations
 WHERE image_url IS NOT NULL
 AND quality_grade = 'research'
@@ -191,7 +289,7 @@ INSERT INTO event (
   habitat,
   event_effort,
   field_notes,
-  event_citation,
+  event_references,
   event_remarks,
   location_id,
   higher_geography_id,
@@ -232,7 +330,12 @@ INSERT INTO event (
   georeference_remarks,
   information_withheld,
   data_generalizations,
-  preferred_spatial_representation
+  preferred_spatial_representation,
+  project_id,
+  project_title,
+  funding_attribution,
+  funding_attribution_id,
+  feedback_url
 )
 (SELECT
   'https://www.inaturalist.org/projects/california-pollination-project' AS event_id,
@@ -265,7 +368,7 @@ INSERT INTO event (
   NULL AS habitat,
   NULL AS event_effort,
   NULL AS field_notes,
-  NULL AS event_citation,
+  NULL AS event_references,
   NULL AS event_remarks,
   NULL AS location_id,
   NULL AS higher_geography_id,
@@ -306,7 +409,12 @@ INSERT INTO event (
   NULL AS georeference_remarks,
   NULL AS information_withheld,
   NULL AS data_generalizations,
-  NULL AS preferred_spatial_representation
+  NULL AS preferred_spatial_representation,
+  NULL AS project_id,
+  NULL AS project_title,
+  NULL AS funding_attribution,
+  NULL AS funding_attribution_id,
+  NULL AS feedback_url
 );
 -- n = 1
 
@@ -342,7 +450,7 @@ INSERT INTO event (
   habitat,
   event_effort,
   field_notes,
-  event_citation,
+  event_references,
   event_remarks,
   location_id,
   higher_geography_id,
@@ -383,7 +491,12 @@ INSERT INTO event (
   georeference_remarks,
   information_withheld,
   data_generalizations,
-  preferred_spatial_representation
+  preferred_spatial_representation,
+  project_id,
+  project_title,
+  funding_attribution,
+  funding_attribution_id,
+  feedback_url
 )
 (SELECT
   b.event_id AS event_id,
@@ -431,7 +544,7 @@ INSERT INTO event (
   NULL AS habitat,
   NULL AS event_effort,
   NULL AS field_notes,
-  NULL AS event_citation,
+  NULL AS event_references,
   NULL AS event_remarks,
   NULL AS location_id,
   NULL AS higher_geography_id,
@@ -472,7 +585,12 @@ INSERT INTO event (
   NULL AS georeference_remarks,
   NULL AS information_withheld,
   NULL AS data_generalizations,
-  'point-radius' AS preferred_spatial_representation
+  'point-radius' AS preferred_spatial_representation,
+  NULL AS project_id,
+  NULL AS project_title,
+  NULL AS funding_attribution,
+  NULL AS funding_attribution_id,
+  NULL AS feedback_url
 FROM observations a
 JOIN temp_ids b ON a.uuid=b.event_id
 WHERE quality_grade = 'research'
@@ -486,14 +604,20 @@ INSERT INTO event_media (
   event_id,
   media_subject_category,
   media_subject_category_iri,
-  media_subject_category_vocabulary
+  media_subject_category_vocabulary,
+  subject_part,
+  subject_orientation,
+  physical_setting
 )
 (SELECT
   a.media_id AS media_id,
   a.event_id AS event_id,
   'occurrence event' AS media_subject_category,
   NULL AS media_subject_category_iri,
-  NULL AS media_subject_category_vocabulary
+  NULL AS media_subject_category_vocabulary,
+  NULL AS subject_part,
+  NULL AS subject_orientation,
+  NULL AS physical_setting
 FROM temp_ids a
 JOIN event b ON a.event_id=b.event_id
 );
@@ -517,6 +641,7 @@ INSERT INTO occurrence (
   establishment_means,
   degree_of_establishment,
   pathway,
+  substrate,
   occurrence_status,
   occurrence_references,
   information_withheld,
@@ -525,6 +650,7 @@ INSERT INTO occurrence (
   organism_id,
   organism_scope,
   organism_name,
+  cause_of_death,
   organism_remarks,
   verbatim_identification,
   taxon_formula,
@@ -539,7 +665,8 @@ INSERT INTO occurrence (
   higher_classification_rank,
   scientific_name,
   taxon_rank,
-  taxon_remarks
+  taxon_remarks,
+  feedback_url
 )
 (SELECT
   b.occurrence_id AS occurrence_id,
@@ -561,6 +688,7 @@ INSERT INTO occurrence (
   END AS establishment_means,
   NULL AS degree_of_establishment,
   NULL AS pathway,
+  NULL AS substrate,
   'detected' AS occurrence_status,
   NULL AS occurrence_references,
   NULL AS information_withheld,
@@ -569,6 +697,7 @@ INSERT INTO occurrence (
   NULL AS organism_id,
   'multicellular organism' AS organism_scope,
   NULL AS organism_name,
+  NULL AS cause_of_death,
   NULL AS organism_remarks,
   species_guess AS verbatim_identification,
   'A' AS taxon_formula,
@@ -583,7 +712,8 @@ INSERT INTO occurrence (
   'kingdom' AS higher_classification_rank,
   scientific_name AS scientific_name,
   NULL AS taxon_rank,
-  NULL AS taxon_remarks
+  NULL AS taxon_remarks,
+  NULL AS feedback_url
 FROM observations a
 JOIN temp_ids b ON a.uuid=b.event_id
 WHERE quality_grade = 'research'
@@ -594,6 +724,7 @@ WHERE quality_grade = 'research'
 INSERT INTO occurrence_assertion (
   assertion_id,
   occurrence_id,
+  verbatim_assertion_type,
   assertion_type,
   assertion_type_iri,
   assertion_type_vocabulary,
@@ -616,6 +747,7 @@ INSERT INTO occurrence_assertion (
 (SELECT
   gen_random_uuid() AS assertion_id,
   a.occurrence_id,
+  NULL AS verbatim_assertion_type,
   'num_identification_agreements' AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
@@ -645,6 +777,7 @@ AND quality_grade = 'research'
 INSERT INTO occurrence_assertion (
   assertion_id,
   occurrence_id,
+  verbatim_assertion_type,
   assertion_type,
   assertion_type_iri,
   assertion_type_vocabulary,
@@ -667,7 +800,8 @@ INSERT INTO occurrence_assertion (
 (SELECT
   gen_random_uuid() AS assertion_id,
   a.occurrence_id,
-  'num_identification_disagreements' AS assertion_type,
+  NULL AS verbatim_assertion_type,
+ 'num_identification_disagreements' AS assertion_type,
   NULL AS assertion_type_iri,
   NULL AS assertion_type_vocabulary,
   NULL AS assertion_made_date,
@@ -699,14 +833,20 @@ INSERT INTO occurrence_media (
   occurrence_id,
   media_subject_category,
   media_subject_category_iri,
-  media_subject_category_vocabulary
+  media_subject_category_vocabulary,
+  subject_part,
+  subject_orientation,
+  physical_setting
 )
 (SELECT
   a.media_id AS media_id,
   a.occurrence_id AS occurrence_id,
   'organism occurrence' AS media_subject_category,
   NULL AS media_subject_category_iri,
-  NULL AS media_subject_category_vocabulary
+  NULL AS media_subject_category_vocabulary,
+  NULL AS subject_part,
+  NULL AS subject_orientation,
+  NULL AS physical_setting
 FROM temp_ids a
 JOIN occurrence b ON a.occurrence_id=b.occurrence_id
 );
@@ -720,7 +860,8 @@ INSERT INTO organism_interaction (
     subject_occurrence_id,
     organism_interaction_type,
     related_occurrence_id,
-    related_organism_part
+    related_organism_part,
+    feedback_url
 )
 (SELECT
     gen_random_uuid() AS organism_interaction_id,
@@ -729,7 +870,8 @@ INSERT INTO organism_interaction (
     occurrence_id AS subject_occurrence_id,
     'visited flower of' AS organism_interaction_type,
     related_occurrence_id_1 AS related_occurrence_id,
-    'flowers' AS related_organism_part
+    'flowers' AS related_organism_part,
+    NULL AS feedback_url
 FROM observations a
 JOIN temp_ids b ON a.uuid=b.event_id
 WHERE "field:interaction->visited flower of" IS NOT NULL
@@ -748,7 +890,8 @@ INSERT INTO organism_interaction (
     subject_occurrence_id,
     organism_interaction_type,
     related_occurrence_id,
-    related_organism_part
+    related_organism_part,
+    feedback_url
 )
 (SELECT
     gen_random_uuid() AS organism_interaction_id,
@@ -757,7 +900,8 @@ INSERT INTO organism_interaction (
     occurrence_id AS subject_occurrence_id,
     'visited flower of' AS organism_interaction_type,
     related_occurrence_id_2 AS related_occurrence_id,
-    'flowers' AS related_organism_part
+    'flowers' AS related_organism_part,
+    NULL AS feedback_url
 FROM observations a
 JOIN temp_ids b ON a.uuid=b.event_id
 WHERE "field:interaction->visited flower of" IS NOT NULL
@@ -777,7 +921,8 @@ INSERT INTO organism_interaction (
     subject_occurrence_id,
     organism_interaction_type,
     related_occurrence_id,
-    related_organism_part
+    related_organism_part,
+    feedback_url
 )
 (SELECT
     gen_random_uuid() AS organism_interaction_id,
@@ -786,7 +931,8 @@ INSERT INTO organism_interaction (
     occurrence_id AS subject_occurrence_id,
     'visited flower of' AS organism_interaction_type,
     related_occurrence_id_3 AS related_occurrence_id,
-    'flowers' AS related_organism_part
+    'flowers' AS related_organism_part,
+    NULL AS feedback_url
 FROM observations a
 JOIN temp_ids b ON a.uuid=b.event_id
 WHERE "field:interaction->visited flower of" IS NOT NULL
@@ -804,14 +950,20 @@ INSERT INTO organism_interaction_media (
   organism_interaction_id,
   media_subject_category,
   media_subject_category_iri,
-  media_subject_category_vocabulary
+  media_subject_category_vocabulary,
+  subject_part,
+  subject_orientation,
+  physical_setting
 )
 (SELECT
   a.media_id AS media_id,
   b.organism_interaction_id AS organism_interaction_id,
   'organism interaction' AS media_subject_category,
   NULL AS media_subject_category_iri,
-  NULL AS media_subject_category_vocabulary
+  NULL AS media_subject_category_vocabulary,
+  NULL AS subject_part,
+  NULL AS subject_orientation,
+  NULL AS physical_setting
 FROM temp_ids a
 JOIN organism_interaction b ON a.event_id=b.event_id
 );
@@ -831,7 +983,6 @@ INSERT INTO identification (
   taxon_formula,
   type_status,
   type_designation_type,
-  typified_name,
   identified_by,
   identified_by_id,
   date_identified,
@@ -844,7 +995,8 @@ INSERT INTO identification (
   higher_classification_rank,
   scientific_name,
   taxon_rank,
-  taxon_remarks
+  taxon_remarks,
+  feedback_url
 )
 (SELECT
   gen_random_uuid() AS identification_id,
@@ -859,7 +1011,6 @@ INSERT INTO identification (
   'A' AS taxon_formula,
   NULL AS type_status,
   NULL AS type_designation_type,
-  NULL AS typified_name,
   user_name AS identified_by,
   user_id AS identified_by_id,
   created_at AS date_identified,
@@ -872,7 +1023,8 @@ INSERT INTO identification (
   'kingdom' AS higher_classification_rank,
   scientific_name AS scientific_name,
   NULL AS taxon_rank,
-  NULL AS taxon_remarks
+  NULL AS taxon_remarks,
+  NULL AS feedback_url
 FROM temp_ids a
 JOIN observations b ON a.event_id=b.uuid
 WHERE quality_grade = 'research'
