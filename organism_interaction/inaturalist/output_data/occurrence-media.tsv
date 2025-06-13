@@ -1,4 +1,4 @@
-media_id	occurrence_id	media_subject_category	media_subject_category_iri	media_subject_category_vocabulary	subject_part	subject_orientation	physical_setting
+mediaID	occurrenceID	mediaSubjectCategory	mediaSubjectCategoryIRI	mediaSubjectCategoryVocabulary	subjectPart	subjectOrientation	physicalSetting
 https://inaturalist-open-data.s3.amazonaws.com/photos/2156910/medium.jpg	https://inaturalist.org/observations/1782033	organism occurrence					
 https://inaturalist-open-data.s3.amazonaws.com/photos/2160291/medium.jpg	https://inaturalist.org/observations/1784617	organism occurrence					
 https://inaturalist-open-data.s3.amazonaws.com/photos/3536791/medium.jpg	https://inaturalist.org/observations/3069262	organism occurrence					

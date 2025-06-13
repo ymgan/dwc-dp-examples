@@ -155,7 +155,7 @@ CREATE TABLE media (
   capture_device TEXT,
   resource_creation_technique TEXT,
   collection_code TEXT,
-  collection_code_id TEXT,
+  collection_id TEXT,
   derived_from TEXT,
   access_uri TEXT,
   format TEXT,
