@@ -28,6 +28,7 @@ FROM ecoab_occurrences;
 
 INSERT INTO event (
     event_id, 
+    event_category,
     event_type, 
     year, 
     month, 
@@ -44,6 +45,7 @@ INSERT INTO event (
 )
 (SELECT
     b.event_id AS event_id,
+    'Event' AS event_category, 
     'mixed' AS event_type, 
     year, 
     month, 
@@ -79,7 +81,8 @@ INSERT INTO material (
     identified_by,
     identified_by_id,
     taxon_id,
-    kingdom,
+    higher_classification_name,
+    higher_classification_rank,
     scientific_name,
     taxon_rank
 )
@@ -99,7 +102,8 @@ SELECT
     identifiedBy AS identified_by,
     identifiedByID AS identified_by_id,
     a.taxonID AS taxon_id,
-    c.kingdom AS kingdom,
+    c.kingdom AS higher_classification_name,
+    'kingdom' AS higher_classification_rank,
     c.scientificName AS scientific_name,
     c.taxonRank AS taxon_rank
 FROM ecoab_occurrences a
@@ -123,7 +127,8 @@ INSERT INTO occurrence (
     identified_by,
     identified_by_id,
     taxon_id,
-    kingdom,
+    higher_classification_name,
+    higher_classification_rank,
     scientific_name,
     taxon_rank
 )
@@ -141,7 +146,8 @@ INSERT INTO occurrence (
     identifiedBy AS identified_by,
     identifiedByID AS identified_by_id,
     a.taxonID AS taxon_id,
-    c.kingdom,
+    c.kingdom AS higher_classification_name,
+    'kingdom' AS higher_classification_rank,
     c.scientificName AS scientific_name,
     c.taxonRank AS taxon_rank
 FROM ecoab_occurrences a
@@ -163,7 +169,8 @@ INSERT INTO occurrence (
     identified_by,
     identified_by_id,
     taxon_id,
-    kingdom,
+    higher_classification_name,
+    higher_classification_rank,
     scientific_name,
     taxon_rank
 )
@@ -179,7 +186,8 @@ INSERT INTO occurrence (
     recordedBy AS identified_by,
     recordedByID AS identified_by_id,
     d.relatedResourceID AS taxon_id,
-    c.kingdom,
+    c.kingdom AS higher_classification_name,
+    'kingdom' AS higher_classification_rank,
     c.scientificName AS scientific_name,
     c.taxonRank AS taxon_rank
 FROM ecoab_occurrences a
@@ -230,9 +238,9 @@ INSERT INTO organism_interaction_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -250,9 +258,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM temp_material a
 JOIN ecoab_interaction_data b ON a.material_entity_id=b.occurrenceID;
@@ -273,9 +281,9 @@ INSERT INTO organism_interaction_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -293,9 +301,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM temp_material a
 JOIN ecoab_interaction_data b ON a.material_entity_id=b.occurrenceID
