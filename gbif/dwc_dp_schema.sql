@@ -171,7 +171,7 @@ CREATE TABLE media (
   pixel_x_dimension INTEGER,
   pixel_y_dimension INTEGER,
   feedback_url TEXT
-  );
+);
 CREATE INDEX ON media(commenter);
 CREATE INDEX ON media(reviewer);
 CREATE INDEX ON media(source_iri);
@@ -1291,7 +1291,7 @@ CREATE TABLE nucleotide_sequence (
 
 CREATE TABLE molecular_protocol (
   molecular_protocol_id TEXT PRIMARY KEY,
-  assayType TEXT,
+  assay_type TEXT,
   samp_name TEXT,
   project_name TEXT,
   experimental_factor TEXT,
