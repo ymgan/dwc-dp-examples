@@ -1,86 +1,8 @@
 -- For this dataset, every record in input_data/inat_interactions.csv represents an 
 -- Occurrence and possibly also an OrganismInteration. Most Occurrences have Media.
 
--- Table Checklist
--- -1. Protocol
--- -2. Agent
--- -2.1 AgentIdentifier
--- -2.2 AgentAgentRole
--- +3. Media
--- -3.1 MediaAssertion
--- -3.2 MediaIdentifier
--- -3.3 MediaAgentRole
--- -3.4 AgentMedia
--- -4. Collection
--- -4.1 CollectionAssertion
--- -4.2 CollectionAgentRole
--- -4.3 CollectionMedia
--- -5. Reference
--- -5.1 ProtocolReference
--- +6. Event
--- -6.1 EventAssertion
--- -6.2 EventIdentifier
--- -6.3 EventAgentRole
--- +6.4 EventMedia
--- -6.5 EventProtocol
--- -6.6 EventReference
--- -6.7 ChronometricAge
--- -6.7.1 ChronometricAgeAssertion
--- -6.7.2 ChronometricAgeAgentRole
--- -6.7.3 ChronometricAgeMedia
--- -6.7.4 ChronometricAgeProtocol
--- -6.7.5 ChronometricAgeReference
--- -6.8 GeologicalContext
--- -6.8.1 GeologicalContextMedia
--- -6.9 Survey
--- -6.9.1 SurveyTarget
--- -6.9.2 SurveyAssertion
--- -6.9.3 SurveyIdentifier
--- -6.9.4 SurveyAgentRole
--- -6.9.5 SurveyProtocol
--- -6.9.6 SurveyReference
--- +6.10 Occurrence
--- +6.10.1 OccurrenceAssertion
--- -6.10.2 OccurrenceIdentifier
--- -6.10.3 OccurrenceAgentRole
--- +6.10.4 OccurrenceMedia
--- -6.10.5 OccurrenceProtocol
--- -6.10.6 OccurrenceReference
--- +6.10.7 OrganismInteraction
--- -6.10.7.1 OrganismInteractionAssertion
--- -6.10.7.2 OrganismInteractionAgentRole
--- +6.10.7.3 OrganismInteractionMedia
--- -6.10.7.4 OrganismInteractionReference
--- -7. Material
--- -7.1 MaterialAssertion
--- -7.2 MaterialIdentifier
--- -7.3 MaterialAgentRole
--- -7.4 MaterialMedia
--- -7.5 MaterialProtocol
--- -7.6 MaterialReference
--- -8. NucleotideSequence
--- -9. MolecularProtocol
--- -9.1 MolecularProtocolAssertion
--- -9.2 MolecularProtocolAgentRole
--- -9.3 MolecularProtocolReference
--- -10. NucleotideAnalysis
--- -10.1 NucleotideAnalysisAssertion
--- +11. Identification
--- -11.1 IdentificationAgentRole
--- -11.2 IdentificationTaxon
--- -12. PhylogeneticTree
--- -12.1 PhylogeneticTreeAssertion
--- -12.2 PhylogeneticTreeIdentifier
--- -12.3 PhylogeneticTreeMedia
--- -12.4 PhylogeneticTreeProtocol
--- -12.5 PhylogeneticTreeReference
--- -12.6 PhylogeneticTreeTip
--- -12.6.1 PhylogeneticTreeTipAssertion
--- -13. Relationship
-
 -- Generate event_id and related occurrence_id for the input observations table records, 
 -- The uuid will be used as the subject occurrence_id.
-
 CREATE TABLE temp_ids AS 
 SELECT 
   uuid AS event_id,
@@ -257,7 +179,6 @@ AND quality_grade = 'research'
 -- n = 909
 
 -- Make an event table with the project.
-
 INSERT INTO event (
   event_id,
   parent_event_id,
