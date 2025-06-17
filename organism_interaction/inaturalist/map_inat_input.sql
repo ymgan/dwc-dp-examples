@@ -331,8 +331,8 @@ INSERT INTO event (
   NULL AS information_withheld,
   NULL AS data_generalizations,
   NULL AS preferred_spatial_representation,
-  NULL AS project_id,
-  NULL AS project_title,
+  '18530' AS project_id,
+  'California Pollination Project' AS project_title,
   NULL AS funding_attribution,
   NULL AS funding_attribution_id,
   NULL AS feedback_url
@@ -507,8 +507,8 @@ INSERT INTO event (
   NULL AS information_withheld,
   NULL AS data_generalizations,
   'point-radius' AS preferred_spatial_representation,
-  NULL AS project_id,
-  NULL AS project_title,
+  '18530' AS project_id,
+  'California Pollination Project' AS project_title,
   NULL AS funding_attribution,
   NULL AS funding_attribution_id,
   NULL AS feedback_url
