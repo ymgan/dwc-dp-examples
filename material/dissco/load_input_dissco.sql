@@ -1,0 +1,18 @@
+-- Foreign key checking deferred due to circular dependencies
+
+BEGIN;
+SET CONSTRAINTS ALL DEFERRED;
+
+\copy public.input_agent FROM './output_data/agent.csv' WITH (FORMAT CSV, HEADER);
+\copy public.input_event_agent_role FROM './output_data/event-agent-role.csv' WITH (FORMAT CSV, HEADER);
+\copy public.input_event FROM './output_data/event.csv' WITH (FORMAT CSV, HEADER);
+\copy public.input_identification_taxon FROM './output_data/identification-taxon.csv' WITH (FORMAT CSV, HEADER);
+\copy public.input_identification FROM './output_data/identification.csv' WITH (FORMAT CSV, HEADER);
+\copy public.input_material_identifier FROM './output_data/material-identifier.csv' WITH (FORMAT CSV, HEADER);
+\copy public.input_material_media FROM './output_data/material-media.csv' WITH (FORMAT CSV, HEADER);
+\copy public.input_material FROM './output_data/material.csv' WITH (FORMAT CSV, HEADER);
+\copy public.input_media FROM './output_data/media.csv' WITH (FORMAT CSV, HEADER);
+\copy public.input_occurrence FROM './output_data/occurrence.csv' WITH (FORMAT CSV, HEADER);
+\copy public.input_relationship FROM './output_data/relationship.csv' WITH (FORMAT CSV, HEADER);
+
+COMMIT;
