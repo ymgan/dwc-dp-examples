@@ -1,7 +1,0 @@
-identificationID,identificationBasedOnOccurrenceID,identificationBasedOnMaterialEntityID,identificationBasedOnGeneticSequenceID,identificationBasedOnMediaID,identificationType,identificationTypeIRI,identificationTypeVocabulary,verbatimIdentification,isAcceptedIdentification,taxonFormula,typeStatus,typeDesignationType,identifiedBy,identifiedByID,dateIdentified,identificationReferences,identificationVerificationStatus,identificationVerificationStatusIRI,identificationVerificationStatusVocabulary,identificationRemarks,taxonID,kingdom,scientificName,taxonRank,taxonRemarks
-1608607033,,B 10 0242900,,,,,,,true,A,,,,,,,,,,,,,Draba nivicola Rose,species,
-1608763793,,B 10 0242900,,,,,,,false,A,,,O. E. Schulz,,1923,,,,,,,,Draba nivicola var. orbiculata O.E.Schulz,variety,
-1608525325,,B 10 0242900,,,,,,,false,A,type,,,,,,,,,,,,Draba orbiculata Rose,species,
-1608444764,,B 10 0356094,,,,,,,true,A,,,Th. Raus,,2009,,,,,,,,Lunaria rediviva L.,species,
-1608442019,,B 10 0479552,,,,,,,true,A,,,G. Mansion,,,,,,,,,,Campanula asperuloides subsp. taygetea (Quézel & Contandr.) Greuter & Burdet,subspecies,
-1608552075,,B 10 1088912,,,,,,,true,A,,,E.Willing,,,,,,,,,,Valerianella coronata (L.) DC.,species,
