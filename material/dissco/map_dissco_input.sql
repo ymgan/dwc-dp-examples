@@ -1,7 +1,3 @@
--- Before beginning, make the occurrenceStatus lowercase, consistent with the ENUM
--- values in the target database structure at 
--- https://github.com/gbif/model-dwc-dp/blob/master/gbif/dwc_dp_schema.sql
-
 -- Fill the event table.
 INSERT INTO event (
     continent,
