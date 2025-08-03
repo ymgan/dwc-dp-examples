@@ -1,0 +1,12 @@
+\copy eventMediaTable FROM './output_data/eventMediaTable.txt' WITH (FORMAT csv, DELIMITER E'\t', NULL '', HEADER, QUOTE '"');
+\copy eventTable FROM './output_data/eventTable.txt' WITH (FORMAT csv, DELIMITER E'\t', NULL '', HEADER, QUOTE '"');
+\copy identificationTable FROM './output_data/identificationTable.txt' WITH (FORMAT csv, DELIMITER E'\t', NULL '', HEADER, QUOTE '"');
+\copy materialAssertionsTable FROM './output_data/materialAssertionsTable.txt' WITH (FORMAT csv, DELIMITER E'\t', NULL '', HEADER, QUOTE '"');
+\copy materialTable FROM './output_data/materialTable.txt' WITH (FORMAT csv, DELIMITER E'\t', NULL '', HEADER, QUOTE '"');
+\copy mediaTable FROM './output_data/mediaTable.txt' WITH (FORMAT csv, DELIMITER E'\t', NULL '', HEADER, QUOTE '"');
+\copy molecularProtocolTable FROM './output_data/molecularProtocolTable.txt' WITH (FORMAT csv, DELIMITER E'\t', NULL '', HEADER, QUOTE '"');
+\copy nucleotideAnalysisTable FROM './output_data/nucleotideAnalysisTable.txt' WITH (FORMAT csv, DELIMITER E'\t', NULL '', HEADER, QUOTE '"');
+\copy nucleotideSequenceTable FROM './output_data/nucleotideSequenceTable.txt' WITH (FORMAT csv, DELIMITER E'\t', NULL '', HEADER, QUOTE '"');
+\copy occurrenceTable FROM './output_data/occurrenceTable.txt' WITH (FORMAT csv, DELIMITER E'\t', NULL '', HEADER, QUOTE '"');
+\copy surveyTable FROM './output_data/surveyTable.txt' WITH (FORMAT csv, DELIMITER E'\t', NULL '', HEADER, QUOTE '"');
+\copy surveyTargetTable FROM './output_data/surveyTargetTable.txt' WITH (FORMAT csv, DELIMITER E'\t', NULL '', HEADER, QUOTE '"');
