@@ -2,12 +2,6 @@
 -- Schema for input data to be mapped to dwc-dp publishing model.
 --
 
-CREATE TABLE input_agent_agent_role (
-  agentID TEXT NOT NULL,
--- missing   related_agent_id TEXT NOT NULL,
-  agentRole TEXT NOT NULL
-);
-
 CREATE TABLE input_agent_identifier (
   identifier TEXT NOT NULL,
   agentID TEXT NOT NULL,
@@ -69,7 +63,6 @@ CREATE TABLE input_identification (
   identificationID TEXT PRIMARY KEY,
   identificationBasedOnMaterialEntityID TEXT,
   identificationType TEXT,
-  identificationTypeIRI TEXT,
   verbatimIdentification TEXT,
   identifiedBy TEXT,
   identifiedByID TEXT,
@@ -102,7 +95,8 @@ CREATE TABLE input_material_media (
 CREATE TABLE input_material (
   materialEntityID TEXT PRIMARY KEY,
   eventID TEXT,
-  materialEntityType TEXT NOT NULL,
+  materialCategory TEXT NOT NULL,
+  materialEntityType TEXT,
   collectedBy TEXT,
   collectedByID TEXT,
   preparations TEXT,
@@ -136,6 +130,7 @@ CREATE TABLE input_media (
 CREATE TABLE input_occurrence (
   occurrenceID TEXT PRIMARY KEY,
   eventID TEXT,
+  surveyTargetID TEXT,
   recordedBy TEXT,
   recordedByID TEXT,
   organismQuantity TEXT,
@@ -171,11 +166,11 @@ CREATE TABLE input_survey_target (
   surveyTargetValue TEXT,
   surveyTargetValueIRI TEXT,
   surveyTargetUnit TEXT,
-  surveyTargetUnitIRI TEXT
+  surveyTargetUnitIRI TEXT,
+  includeOrExclude TEXT,
+  isSurveyTargetFullyReported TEXT
 );
 
--- NOTE: The scopes are no longer part of Survey
--- NOTE: netSize is not part of Survey
 CREATE TABLE input_survey (
   surveyID TEXT PRIMARY KEY,
   eventID TEXT NOT NULL,
@@ -183,7 +178,6 @@ CREATE TABLE input_survey (
   siteNestingDescription TEXT,
   verbatimSiteDescriptions TEXT,
   verbatimSiteNames TEXT,
-  eventDurationUnit TEXT,
   isAbsenceReported TEXT,
   areNonTargetTaxaFullyReported TEXT,
   compilationType TEXT,

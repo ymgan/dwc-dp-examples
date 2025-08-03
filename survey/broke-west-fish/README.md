@@ -2,9 +2,9 @@
 
 This is dataset is an example of a biotic survey with target organism scopes.
 
-Originally mapped data were shared via https://github.com/biodiversity-aq/broke-west-fish-dwcav2/tree/main/data/output/tsv. A copy of those data was made in the [input data folder](../input_data) for testing against the [database schema](https://github.com/gbif/model-dwc-dp/blob/master/gbif/dwc_dp_schema.sql).
+Originally mapped data were shared via https://github.com/biodiversity-aq/broke-west-fish-dwc-dp/tree/main/data/output/tsv. A copy of those data was made in the [input data folder](../input_data) for testing against the [database schema](https://github.com/gbif/model-dwc-dp/blob/master/gbif/dwc_dp_schema.sql).
 
-The process to create the output dataset for the DwC-DP publishing model is as follows:
+Do the following to test the integrity of the Darwin Core Data Package directly against the [database schema](../../gbif/dwc_dp_schema.sql):
 
 ## Create a postgreSQL database to hold the input data and the output data mapped to the DwC-DP publishing model:
 ```cd survey/broke-west```
@@ -23,15 +23,3 @@ The process to create the output dataset for the DwC-DP publishing model is as f
 ```psql bw -f export_broke_west_tsvs.sql```
 
 The Darwin Core Data Package from the IPT was also copied and can be found in the [data package download folder](../input/datapackage-download).
-
-Do the following to test the integrity of the IPT-produced Darwin Core Data Package directly against the [database schema](../../gbif/dwc_dp_schema.sql):
-
-## Create a postgreSQL database to hold the DwC-DP data and the output data mapped to the DwC-DP publishing model:
-```cd survey/broke-west-fish```
-
-(First time) ```createdb bgbm && psql bw -f ../../gbif/dwc_dp_schema.sql```
-
-(Subsequent times) ```dropdb bw && createdb bw && psql bw -f ../../gbif/dwc_dp_schema.sql```
-
-## Load the DwC-DP data directly into the tables in the database:
-```psql bw -f load_dwc-dp_broke_west.sql```
