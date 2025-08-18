@@ -2,7 +2,7 @@
 
 This is dataset is an example of a biotic survey with target organism scopes.
 
-Originally mapped data were shared via https://github.com/biodiversity-aq/broke-west-fish-dwc-dp/tree/main/data/output/tsv. A copy of those data was made in the [input data folder](../input_data) for testing against the [database schema](https://github.com/gbif/model-dwc-dp/blob/master/gbif/dwc_dp_schema.sql).
+Originally mapped data were shared via https://github.com/biodiversity-aq/broke-west-fish-dwc-dp/tree/main/data/output/tsv. A copy of those data was made in the [input data folder](./input_data) for testing against the [database schema](https://github.com/gbif/model-dwc-dp/blob/master/gbif/dwc_dp_schema.sql).
 
 Do the following to test the integrity of the Darwin Core Data Package directly against the [database schema](../../gbif/dwc_dp_schema.sql):
 
@@ -22,4 +22,3 @@ Do the following to test the integrity of the Darwin Core Data Package directly 
 ## Run the script to export the publishing model tables as TSV files:
 ```psql bw -f export_broke_west_tsvs.sql```
 
-The Darwin Core Data Package from the IPT was also copied and can be found in the [data package download folder](../input/datapackage-download).
