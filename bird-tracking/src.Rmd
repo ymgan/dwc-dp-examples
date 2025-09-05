@@ -433,8 +433,51 @@ occurrence <-
 ```
 
 ```{r occurrenceAssertion}
-occurrenceAssertion
+sex <-
+  ref_occurrence %>%
+  dplyr::mutate(
+    .keep = "none",
+    occurrenceID = .data$occurrenceID,
+    assertionID = NA_character_, # Required
+    assertionType = "sex",
+    assertionTypeIRI =
+      "http://vocab.nerc.ac.uk/collection/P01/current/ENTSEX01/",
+    assertionValue = .data$sex, # Value as is
+    assertionValueIRI = dplyr::recode(
+      .data$sex,
+      "female" = "http://vocab.nerc.ac.uk/collection/S10/current/S102/",
+      "male" = "https://vocab.nerc.ac.uk/collection/S10/current/S103/",
+      "unknown" = "https://vocab.nerc.ac.uk/collection/S10/current/S105/", # indeterminate
+      .default = NA_character_, # Don't map other values
+      .missing = "https://vocab.nerc.ac.uk/collection/S10/current/S104/" # not specified
+    )
+  )
+
+lifestage <-
+  ref_occurrence %>%
+  dplyr::mutate(
+    .keep = "none",
+    occurrenceID = .data$occurrenceID,
+    assertionType = "life stage",
+    assertionTypeIRI =
+      "http://vocab.nerc.ac.uk/collection/P01/current/LSTAGE01/",
+    assertionValue = .data$lifeStage, # Value as is
+    assertionValueIRI = dplyr::recode(
+      .data$lifeStage,
+      "adult" = "http://vocab.nerc.ac.uk/collection/S11/current/S1116/",
+      "subadult" = "https://vocab.nerc.ac.uk/collection/S11/current/S120/", # sub-adult
+      "juvenile" = "https://vocab.nerc.ac.uk/collection/S11/current/S1127/",
+      "unknown" = "http://vocab.nerc.ac.uk/collection/S11/current/S1152/", # indeterminate
+      .default = NA_character_, # Don't map other values
+      .missing = "http://vocab.nerc.ac.uk/collection/S11/current/S1131/" # not specified
+    )
+  )
+
+occurrenceAssertion <-
+  dplyr::bind_rows(sex, lifestage) %>%
+  dplyr::arrange(.data$occurrenceID)
 ```
+
 
 ```{r identification}
 identification
