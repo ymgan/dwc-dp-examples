@@ -299,20 +299,6 @@ occurrenceAssertion <-
   dplyr::arrange(.data$occurrenceID)
 ```
 
-## Identification
-
-```{r identification}
-identification
-```
-
-## Provenance
-
-```{r provenance}
-provenance
-institutionCode
-collectionCode
-```
-
 # Compare with Darwin Core Archive
 
 ```{r}
