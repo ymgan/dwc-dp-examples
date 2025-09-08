@@ -73,35 +73,8 @@ ref_event <-
     .keep = "none",
     eventID = paste(.data$`animal-id`, .data$`tag-id`, "start", sep = "_"),
     parentEventID = paste(.data$`animal-id`, .data$`tag-id`, sep = "_"),
-    preferredEventName = NA_character_,
-    eventCategory = NA_character_,
     eventType = "tag attachment",
-    datasetName = NA_character_,
-    datasetID = NA_character_,
-    fieldNumber = NA_character_,
-    eventConductedBy = NA_character_,
-    eventConductedByID = NA_character_,
     eventDate = format(.data$`deploy-on-date`, format = "%Y-%m-%dT%H:%M:%SZ"),
-    eventTime = NA_character_,
-    startDayOfYear = NA_integer_,
-    endDayOfYear = NA_integer_,
-    year = NA_integer_,
-    month = NA_integer_,
-    day = NA_integer_,
-    verbatimEventDate = NA_character_,
-    verbatimLocality = NA_character_,
-    verbatimElevation = NA_character_,
-    verbatimDepth = NA_character_,
-    verbatimCoordinates = NA_character_,
-    verbatimLatitude = NA_character_,
-    verbatimLongitude = NA_character_,
-    verbatimCoordinateSystem = NA_character_,
-    verbatimSRS = NA_character_,
-    georeferenceVerificationStatus = NA_character_,
-    habitat = NA_character_,
-    eventEffort = NA_character_,
-    fieldNotes = NA_character_,
-    eventReferences = NA_character_,
     eventRemarks = paste0(
       dplyr::if_else(
         is.na(.data$`tag-manufacturer-name`),
@@ -132,27 +105,8 @@ ref_event <-
         ""
       )
     ),
-    locationID = NA_character_,
-    higherGeographyID = NA_character_,
-    higherGeography = NA_character_,
-    continent = NA_character_,
-    waterBody = NA_character_,
-    islandGroup = NA_character_,
-    island = NA_character_,
-    country = NA_character_,
-    countryCode = NA_character_,
-    stateProvince = NA_character_,
-    county = NA_character_,
-    municipality = NA_character_,
-    locality = NA_character_,
     minimumElevationInMeters = NA_real_,
     maximumElevationInMeters = NA_real_,
-    verticalDatum = NA_character_,
-    minimumDepthInMeters = NA_real_,
-    maximumDepthInMeters = NA_real_,
-    minimumDistanceAboveSurfaceInMeters = NA_real_,
-    maximumDistanceAboveSurfaceInMeters = NA_real_,
-    locationRemarks = NA_character_,
     decimalLatitude = as.numeric(.data$`deploy-on-latitude`),
     decimalLongitude = as.numeric(.data$`deploy-on-longitude`),
     geodeticDatum = dplyr::if_else(
@@ -161,26 +115,7 @@ ref_event <-
       NA_character_
     ),
     coordinateUncertaintyInMeters = NA_real_,
-    coordinatePrecision = NA_real_,
-    pointRadiusSpatialFit = NA_real_,
-    footprintWKT = NA_character_,
-    footprintSRS = NA_character_,
-    footprintSpatialFit = NA_real_,
-    georeferencedBy = NA_character_,
-    georeferencedByID = NA_character_,
-    georeferencedDate = NA_character_,
-    georeferenceProtocol = NA_character_,
-    georeferenceProtocolID = NA_character_,
-    georeferenceSources = NA_character_,
-    georeferenceRemarks = NA_character_,
-    informationWithheld = NA_character_,
-    dataGeneralizations = NA_character_,
-    preferredSpatialRepresentation = NA_character_,
-    projectID = NA_character_,
-    projectTitle = NA_character_,
-    fundingAttribution = NA_character_,
-    fundingAttributionID = NA_character_,
-    feedbackURL = NA_character_
+    dataGeneralizations = NA_character_
   )
 
 ```
@@ -196,49 +131,9 @@ gps_event <-
       .data$`tag-local-identifier`,
       sep = "_"
     ),
-    preferredEventName = NA_character_,
-    eventCategory = NA_character_,
     eventType = "gps",
-    datasetName = NA_character_,
-    datasetID = NA_character_,
-    fieldNumber = NA_character_,
-    eventConductedBy = NA_character_,
-    eventConductedByID = NA_character_,
     eventDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
-    eventTime = NA_character_,
-    startDayOfYear = NA_integer_,
-    endDayOfYear = NA_integer_,
-    year = NA_integer_,
-    month = NA_integer_,
-    day = NA_integer_,
-    verbatimEventDate = NA_character_,
-    verbatimLocality = NA_character_,
-    verbatimElevation = NA_character_,
-    verbatimDepth = NA_character_,
-    verbatimCoordinates = NA_character_,
-    verbatimLatitude = NA_character_,
-    verbatimLongitude = NA_character_,
-    verbatimCoordinateSystem = NA_character_,
-    verbatimSRS = NA_character_,
-    georeferenceVerificationStatus = NA_character_,
-    habitat = NA_character_,
-    eventEffort = NA_character_,
-    fieldNotes = NA_character_,
-    eventReferences = NA_character_,
     eventRemarks = dplyr::coalesce(.data$`comments`, ""),
-    locationID = NA_character_,
-    higherGeographyID = NA_character_,
-    higherGeography = NA_character_,
-    continent = NA_character_,
-    waterBody = NA_character_,
-    islandGroup = NA_character_,
-    island = NA_character_,
-    country = NA_character_,
-    countryCode = NA_character_,
-    stateProvince = NA_character_,
-    county = NA_character_,
-    municipality = NA_character_,
-    locality = NA_character_,
     minimumElevationInMeters = dplyr::coalesce(
       .data$`height-above-msl`,
       as.numeric(.data$`height-above-ellipsoid`),
@@ -249,11 +144,6 @@ gps_event <-
       as.numeric(.data$`height-above-ellipsoid`),
       NA_real_
     ),
-    verticalDatum = NA_character_,
-    minimumDepthInMeters = NA_real_,
-    maximumDepthInMeters = NA_real_,
-    minimumDistanceAboveSurfaceInMeters = NA_real_,
-    maximumDistanceAboveSurfaceInMeters = NA_real_,
     locationRemarks = dplyr::case_when(
       !is.na(.data$`height-above-msl`) ~
         "elevations are altitude above mean sea level",
@@ -265,38 +155,17 @@ gps_event <-
     geodeticDatum = "EPSG:4326",
     coordinateUncertaintyInMeters =
       as.numeric(.data$`location-error-numerical`),
-    coordinatePrecision = NA_real_,
-    pointRadiusSpatialFit = NA_real_,
-    footprintWKT = NA_character_,
-    footprintSRS = NA_character_,
-    footprintSpatialFit = NA_real_,
-    georeferencedBy = NA_character_,
-    georeferencedByID = NA_character_,
-    georeferencedDate = NA_character_,
-    georeferenceProtocol = NA_character_,
-    georeferenceProtocolID = NA_character_,
-    georeferenceSources = NA_character_,
-    georeferenceRemarks = NA_character_,
-    informationWithheld = NA_character_,
     dataGeneralizations = paste(
       "subsampled by hour: first of", .data$subsample_count, "record(s)"
-    ),
-    preferredSpatialRepresentation = NA_character_,
-    projectID = NA_character_,
-    projectTitle = NA_character_,
-    fundingAttribution = NA_character_,
-    fundingAttributionID = NA_character_,
-    feedbackURL = NA_character_
+    )
   )
 ```
 
 ```{r event}
-not_all_na <- function(x) any(!is.na(x))
 event <-
   ref_event %>%
   dplyr::bind_rows(gps_event) %>%
   dplyr::arrange(eventID) %>% 
-  dplyr::select(where(not_all_na)) %>% 
   distinct() %>% 
   dplyr::mutate(
       # DATASET-LEVEL
@@ -319,11 +188,6 @@ ref_occurrence <-
         .data$`animal-id`, .data$`tag-id`, "start", sep = "_" # Same as eventID
       ),
     eventID = paste(.data$`animal-id`, .data$`tag-id`, "start", sep = "_"),
-    surveyTargetID = NA_character_,
-    recordedBy = NA_character_,
-    recordedByID = NA_character_,
-    organismQuantity = NA_character_,
-    organismQuantityType = NA_character_,
     sex = dplyr::recode(
         .data$`animal-sex`,
         "m" = "male",
@@ -332,38 +196,14 @@ ref_occurrence <-
       ),
     lifeStage = .data$`animal-life-stage`,
     reproductiveCondition = .data$`animal-reproductive-condition`,
-    caste = NA_character_,
-    behavior = NA_character_,
-    vitality = NA_character_,
-    establishmentMeans = NA_character_,
-    degreeOfEstablishment = NA_character_,
-    pathway = NA_character_,
-    substrate = NA_character_,
     occurrenceStatus = "present",
-    occurrenceReferences = NA_character_,
-    informationWithheld = NA_character_,
-    dataGeneralizations = NA_character_,
-    occurrenceRemarks = NA_character_,
     organismID = .data$`animal-id`,
-    organismScope = NA_character_,
     organismName = .data$`animal-nickname`,
-    causeOfDeath = NA_character_,
-    organismRemarks = NA_character_,
-    verbatimIdentification = NA_character_,
-    taxonFormula = NA_character_,
-    identifiedBy = NA_character_,
-    identifiedByID = NA_character_,
-    dateIdentified = NA_character_,
-    identificationReferences = NA_character_,
-    identificationVerificationStatus = NA_character_,
-    identificationRemarks = NA_character_,
     taxonID = .data$aphia_lsid,
     higherClassificationName = "Animalia",
     higherClassificationRank = "kingdom",
     scientificName = .data$`animal-taxon`,
-    taxonRank = "species",
-    taxonRemarks = NA_character_,
-    feedbackURL = NA_character_
+    taxonRank = "species"
   )
 ```
 
@@ -374,11 +214,6 @@ gps_occurrence <-
     .keep = "none",
     occurrenceID = as.character(.data$`event-id`),
     eventID = as.character(.data$`event-id`),
-    surveyTargetID = NA_character_,
-    recordedBy = NA_character_,
-    recordedByID = NA_character_,
-    organismQuantity = NA_character_,
-    organismQuantityType = NA_character_,
     sex = dplyr::recode(
         .data$`animal-sex`,
         "m" = "male",
@@ -387,49 +222,23 @@ gps_occurrence <-
       ),
     lifeStage = NA_character_,
     reproductiveCondition = NA_character_,
-    caste = NA_character_,
-    behavior = NA_character_,
-    vitality = NA_character_,
-    establishmentMeans = NA_character_,
-    degreeOfEstablishment = NA_character_,
-    pathway = NA_character_,
-    substrate = NA_character_,
     occurrenceStatus = "present",
-    occurrenceReferences = NA_character_,
-    informationWithheld = NA_character_,
-    dataGeneralizations = NA_character_,
-    occurrenceRemarks = NA_character_,
     organismID = .data$`individual-local-identifier`,
-    organismScope = NA_character_,
     organismName = .data$`animal-nickname`,
-    causeOfDeath = NA_character_,
-    organismRemarks = NA_character_,
-    verbatimIdentification = NA_character_,
-    taxonFormula = NA_character_,
-    identifiedBy = NA_character_,
-    identifiedByID = NA_character_,
-    dateIdentified = NA_character_,
-    identificationReferences = NA_character_,
-    identificationVerificationStatus = NA_character_,
-    identificationRemarks = NA_character_,
     taxonID = .data$aphia_lsid,
     higherClassificationName = "Animalia",
     higherClassificationRank = "kingdom",
     scientificName = .data$`animal-taxon`,
-    taxonRank = "species",
-    taxonRemarks = NA_character_,
-    feedbackURL = NA_character_
+    taxonRank = "species"
   )
 ```
 
 
 ```{r occurrence}
-not_all_na <- function(x) any(!is.na(x))
 occurrence <-
   ref_occurrence %>%
   dplyr::bind_rows(gps_occurrence) %>%
-  dplyr::arrange(eventID) %>% 
-  dplyr::select(where(not_all_na))
+  dplyr::arrange(eventID)
 ```
 
 ```{r occurrenceAssertion}
@@ -485,6 +294,8 @@ identification
 
 ```{r provenance}
 provenance
+institutionCode
+collectionCode
 ```
 
 ```{r}
@@ -493,6 +304,7 @@ dwc <- movepub::write_dwc(package, directory = "my_directory")
 unlink("my_directory", recursive = TRUE)
 
 nrow(dwc$occurrence) == nrow(occurrence)
+nrow(dwc$emof) == nrow(occurrenceAssertion)
 ```
 
 
