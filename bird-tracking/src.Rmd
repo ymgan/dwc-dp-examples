@@ -7,6 +7,8 @@ output: html_document
 
 Transforms a Movebank dataset (formatted as a [Frictionless Data Package](https://specs.frictionlessdata.io/data-package/)) to a [Darwin Core Data Package](https://gbif.github.io/dwc-dp/) as part of the public review.
 
+# Initiation
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -20,6 +22,8 @@ library(dplyr)
 package <- o_assen
 ```
 
+# Prepare data
+
 ```{r}
 ref <- movepub::read_resource(package, "reference-data") %>% 
   dplyr::mutate(
@@ -31,7 +35,7 @@ ref <- movepub::read_resource(package, "reference-data") %>%
 names <- dplyr::pull(dplyr::distinct(ref, .data$`animal-taxon`))
 taxa <- get_aphia_id(names)
 
-
+# Read GPS data and subsample to 1 record per animal+tag+date+hour combination
 gps <- movepub::read_resource(package, "gps") %>% 
   dplyr::mutate(
     comments = NA_character_,
@@ -65,6 +69,10 @@ gps <- movepub::read_resource(package, "gps") %>%
   dplyr::filter(!is.na(.data$`animal-taxon`)) %>%
   dplyr::left_join(taxa, by = dplyr::join_by("animal-taxon" == "name")) 
 ```
+
+# Data transformation
+
+## Event
 
 ```{r ref_event}
 ref_event <-
@@ -176,6 +184,7 @@ event <-
     dplyr::arrange(.data$parentEventID, .data$eventDate)
 ```
 
+## Occurrence
 
 ```{r ref_occurrence}
 ref_occurrence <-
@@ -220,6 +229,7 @@ gps_occurrence <-
         "f" = "female",
         "u" = "unknown"
       ),
+    # Value at start of deployment might not apply to all records
     lifeStage = NA_character_,
     reproductiveCondition = NA_character_,
     occurrenceStatus = "present",
@@ -240,6 +250,8 @@ occurrence <-
   dplyr::bind_rows(gps_occurrence) %>%
   dplyr::arrange(eventID)
 ```
+
+## OccurrenceAssertion
 
 ```{r occurrenceAssertion}
 sex <-
@@ -287,10 +299,13 @@ occurrenceAssertion <-
   dplyr::arrange(.data$occurrenceID)
 ```
 
+## Identification
 
 ```{r identification}
 identification
 ```
+
+## Provenance
 
 ```{r provenance}
 provenance
@@ -298,8 +313,9 @@ institutionCode
 collectionCode
 ```
 
+# Compare with Darwin Core Archive
+
 ```{r}
-# Compare with DwcA
 dwc <- movepub::write_dwc(package, directory = "my_directory")
 unlink("my_directory", recursive = TRUE)
 
