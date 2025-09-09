@@ -130,7 +130,6 @@ ref_event <-
     coordinateUncertaintyInMeters = NA_real_,
     dataGeneralizations = NA_character_
   )
-
 ```
 
 ```{r gps_event}
@@ -174,11 +173,37 @@ gps_event <-
   )
 ```
 
+```{r}
+parent_event <-
+  ref %>% 
+  dplyr::mutate(
+    .keep = "none", 
+    eventID = paste(.data$`animal-id`, .data$`tag-id`, sep = "_"),
+    parentEventID = NA_character_,
+    eventType = "deployment",
+    eventDate = format(.data$`deploy-on-date`, format = "%Y-%m-%dT%H:%M:%SZ"),
+    eventRemarks = NA_character_,
+    minimumElevationInMeters = NA_real_,
+    maximumElevationInMeters = NA_real_,
+    locationRemarks = NA_character_,
+    decimalLatitude = NA_real_,
+    decimalLongitude = NA_real_,,
+    geodeticDatum = dplyr::if_else(
+      !is.na(.data$`deploy-on-latitude`),
+      "EPSG:4326",
+      NA_character_
+    ),
+    coordinateUncertaintyInMeters = NA_real_,
+    dataGeneralizations = NA_character_
+  )
+```
+
+
 ```{r event}
 event <-
-  ref_event %>%
-  dplyr::bind_rows(gps_event) %>%
-  dplyr::arrange(eventID) %>% 
+  parent_event %>%
+  dplyr::bind_rows(ref_event) %>%
+  dplyr::bind_rows(gps_event) %>% 
   distinct() %>% 
   dplyr::mutate(
       # DATASET-LEVEL
@@ -186,7 +211,7 @@ event <-
       datasetID = movebank_package$id,
       .before = "eventDate"
     ) %>% 
-    dplyr::arrange(.data$parentEventID, .data$eventDate)
+  dplyr::arrange(.data$parentEventID, .data$eventDate)
 ```
 
 ## Occurrence
