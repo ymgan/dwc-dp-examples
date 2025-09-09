@@ -396,7 +396,7 @@
           {
             "fields": "eventID",
             "reference": {
-              "resource": "event",
+              "resource": "",
               "fields": "eventID"
             }
           }
