@@ -309,21 +309,15 @@ occurrenceAssertion <-
 ## Prepare table schema's
 
 ```{r table schema event}
-schema_event <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/0.1/table-schemas/event.json")
+schema_event <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/0.1/table-schemas/event.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
 
-schema_event$fields <-
-  schema_event$fields %>% 
-  dplyr::filter(name %in% names(event)) %>% 
-  purrr::transpose()
+schema_event$fields <- purrr::keep(schema_event$fields, ~ .x$name %in% names(event))
 ```
 
 ```{r table schema occurrence}
-schema_occurrence <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/0.1/table-schemas/occurrence.json")
+schema_occurrence <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/0.1/table-schemas/occurrence.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
 
-schema_occurrence$fields <-
-  schema_occurrence$fields %>% 
-  dplyr::filter(name %in% names(occurrence)) %>% 
-  purrr::transpose()
+schema_occurrence$fields <- purrr::keep(schema_occurrence$fields, ~ .x$name %in% names(occurrence))
 ```
 
 

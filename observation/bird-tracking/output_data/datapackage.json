@@ -27,7 +27,10 @@
             "examples": "",
             "namespace": "dwc",
             "iri": "http://rs.tdwg.org/dwc/terms/eventID",
-            "constraints": [true, null, null, null, null, null, null, false, false, null, false, false, null, false, null]
+            "constraints": {
+              "required": true,
+              "unique": true
+            }
           },
           {
             "name": "parentEventID",
@@ -38,8 +41,7 @@
             "comments": "Recommended best practice is to use a globally unique identifier.",
             "examples": "",
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/parentEventID",
-            "constraints": [true, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+            "iri": "http://rs.tdwg.org/dwc/terms/parentEventID"
           },
           {
             "name": "eventType",
@@ -50,8 +52,7 @@
             "comments": "Recommended best practice is to use a controlled vocabulary.",
             "examples": "`MaterialGathering`; `Occurrence`; `Survey`; `SiteVisit`; `OrganismInteraction`; `CameraTrapDeployment`; `MediaCapture`",
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/eventType",
-            "constraints": [null, null, null, null, null, null, null, -430, -430, null, -90, -180, null, 1, null]
+            "iri": "http://rs.tdwg.org/dwc/terms/eventType"
           },
           {
             "name": "datasetName",
@@ -62,8 +63,7 @@
             "comments": "",
             "examples": "",
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/datasetName",
-            "constraints": [null, null, null, null, null, null, null, 8850, 8850, null, 90, 180, null, 20037509, null]
+            "iri": "http://rs.tdwg.org/dwc/terms/datasetName"
           },
           {
             "name": "datasetID",
@@ -74,8 +74,7 @@
             "comments": "Recommended best practice is to use a globally unique identifier.",
             "examples": "",
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/datasetID",
-            "constraints": null
+            "iri": "http://rs.tdwg.org/dwc/terms/datasetID"
           },
           {
             "name": "eventDate",
@@ -86,8 +85,7 @@
             "comments": "For gathering dwc:Events, this is the date-time when the gathering took place.",
             "examples": "`1963-03-08T14:07-06:00` (8 Mar 1963 at 2:07pm in the time zone six hours earlier than UTC); `2009-02-20T08:40Z` (20 February 2009 8:40am UTC); `2018-08-29T15:19` (3:19pm local time on 29 August 2018); `1809-02-12` (some time during 12 February 1809); `1906-06` (some time in June 1906); `1971` (some time in the year 1971); `2007-03-01T13:00:00Z/2008-05-11T15:30:00Z` (some time during the interval between 1 March 2007 1pm UTC and 11 May 2008 3:30pm UTC); `1900/1909` (some time during the interval between the beginning of the year 1900 and the end of the year 1909); `2007-11-13/15` (some time in the interval between 13 November 2007 and 15 November 2007)",
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/eventDate",
-            "constraints": null
+            "iri": "http://rs.tdwg.org/dwc/terms/eventDate"
           },
           {
             "name": "eventRemarks",
@@ -98,8 +96,7 @@
             "comments": "",
             "examples": "`After the recent rains the river is nearly at flood stage.`",
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/eventRemarks",
-            "constraints": null
+            "iri": "http://rs.tdwg.org/dwc/terms/eventRemarks"
           },
           {
             "name": "minimumElevationInMeters",
@@ -109,9 +106,13 @@
             "format": "default",
             "comments": "",
             "examples": "`-100`; `802`",
+            "constraints": {
+              "required": false,
+              "minimum": -430,
+              "maximum": 8850
+            },
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/minimumElevationInMeters",
-            "constraints": null
+            "iri": "http://rs.tdwg.org/dwc/terms/minimumElevationInMeters"
           },
           {
             "name": "maximumElevationInMeters",
@@ -121,9 +122,13 @@
             "format": "default",
             "comments": "",
             "examples": "`-205`; `1236`",
+            "constraints": {
+              "required": false,
+              "minimum": -430,
+              "maximum": 8850
+            },
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/maximumElevationInMeters",
-            "constraints": null
+            "iri": "http://rs.tdwg.org/dwc/terms/maximumElevationInMeters"
           },
           {
             "name": "locationRemarks",
@@ -134,8 +139,7 @@
             "comments": "",
             "examples": "`under water since 2005`",
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/locationRemarks",
-            "constraints": null
+            "iri": "http://rs.tdwg.org/dwc/terms/locationRemarks"
           },
           {
             "name": "decimalLatitude",
@@ -145,9 +149,13 @@
             "format": "default",
             "comments": "Positive values are north of the Equator, negative values are south of it. Legal values lie between -90 and 90, inclusive.",
             "examples": "`-41.0983423`",
+            "constraints": {
+              "required": false,
+              "minimum": -90,
+              "maximum": 90
+            },
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/decimalLatitude",
-            "constraints": null
+            "iri": "http://rs.tdwg.org/dwc/terms/decimalLatitude"
           },
           {
             "name": "decimalLongitude",
@@ -157,9 +165,13 @@
             "format": "default",
             "comments": "Positive values are east of the Greenwich Meridian, negative values are west of it. Legal values lie between -180 and 180, inclusive.",
             "examples": "`-121.1761111`",
+            "constraints": {
+              "required": false,
+              "minimum": -180,
+              "maximum": 180
+            },
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/decimalLongitude",
-            "constraints": null
+            "iri": "http://rs.tdwg.org/dwc/terms/decimalLongitude"
           },
           {
             "name": "geodeticDatum",
@@ -170,8 +182,7 @@
             "comments": "Recommended best practice is to use the EPSG code of the SRS, if known. Otherwise use a controlled vocabulary for the name or code of the geodetic datum, if known. Otherwise use a controlled vocabulary for the name or code of the ellipsoid, if known. If none of these is known, use the value `not recorded`.",
             "examples": "`EPSG:4326`; `WGS84`; `NAD27`; `Campo Inchauspe`; `European 1950`; `Clarke 1866`; `not recorded`",
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/geodeticDatum",
-            "constraints": null
+            "iri": "http://rs.tdwg.org/dwc/terms/geodeticDatum"
           },
           {
             "name": "coordinateUncertaintyInMeters",
@@ -181,9 +192,13 @@
             "format": "default",
             "comments": "Leave the value empty if the uncertainty is unknown, cannot be estimated, or is not applicable (because there are no coordinates). Zero is not a valid value for this term.",
             "examples": "`30` (reasonable lower limit on or after 2000-05-01 of a GPS reading under good conditions if the actual precision was not recorded at the time); `100` (reasonable lower limit before 2000-05-01 of a GPS reading under good conditions if the actual precision was not recorded at the time); `71` (uncertainty for a UTM coordinate having 100 meter precision and a known spatial reference system)",
+            "constraints": {
+              "required": false,
+              "minimum": 1,
+              "maximum": 20037509
+            },
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters",
-            "constraints": null
+            "iri": "http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters"
           },
           {
             "name": "dataGeneralizations",
@@ -194,8 +209,7 @@
             "comments": "",
             "examples": "`coordinates generalized from original GPS coordinates to the nearest half degree grid cell`",
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/dataGeneralizations",
-            "constraints": null
+            "iri": "http://rs.tdwg.org/dwc/terms/dataGeneralizations"
           }
         ],
         "primaryKey": "eventID",
@@ -262,8 +276,10 @@
             "examples": "`http://arctos.database.museum/guid/MSB:Mamm:233627`",
             "namespace": "dwc",
             "iri": "http://rs.tdwg.org/dwc/terms/occurrenceID",
-            "constraints": [true, true, null, null, null, null, null, null, null, null, null, null, null],
-            "default": null
+            "constraints": {
+              "required": true,
+              "unique": true
+            }
           },
           {
             "name": "eventID",
@@ -275,8 +291,10 @@
             "examples": "",
             "namespace": "dwcdp",
             "iri": "http://rs.tdwg.org/dwc/terms/eventID",
-            "constraints": [true, false, null, null, null, null, null, null, null, null, null, null, null],
-            "default": null
+            "constraints": {
+              "required": true,
+              "unique": false
+            }
           },
           {
             "name": "sex",
@@ -287,9 +305,7 @@
             "comments": "Recommended best practice is to use a controlled vocabulary. This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
             "examples": "`male`; `female`; `hermaphrodite`",
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/sex",
-            "constraints": null,
-            "default": null
+            "iri": "http://rs.tdwg.org/dwc/terms/sex"
           },
           {
             "name": "lifeStage",
@@ -300,9 +316,7 @@
             "comments": "Recommended best practice is to use a controlled vocabulary. This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
             "examples": "`zygote`; `larva`; `juvenile`; `adult`; `seedling`; `flowering`; `fruiting`",
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/lifeStage",
-            "constraints": null,
-            "default": null
+            "iri": "http://rs.tdwg.org/dwc/terms/lifeStage"
           },
           {
             "name": "reproductiveCondition",
@@ -313,9 +327,7 @@
             "comments": "Recommended best practice is to use a controlled vocabulary. This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
             "examples": "`non-reproductive`; `pregnant`; `in bloom`; `fruit-bearing`",
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/reproductiveCondition",
-            "constraints": null,
-            "default": null
+            "iri": "http://rs.tdwg.org/dwc/terms/reproductiveCondition"
           },
           {
             "name": "occurrenceStatus",
@@ -327,7 +339,6 @@
             "examples": "`detected`; `notDetected`",
             "namespace": "dwc",
             "iri": "http://rs.tdwg.org/dwc/terms/occurrenceStatus",
-            "constraints": null,
             "default": "detected"
           },
           {
@@ -339,9 +350,7 @@
             "comments": "",
             "examples": "",
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/organismID",
-            "constraints": null,
-            "default": null
+            "iri": "http://rs.tdwg.org/dwc/terms/organismID"
           },
           {
             "name": "organismName",
@@ -352,9 +361,7 @@
             "comments": "",
             "examples": "`Huberta`; `Boab Prison Tree`; `J pod`",
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/organismName",
-            "constraints": null,
-            "default": null
+            "iri": "http://rs.tdwg.org/dwc/terms/organismName"
           },
           {
             "name": "taxonID",
@@ -365,9 +372,7 @@
             "comments": "In DwC-DP, the taxonID is always an external link to a taxon record. As such, if present, it should be a resolvable globally unique identifier. See the Identifiers section of https://github.com/CatalogueOfLife/coldp/blob/master/README.md.",
             "examples": "`https://www.checklistbank.org/dataset/COL2023/taxon/DGP6 `; `worms:212808`; `ipni:320035-2`",
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/taxonID",
-            "constraints": null,
-            "default": null
+            "iri": "http://rs.tdwg.org/dwc/terms/taxonID"
           },
           {
             "name": "higherClassificationName",
@@ -378,9 +383,7 @@
             "comments": "A higherClassificationName must have a corresponding higherClassificationRank.",
             "examples": "`Animalia` (higherClassificationName) with `kingdom` (higherClassificationRank); `Laphriinae`  (higherClassificationName) with `subfamily` (higherClassificationRank)",
             "namespace": "dwcdp",
-            "iri": "",
-            "constraints": null,
-            "default": null
+            "iri": ""
           },
           {
             "name": "higherClassificationRank",
@@ -391,9 +394,7 @@
             "comments": "A higherClassificationRank must have a corresponding higherClassificationName.",
             "examples": "`Acanthaceae` (higherClassificationName) with `family` (higherClassificationRank); `Pyrenomycetes` (higherClassificationName) with `class` (higherClassificationRank",
             "namespace": "dwcdp",
-            "iri": "",
-            "constraints": null,
-            "default": null
+            "iri": ""
           },
           {
             "name": "scientificName",
@@ -404,9 +405,7 @@
             "comments": "",
             "examples": "",
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/scientificName",
-            "constraints": null,
-            "default": null
+            "iri": "http://rs.tdwg.org/dwc/terms/scientificName"
           },
           {
             "name": "taxonRank",
@@ -417,9 +416,7 @@
             "comments": "",
             "examples": "",
             "namespace": "dwc",
-            "iri": "http://rs.tdwg.org/dwc/terms/taxonRank",
-            "constraints": null,
-            "default": null
+            "iri": "http://rs.tdwg.org/dwc/terms/taxonRank"
           }
         ],
         "primaryKey": "occurrenceID",
