@@ -312,12 +312,14 @@ occurrenceAssertion <-
 schema_event <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/0.1/table-schemas/event.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
 
 schema_event$fields <- purrr::keep(schema_event$fields, ~ .x$name %in% names(event))
+schema_event$foreignKeys <- purrr::keep(schema_event$foreignKeys, ~ .x$fields %in% c("parentEventID"))
 ```
 
 ```{r table schema occurrence}
 schema_occurrence <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/0.1/table-schemas/occurrence.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
 
 schema_occurrence$fields <- purrr::keep(schema_occurrence$fields, ~ .x$name %in% names(occurrence))
+schema_occurrence$foreignKeys <- purrr::keep(schema_occurrence$foreignKeys, ~ .x$fields %in% c("eventID"))
 ```
 
 

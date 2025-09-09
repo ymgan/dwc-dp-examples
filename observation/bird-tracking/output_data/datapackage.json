@@ -220,34 +220,6 @@
               "resource": "event",
               "fields": "eventID"
             }
-          },
-          {
-            "fields": "eventConductedByID",
-            "reference": {
-              "resource": "agent",
-              "fields": "agentID"
-            }
-          },
-          {
-            "fields": "georeferencedByID",
-            "reference": {
-              "resource": "agent",
-              "fields": "agentID"
-            }
-          },
-          {
-            "fields": "georeferenceProtocolID",
-            "reference": {
-              "resource": "protocol",
-              "fields": "protocolID"
-            }
-          },
-          {
-            "fields": "fundingAttributionID",
-            "reference": {
-              "resource": "agent",
-              "fields": "agentID"
-            }
           }
         ]
       }
@@ -426,27 +398,6 @@
             "reference": {
               "resource": "event",
               "fields": "eventID"
-            }
-          },
-          {
-            "fields": "surveyTargetID",
-            "reference": {
-              "resource": "survey-target",
-              "fields": "surveyTargetID"
-            }
-          },
-          {
-            "fields": "recordedByID",
-            "reference": {
-              "resource": "agent",
-              "fields": "agentID"
-            }
-          },
-          {
-            "fields": "identifiedByID",
-            "reference": {
-              "resource": "agent",
-              "fields": "agentID"
             }
           }
         ]
