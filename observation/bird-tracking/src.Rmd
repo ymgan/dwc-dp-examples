@@ -16,16 +16,20 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r library}
 library(movepub)
 library(dplyr)
+library(jsonlite)
+library(purrr)
+library(frictionless)
+library(here)
 ```
 
 ```{r dataset}
-package <- o_assen
+movebank_package <- o_assen
 ```
 
 # Prepare data
 
 ```{r}
-ref <- movepub::read_resource(package, "reference-data") %>% 
+ref <- movepub::read_resource(movebank_package, "reference-data") %>% 
   dplyr::mutate(
     `tag-model` = NA_character_,
     `animal-reproductive-condition` = NA_character_
@@ -36,7 +40,7 @@ names <- dplyr::pull(dplyr::distinct(ref, .data$`animal-taxon`))
 taxa <- get_aphia_id(names)
 
 # Read GPS data and subsample to 1 record per animal+tag+date+hour combination
-gps <- movepub::read_resource(package, "gps") %>% 
+gps <- movepub::read_resource(movebank_package, "gps") %>% 
   dplyr::mutate(
     comments = NA_character_,
     `height-above-ellipsoid` = NA_character_
@@ -115,6 +119,7 @@ ref_event <-
     ),
     minimumElevationInMeters = NA_real_,
     maximumElevationInMeters = NA_real_,
+    locationRemarks = NA_character_,
     decimalLatitude = as.numeric(.data$`deploy-on-latitude`),
     decimalLongitude = as.numeric(.data$`deploy-on-longitude`),
     geodeticDatum = dplyr::if_else(
@@ -177,8 +182,8 @@ event <-
   distinct() %>% 
   dplyr::mutate(
       # DATASET-LEVEL
-      datasetID = package$id,
-      datasetName = package$title,
+      datasetName = movebank_package$title,
+      datasetID = movebank_package$id,
       .before = "eventDate"
     ) %>% 
     dplyr::arrange(.data$parentEventID, .data$eventDate)
@@ -299,10 +304,67 @@ occurrenceAssertion <-
   dplyr::arrange(.data$occurrenceID)
 ```
 
+# Create Darwin Core Data Package
+
+## Prepare table schema's
+
+```{r table schema event}
+schema_event <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/0.1/table-schemas/event.json")
+
+schema_event$fields <-
+  schema_event$fields %>% 
+  dplyr::filter(name %in% names(event)) %>% 
+  purrr::transpose()
+```
+
+```{r table schema occurrence}
+schema_occurrence <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/0.1/table-schemas/occurrence.json")
+
+schema_occurrence$fields <-
+  schema_occurrence$fields %>% 
+  dplyr::filter(name %in% names(occurrence)) %>% 
+  purrr::transpose()
+```
+
+
+## Create DP
+
+```{r dwcDP}
+dwcDP <-
+  frictionless::create_package() %>% 
+  frictionless::add_resource(
+    resource_name = "event",
+    data = event,
+    schema = schema_event
+    ) %>% 
+  frictionless::add_resource(
+    resource_name = "occurrence",
+    data = occurrence,
+    schema = schema_occurrence
+    ) %>%
+  append(
+    c(
+      profile = "tabular-data-package",
+      name = "bird-tracking-example",
+      title = "Bird tracking (Movebank) Observation Example"
+    ),
+    after = 0
+  ) %>% 
+  frictionless::create_package()
+```
+
+
+# Write data
+
+```{r}
+frictionless::write_package(dwcDP, here::here("observation", "bird-tracking", "output_data"))
+```
+
+
 # Compare with Darwin Core Archive
 
 ```{r}
-dwc <- movepub::write_dwc(package, directory = "my_directory")
+dwc <- movepub::write_dwc(movebank_package, directory = "my_directory")
 unlink("my_directory", recursive = TRUE)
 
 nrow(dwc$occurrence) == nrow(occurrence)

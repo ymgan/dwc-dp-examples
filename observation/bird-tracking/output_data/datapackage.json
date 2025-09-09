@@ -1,0 +1,459 @@
+{
+  "profile": "tabular-data-package",
+  "name": "bird-tracking-example",
+  "title": "Bird tracking (Movebank) Observation Example",
+  "resources": [
+    {
+      "name": "event",
+      "path": "event.csv",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "schema": {
+        "name": "event",
+        "identifier": "http://rs.tdwg.org/dwc/dwc-dp/event",
+        "url": "https://github.com/gbif/dwc-dp/blob/master/dwc-dp/0.1/table-schemas/event.json",
+        "title": "Event",
+        "description": "An action, process, or set of circumstances occurring at a dcterms:Location during a period of time.",
+        "fields": [
+          {
+            "name": "eventID",
+            "title": "Event ID",
+            "description": "An identifier for a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/eventID",
+            "constraints": [true, null, null, null, null, null, null, false, false, null, false, false, null, false, null]
+          },
+          {
+            "name": "parentEventID",
+            "title": "Parent Event ID",
+            "description": "An identifier for a broader dwc:Event that groups this and potentially other dwc:Events.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/parentEventID",
+            "constraints": [true, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+          },
+          {
+            "name": "eventType",
+            "title": "Event Type",
+            "description": "A narrow category that best matches the nature of a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary.",
+            "examples": "`MaterialGathering`; `Occurrence`; `Survey`; `SiteVisit`; `OrganismInteraction`; `CameraTrapDeployment`; `MediaCapture`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/eventType",
+            "constraints": [null, null, null, null, null, null, null, -430, -430, null, -90, -180, null, 1, null]
+          },
+          {
+            "name": "datasetName",
+            "title": "Dataset Name",
+            "description": "A name of a dataset from which data originated.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/datasetName",
+            "constraints": [null, null, null, null, null, null, null, 8850, 8850, null, 90, 180, null, 20037509, null]
+          },
+          {
+            "name": "datasetID",
+            "title": "Dataset ID",
+            "description": "An identifier for a dataset from which data originated.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/datasetID",
+            "constraints": null
+          },
+          {
+            "name": "eventDate",
+            "title": "Event Date",
+            "description": "A date or time interval during which a dwc:Event occurred.",
+            "type": "string",
+            "format": "default",
+            "comments": "For gathering dwc:Events, this is the date-time when the gathering took place.",
+            "examples": "`1963-03-08T14:07-06:00` (8 Mar 1963 at 2:07pm in the time zone six hours earlier than UTC); `2009-02-20T08:40Z` (20 February 2009 8:40am UTC); `2018-08-29T15:19` (3:19pm local time on 29 August 2018); `1809-02-12` (some time during 12 February 1809); `1906-06` (some time in June 1906); `1971` (some time in the year 1971); `2007-03-01T13:00:00Z/2008-05-11T15:30:00Z` (some time during the interval between 1 March 2007 1pm UTC and 11 May 2008 3:30pm UTC); `1900/1909` (some time during the interval between the beginning of the year 1900 and the end of the year 1909); `2007-11-13/15` (some time in the interval between 13 November 2007 and 15 November 2007)",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/eventDate",
+            "constraints": null
+          },
+          {
+            "name": "eventRemarks",
+            "title": "Event Remarks",
+            "description": "Comments or notes about a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`After the recent rains the river is nearly at flood stage.`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/eventRemarks",
+            "constraints": null
+          },
+          {
+            "name": "minimumElevationInMeters",
+            "title": "Minimum Elevation In Meters",
+            "description": "A lower limit of a range of elevation (altitude, usually above sea level), in meters.",
+            "type": "number",
+            "format": "default",
+            "comments": "",
+            "examples": "`-100`; `802`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/minimumElevationInMeters",
+            "constraints": null
+          },
+          {
+            "name": "maximumElevationInMeters",
+            "title": "Maximum Elevation In Meters",
+            "description": "An upper limit of a range of elevation (altitude, usually above sea level), in meters.",
+            "type": "number",
+            "format": "default",
+            "comments": "",
+            "examples": "`-205`; `1236`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/maximumElevationInMeters",
+            "constraints": null
+          },
+          {
+            "name": "locationRemarks",
+            "title": "Location Remarks",
+            "description": "Comments or notes about a dcterms:Location.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`under water since 2005`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/locationRemarks",
+            "constraints": null
+          },
+          {
+            "name": "decimalLatitude",
+            "title": "Decimal Latitude",
+            "description": "A geographic latitude (in decimal degrees, using the spatial reference system given in dwc:geodeticDatum) of the geographic center of a dcterms:Location.",
+            "type": "number",
+            "format": "default",
+            "comments": "Positive values are north of the Equator, negative values are south of it. Legal values lie between -90 and 90, inclusive.",
+            "examples": "`-41.0983423`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/decimalLatitude",
+            "constraints": null
+          },
+          {
+            "name": "decimalLongitude",
+            "title": "Decimal Longitude",
+            "description": "A geographic longitude (in decimal degrees, using the spatial reference system given in dwc:geodeticDatum) of the geographic center of a dcterms:Location.",
+            "type": "number",
+            "format": "default",
+            "comments": "Positive values are east of the Greenwich Meridian, negative values are west of it. Legal values lie between -180 and 180, inclusive.",
+            "examples": "`-121.1761111`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/decimalLongitude",
+            "constraints": null
+          },
+          {
+            "name": "geodeticDatum",
+            "title": "Geodetic Datum",
+            "description": "An ellipsoid, geodetic datum, or spatial reference system (SRS) upon which the geographic coordinates given in dwc:decimalLatitude and dwc:decimalLongitude as based.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use the EPSG code of the SRS, if known. Otherwise use a controlled vocabulary for the name or code of the geodetic datum, if known. Otherwise use a controlled vocabulary for the name or code of the ellipsoid, if known. If none of these is known, use the value `not recorded`.",
+            "examples": "`EPSG:4326`; `WGS84`; `NAD27`; `Campo Inchauspe`; `European 1950`; `Clarke 1866`; `not recorded`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/geodeticDatum",
+            "constraints": null
+          },
+          {
+            "name": "coordinateUncertaintyInMeters",
+            "title": "Coordinate Uncertainty In Meters",
+            "description": "A horizontal distance (in meters) from a given dwc:decimalLatitude and dwc:decimalLongitude describing the smallest circle containing the whole of the dcterms:Location.",
+            "type": "number",
+            "format": "default",
+            "comments": "Leave the value empty if the uncertainty is unknown, cannot be estimated, or is not applicable (because there are no coordinates). Zero is not a valid value for this term.",
+            "examples": "`30` (reasonable lower limit on or after 2000-05-01 of a GPS reading under good conditions if the actual precision was not recorded at the time); `100` (reasonable lower limit before 2000-05-01 of a GPS reading under good conditions if the actual precision was not recorded at the time); `71` (uncertainty for a UTM coordinate having 100 meter precision and a known spatial reference system)",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters",
+            "constraints": null
+          },
+          {
+            "name": "dataGeneralizations",
+            "title": "Data Generalizations",
+            "description": "Actions taken to make the shared data less specific or complete than in its original form. Suggests that alternative data of higher quality may be available on request.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`coordinates generalized from original GPS coordinates to the nearest half degree grid cell`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/dataGeneralizations",
+            "constraints": null
+          }
+        ],
+        "primaryKey": "eventID",
+        "foreignKeys": [
+          {
+            "fields": "parentEventID",
+            "reference": {
+              "resource": "event",
+              "fields": "eventID"
+            }
+          },
+          {
+            "fields": "eventConductedByID",
+            "reference": {
+              "resource": "agent",
+              "fields": "agentID"
+            }
+          },
+          {
+            "fields": "georeferencedByID",
+            "reference": {
+              "resource": "agent",
+              "fields": "agentID"
+            }
+          },
+          {
+            "fields": "georeferenceProtocolID",
+            "reference": {
+              "resource": "protocol",
+              "fields": "protocolID"
+            }
+          },
+          {
+            "fields": "fundingAttributionID",
+            "reference": {
+              "resource": "agent",
+              "fields": "agentID"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "occurrence",
+      "path": "occurrence.csv",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "schema": {
+        "name": "occurrence",
+        "identifier": "http://rs.tdwg.org/dwc/dwc-dp/occurrence",
+        "url": "https://github.com/gbif/dwc-dp/blob/master/dwc-dp/0.1/table-schemas/occurrence.json",
+        "title": "Occurrence",
+        "description": "A state of a dwc:Organism in a dwc:Event.",
+        "fields": [
+          {
+            "name": "occurrenceID",
+            "title": "Occurrence ID",
+            "description": "An identifier for a dwc:Occurrence.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a persistent, globally unique identifier. In the absence of a persistent global unique identifier, construct one from a combination of identifiers in the record that will most closely make a dwc:occurrenceID globally unique.",
+            "examples": "`http://arctos.database.museum/guid/MSB:Mamm:233627`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/occurrenceID",
+            "constraints": [true, true, null, null, null, null, null, null, null, null, null, null, null],
+            "default": null
+          },
+          {
+            "name": "eventID",
+            "title": "Event ID",
+            "description": "An identifier for a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": "http://rs.tdwg.org/dwc/terms/eventID",
+            "constraints": [true, false, null, null, null, null, null, null, null, null, null, null, null],
+            "default": null
+          },
+          {
+            "name": "sex",
+            "title": "Sex",
+            "description": "A sex of a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary. This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
+            "examples": "`male`; `female`; `hermaphrodite`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/sex",
+            "constraints": null,
+            "default": null
+          },
+          {
+            "name": "lifeStage",
+            "title": "Life Stage",
+            "description": "An age class or life stage of a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary. This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
+            "examples": "`zygote`; `larva`; `juvenile`; `adult`; `seedling`; `flowering`; `fruiting`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/lifeStage",
+            "constraints": null,
+            "default": null
+          },
+          {
+            "name": "reproductiveCondition",
+            "title": "Reproductive Condition",
+            "description": "A reproductive condition of a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary. This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
+            "examples": "`non-reproductive`; `pregnant`; `in bloom`; `fruit-bearing`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/reproductiveCondition",
+            "constraints": null,
+            "default": null
+          },
+          {
+            "name": "occurrenceStatus",
+            "title": "Occurrence Status",
+            "description": "A statement about the detection or non-detection of a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "For dwc:Occurrences, the default vocabulary is recommended to consist of 'detected' and 'notDetected', but can be extended by implementers with good justification. This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
+            "examples": "`detected`; `notDetected`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/occurrenceStatus",
+            "constraints": null,
+            "default": "detected"
+          },
+          {
+            "name": "organismID",
+            "title": "Organism ID",
+            "description": "An identifier for a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/organismID",
+            "constraints": null,
+            "default": null
+          },
+          {
+            "name": "organismName",
+            "title": "Organism Name",
+            "description": "A name or label assigned to a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Huberta`; `Boab Prison Tree`; `J pod`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/organismName",
+            "constraints": null,
+            "default": null
+          },
+          {
+            "name": "taxonID",
+            "title": "Taxon ID",
+            "description": "An identifier for a dwc:Taxon.",
+            "type": "string",
+            "format": "default",
+            "comments": "In DwC-DP, the taxonID is always an external link to a taxon record. As such, if present, it should be a resolvable globally unique identifier. See the Identifiers section of https://github.com/CatalogueOfLife/coldp/blob/master/README.md.",
+            "examples": "`https://www.checklistbank.org/dataset/COL2023/taxon/DGP6 `; `worms:212808`; `ipni:320035-2`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/taxonID",
+            "constraints": null,
+            "default": null
+          },
+          {
+            "name": "higherClassificationName",
+            "title": "Higher Classification Name",
+            "description": "A full scientific name at a higher rank than the taxonRank of a dwc:scientificName.",
+            "type": "string",
+            "format": "default",
+            "comments": "A higherClassificationName must have a corresponding higherClassificationRank.",
+            "examples": "`Animalia` (higherClassificationName) with `kingdom` (higherClassificationRank); `Laphriinae`  (higherClassificationName) with `subfamily` (higherClassificationRank)",
+            "namespace": "dwcdp",
+            "iri": "",
+            "constraints": null,
+            "default": null
+          },
+          {
+            "name": "higherClassificationRank",
+            "title": "Higher Classification Rank",
+            "description": "A taxonomic rank of a higherClassificationName.",
+            "type": "string",
+            "format": "default",
+            "comments": "A higherClassificationRank must have a corresponding higherClassificationName.",
+            "examples": "`Acanthaceae` (higherClassificationName) with `family` (higherClassificationRank); `Pyrenomycetes` (higherClassificationName) with `class` (higherClassificationRank",
+            "namespace": "dwcdp",
+            "iri": "",
+            "constraints": null,
+            "default": null
+          },
+          {
+            "name": "scientificName",
+            "title": "Scientific Name",
+            "description": "A full scientific name, with authorship and date information if known. When forming part of a dwc:Identification, this should be the name in lowest level taxonomic rank that can be determined. This term should not contain identification qualifications, which should instead be supplied in dwc:verbatimIdentification.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/scientificName",
+            "constraints": null,
+            "default": null
+          },
+          {
+            "name": "taxonRank",
+            "title": "Taxon Rank",
+            "description": "A taxonomic rank of the most specific name in a dwc:scientificName.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/taxonRank",
+            "constraints": null,
+            "default": null
+          }
+        ],
+        "primaryKey": "occurrenceID",
+        "foreignKeys": [
+          {
+            "fields": "eventID",
+            "reference": {
+              "resource": "event",
+              "fields": "eventID"
+            }
+          },
+          {
+            "fields": "surveyTargetID",
+            "reference": {
+              "resource": "survey-target",
+              "fields": "surveyTargetID"
+            }
+          },
+          {
+            "fields": "recordedByID",
+            "reference": {
+              "resource": "agent",
+              "fields": "agentID"
+            }
+          },
+          {
+            "fields": "identifiedByID",
+            "reference": {
+              "resource": "agent",
+              "fields": "agentID"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
