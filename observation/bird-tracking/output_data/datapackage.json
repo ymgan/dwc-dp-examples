@@ -217,7 +217,7 @@
           {
             "fields": "parentEventID",
             "reference": {
-              "resource": "event",
+              "resource": "",
               "fields": "eventID"
             }
           }
@@ -396,7 +396,7 @@
           {
             "fields": "eventID",
             "reference": {
-              "resource": "",
+              "resource": "event",
               "fields": "eventID"
             }
           }
