@@ -187,7 +187,7 @@ parent_event <-
     maximumElevationInMeters = NA_real_,
     locationRemarks = NA_character_,
     decimalLatitude = NA_real_,
-    decimalLongitude = NA_real_,,
+    decimalLongitude = NA_real_,
     geodeticDatum = dplyr::if_else(
       !is.na(.data$`deploy-on-latitude`),
       "EPSG:4326",
