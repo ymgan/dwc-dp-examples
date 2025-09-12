@@ -1,0 +1,3382 @@
+{
+  "profile": "tabular-data-package",
+  "name": "inat-organisminteraction",
+  "title": "iNaturalist DwC-DP OrganismInteraction Example",
+  "resources": [
+    {
+      "profile": "tabular-data-resource",
+      "name": "occurrence-assertion",
+      "path": "occurrence-assertion.tsv",
+      "format": "tsv",
+      "mediatype": "text/tab-separated-values",
+      "schema": {
+        "name": "occurrence-assertion",
+        "identifier": "http://rs.tdwg.org/dwc/dwc-dp/occurrence-assertion",
+        "url": "https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/occurrence-assertion.json",
+        "title": "OccurrenceAssertion",
+        "description": "An Assertion made by an Agent about a dwc:Occurrence.",
+        "fields": [
+          {
+            "name": "assertionID",
+            "title": "Assertion ID",
+            "description": "An identifier for an Assertion.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/measurementID",
+            "constraints": {
+              "required": true,
+              "unique": true
+            }
+          },
+          {
+            "name": "occurrenceID",
+            "title": "Occurrence ID",
+            "description": "An identifier for a dwc:Occurrence.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a persistent, globally unique identifier. In the absence of a persistent global unique identifier, construct one from a combination of identifiers in the record that will most closely make a dwc:occurrenceID globally unique.",
+            "examples": "`http://arctos.database.museum/guid/MSB:Mamm:233627`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/occurrenceID",
+            "constraints": {
+              "required": true,
+              "unique": false
+            }
+          },
+          {
+            "name": "verbatimAssertionType",
+            "title": "Verbatim Assertion Type",
+            "description": "A string representing the type of Assertion as it appeared in the original record.",
+            "type": "string",
+            "format": "default",
+            "comments": "This term is meant to allow the capture of an unaltered original name for an Assertion type. This term is meant to be used in addition to dwc:assertionType, not instead of it.",
+            "examples": "`water_temp`; `Fish biomass`; `sampling net mesh size`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/verbatimMeasurementType"
+          },
+          {
+            "name": "assertionType",
+            "title": "Assertion Type",
+            "description": "A category that best matches the nature of an Assertion.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`mass`; `mean mass`; `weight standard deviation`; `minimum organism quantity`; `Temperature of the water body`; `salinity`; `Mesh size of sample collector`",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "assertionTypeIRI",
+            "title": "Assertion Type IRI",
+            "description": "An IRI of a controlled vocabulary value for a type of Assertion.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use an IRI for a term in a controlled vocabulary.",
+            "examples": "`http://vocab.nerc.ac.uk/collection/P01/current/TEMPPR01/`;`http://vocab.nerc.ac.uk/collection/P01/current/SDBIOL05/`;`http://vocab.nerc.ac.uk/collection/P01/current/MSHSIZE1/`",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "assertionTypeVocabulary",
+            "title": "Assertion Type Vocabulary",
+            "description": "A reference to the controlled vocabulary in which the definition of a value in assertionType is given.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "http://vocab.nerc.ac.uk/collection/P01/current/",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "assertionMadeDate",
+            "title": "Assertion Made Date",
+            "description": "A date on which an Assertion was created.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a date that conforms to ISO 8601-1:2019.",
+            "examples": "`2024-07-29`",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "assertionEffectiveDate",
+            "title": "Assertion Effective Date",
+            "description": "A date on which a state or measurement of an Assertion was deemed to first be in effect.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a date that conforms to ISO 8601-1:2019.",
+            "examples": "`2024-07-29`",
+            "namespace": "dwcdp",
+            "iri": "http://rs.tdwg.org/dwc/terms/measurementDeterminedDate"
+          },
+          {
+            "name": "assertionValue",
+            "title": "Assertion Value",
+            "description": "An asserted value, if it is not numeric.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`UV-light`",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "assertionValueIRI",
+            "title": "Assertion Value IRI",
+            "description": "An IRI of the controlled vocabulary value for a value of an Assertion.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use an IRI for a term in a controlled vocabulary.",
+            "examples": "`https://vocab.nerc.ac.uk/collection/S10/current/S103/`",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "assertionValueVocabulary",
+            "title": "Assertion Value Vocabulary",
+            "description": "A reference to a controlled vocabulary in which the definition of a value in assertionValue is given.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`https://vocab.nerc.ac.uk/collection/S10/current/`",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "assertionValueNumeric",
+            "title": "Assertion Value Numeric",
+            "description": "An asserted value, if it is numeric.",
+            "type": "number",
+            "format": "default",
+            "comments": "",
+            "examples": "`0`; `1`; `14.5`",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "assertionUnit",
+            "title": "Assertion Unit",
+            "description": "Units associated with the value in assertionValueNumeric.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary such as the Ontology of Units of Measure http://www.wurvoc.org/vocabularies/om-1.8/ of SI units, derived units, or other non-SI units accepted for use within the SI. For units that are composed of multiple parts, use the patterns as given in \"A Primer for Communicating Mathematics via Plain Text\" (https://cse.sc.edu/~fenner/latex-ASCII.pdf) by Stephen Fenner (e.g., `g/cm^3` for grams per cubic centimeter). For other units, provide the value as a recognizable standard (e.g., '%') or written out in full and in the plural (e.g., `individuals`). It is fine to provide non-SI units in the original language of the dataset.",
+            "examples": "`m`; `g`; `l`; `s`; `\u00b0C`; `mm`; `km\u00b2`; `%`; `hh:mm:ss`",
+            "namespace": "dwcdp",
+            "iri": "http://rs.tdwg.org/dwc/terms/measurementUnit"
+          },
+          {
+            "name": "assertionUnitIRI",
+            "title": "Assertion Unit IRI",
+            "description": "An IRI of a controlled vocabulary value for the units of an assertionValueNumeric.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use an IRI for a term in a controlled vocabulary.",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "assertionUnitVocabulary",
+            "title": "Assertion Unit Vocabulary",
+            "description": "A reference to a controlled vocabulary in which the definition of the value in assertionUnit is given.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "assertionBy",
+            "title": "Assertion By",
+            "description": "A list (concatenated and separated) of names of Agents responsible for making an Assertion.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to separate the values in a list with space vertical bar space ( | ).",
+            "examples": "`Jos\u00e9 E. Crespo`; `Oliver P. Pearson | Anita K. Pearson`; `FMNH`; `bdqtestrunner`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/measurementDeterminedBy"
+          },
+          {
+            "name": "assertionByID",
+            "title": "Assertion By ID",
+            "description": "An identifier for an Agent responsible for making an Assertion.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "`https://orcid.org/0000-0002-1825-0097` (for an individual); `https://orcid.org/0000-0002-1825-0097 | https://orcid.org/0000-0002-1825-0098` (for a list of people)",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "assertionProtocols",
+            "title": "Assertion Protocols",
+            "description": "Names of, references to, or descriptions of Protocols used in making an Assertion.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": "http://rs.tdwg.org/dwc/terms/measurementMethod"
+          },
+          {
+            "name": "assertionProtocolID",
+            "title": "Assertion Protocol ID",
+            "description": "An identifier for a Protocol used to make an Assertion.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": "http://rs.tdwg.org/dwc/iri/measurementMethod"
+          },
+          {
+            "name": "assertionReferences",
+            "title": "Assertion References",
+            "description": "A list (concatenated and separated) of identifiers (publication, bibliographic reference, global unique identifier, URI) of literature associated with an Assertion.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to separate the values in a list with space vertical bar space (` | `).",
+            "examples": "`http://www.sciencemag.org/cgi/content/abstract/322/5899/261`; `Christopher J. Conroy, Jennifer L. Neuwald. 2008. Phylogeographic study of the California vole, Microtus californicus Journal of Mammalogy, 89(3):755-767.`; `Steven R. Hoofer and Ronald A. Van Den Bussche. 2001. Phylogenetic Relationships of Plecotine Bats and Allies Based on Mitochondrial Ribosomal Sequences. Journal of Mammalogy 82(1):131-137. | Walker, Faith M., Jeffrey T. Foster, Kevin P. Drees, Carol L. Chambers. 2014. Spotted bat (Euderma maculatum) microsatellite discovery using illumina sequencing. Conservation Genetics Resources.`",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "assertionRemarks",
+            "title": "Assertion Remarks",
+            "description": "Comments or notes about an Assertion.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": "http://rs.tdwg.org/dwc/terms/measurementRemarks"
+          }
+        ],
+        "primaryKey": "assertionID",
+        "foreignKeys": [
+          {
+            "fields": "occurrenceID",
+            "reference": {
+              "resource": "occurrence",
+              "fields": "occurrenceID"
+            }
+          }
+        ]
+      },
+      "dialect": {
+        "delimiter": "\t",
+        "quoteChar": "\"",
+        "lineTerminator": "\n",
+        "header": true,
+        "doubleQuote": true,
+        "skipInitialSpace": false,
+        "commentChar": "#",
+        "caseSensitiveHeader": false
+      }
+    },
+    {
+      "profile": "tabular-data-resource",
+      "name": "event",
+      "path": "event.tsv",
+      "format": "tsv",
+      "mediatype": "text/tab-separated-values",
+      "schema": {
+        "name": "event",
+        "identifier": "http://rs.tdwg.org/dwc/dwc-dp/event",
+        "url": "https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/event.json",
+        "title": "Event",
+        "description": "An action, process, or set of circumstances occurring at a dcterms:Location during a period of time.",
+        "fields": [
+          {
+            "name": "eventID",
+            "title": "Event ID",
+            "description": "An identifier for a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/eventID",
+            "constraints": {
+              "required": true,
+              "unique": true
+            }
+          },
+          {
+            "name": "parentEventID",
+            "title": "Parent Event ID",
+            "description": "An identifier for a broader dwc:Event that groups this and potentially other dwc:Events.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/parentEventID"
+          },
+          {
+            "name": "preferredEventName",
+            "title": "Preferred Event Name",
+            "description": "The name of a dwc:Event preferred in searches and results.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "eventCategory",
+            "title": "Event Category",
+            "description": "A broad category that best matches the nature of a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a limited, tightly controlled vocabulary.",
+            "examples": "`observation`; `material gathering`; `organism interaction`; `survey`; `nucleotide analysis`",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "eventType",
+            "title": "Event Type",
+            "description": "A narrow category that best matches the nature of a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary.",
+            "examples": "`MaterialGathering`; `Occurrence`; `Survey`; `SiteVisit`; `OrganismInteraction`; `CameraTrapDeployment`; `MediaCapture`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/eventType"
+          },
+          {
+            "name": "datasetName",
+            "title": "Dataset Name",
+            "description": "A name of a dataset from which data originated.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/datasetName"
+          },
+          {
+            "name": "datasetID",
+            "title": "Dataset ID",
+            "description": "An identifier for a dataset from which data originated.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/datasetID"
+          },
+          {
+            "name": "fieldNumber",
+            "title": "Field Number",
+            "description": "An identifier given to a dwc:Event in the field.",
+            "type": "string",
+            "format": "default",
+            "comments": "Often serves as a link between field notes and a dwc:Event.",
+            "examples": "`RV Sol 87-03-08`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/fieldNumber"
+          },
+          {
+            "name": "eventConductedBy",
+            "title": "Event Conducted By",
+            "description": "A list (concatenated and separated) of names of Agents responsible for conducting or recording a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to separate the values in a list with space vertical bar space ( | ).",
+            "examples": "`Jos\u00e9 E. Crespo`; `Oliver P. Pearson | Anita K. Pearson`; `FMNH`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/recordedBy"
+          },
+          {
+            "name": "eventConductedByID",
+            "title": "Event Conducted By ID",
+            "description": "An identifier for the Agent responsible for conducting or recording a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "`https://orcid.org/0000-0002-1825-0097`; `https://ror.org/00mh9zx15`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/recordedByID"
+          },
+          {
+            "name": "eventDate",
+            "title": "Event Date",
+            "description": "A date or time interval during which a dwc:Event occurred.",
+            "type": "string",
+            "format": "default",
+            "comments": "For gathering dwc:Events, this is the date-time when the gathering took place.",
+            "examples": "`1963-03-08T14:07-06:00` (8 Mar 1963 at 2:07pm in the time zone six hours earlier than UTC); `2009-02-20T08:40Z` (20 February 2009 8:40am UTC); `2018-08-29T15:19` (3:19pm local time on 29 August 2018); `1809-02-12` (some time during 12 February 1809); `1906-06` (some time in June 1906); `1971` (some time in the year 1971); `2007-03-01T13:00:00Z/2008-05-11T15:30:00Z` (some time during the interval between 1 March 2007 1pm UTC and 11 May 2008 3:30pm UTC); `1900/1909` (some time during the interval between the beginning of the year 1900 and the end of the year 1909); `2007-11-13/15` (some time in the interval between 13 November 2007 and 15 November 2007)",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/eventDate"
+          },
+          {
+            "name": "eventTime",
+            "title": "Event Time",
+            "description": "A time interval during which a dwc:Event occurred.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a time of day that conforms to ISO 8601-1:2019.",
+            "examples": "`14:07-06:00` (2:07pm in the time zone six hours earlier than UTC); `08:40:21Z` (8:40:21am UTC); `13:00:00Z/15:30:00Z` (the interval between 1pm UTC and 3:30pm UTC)",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/eventTime"
+          },
+          {
+            "name": "startDayOfYear",
+            "title": "Start Day Of Year",
+            "description": "The earliest integer day of the year on which a dwc:Event occurred (1 for January 1, 365 for December 31, except in a leap year, in which case it is 366).",
+            "type": "integer",
+            "format": "default",
+            "comments": "",
+            "examples": "`1` (1 January); `32` (1 February); `366` (31 December); `365` (30 December in a leap year, 31 December in a non-leap year)",
+            "constraints": {
+              "required": false,
+              "minimum": 1,
+              "maximum": 366
+            },
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/startDayOfYear"
+          },
+          {
+            "name": "endDayOfYear",
+            "title": "End Day Of Year",
+            "description": "The latest integer day of the year on which a dwc:Event occurred (1 for January 1, 365 for December 31, except in a leap year, in which case it is 366).",
+            "type": "integer",
+            "format": "default",
+            "comments": "",
+            "examples": "`1` (1 January); `32` (1 February); `366` (31 December); `365` (30 December in a leap year, 31 December in a non-leap year)",
+            "constraints": {
+              "required": false,
+              "minimum": 1,
+              "maximum": 366
+            },
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/endDayOfYear"
+          },
+          {
+            "name": "year",
+            "title": "Year",
+            "description": "A four-digit year in which a dwc:Event occurred, according to the Common Era Calendar.",
+            "type": "integer",
+            "format": "default",
+            "comments": "",
+            "examples": "`1160`; `2008`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/year"
+          },
+          {
+            "name": "month",
+            "title": "Month",
+            "description": "An integer month in which a dwc:Event occurred.",
+            "type": "integer",
+            "format": "default",
+            "comments": "",
+            "examples": "`1` (January); `10` (October)",
+            "constraints": {
+              "required": false,
+              "minimum": 1,
+              "maximum": 12
+            },
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/month"
+          },
+          {
+            "name": "day",
+            "title": "Day",
+            "description": "An integer day of the month on which a dwc:Event occurred.",
+            "type": "integer",
+            "format": "default",
+            "comments": "",
+            "examples": "`9`; `28`",
+            "constraints": {
+              "required": false,
+              "minimum": 1,
+              "maximum": 31
+            },
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/day"
+          },
+          {
+            "name": "verbatimEventDate",
+            "title": "Verbatim Event Date",
+            "description": "A verbatim original representation of the date and time information for a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`spring 1910`; `marzo 2002`; `1999-03-XX`; `17IV1934`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/verbatimEventDate"
+          },
+          {
+            "name": "verbatimLocality",
+            "title": "Verbatim Locality",
+            "description": "An original textual description of a dcterms:Location.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`25 km NNE Bariloche por R. Nac. 237`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/verbatimLocality"
+          },
+          {
+            "name": "verbatimElevation",
+            "title": "Verbatim Elevation",
+            "description": "An original description of the elevation (altitude, usually above sea level) of a dcterms:Location.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`100-200 m`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/verbatimElevation"
+          },
+          {
+            "name": "verbatimDepth",
+            "title": "Verbatim Depth",
+            "description": "An original description of the depth below a local surface.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`100-200 m`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/verbatimDepth"
+          },
+          {
+            "name": "verbatimCoordinates",
+            "title": "Verbatim Coordinates",
+            "description": "Verbatim original spatial coordinates of a dcterms:Location.",
+            "type": "string",
+            "format": "default",
+            "comments": "The coordinate ellipsoid, geodeticDatum, or full Spatial Reference System (SRS) for these coordinates should be stored in verbatimSRS and the coordinate system should be stored in verbatimCoordinateSystem.",
+            "examples": "`41 05 54S 121 05 34W`; `17T 630000 4833400`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/verbatimCoordinates"
+          },
+          {
+            "name": "verbatimLatitude",
+            "title": "Verbatim Latitude",
+            "description": "A verbatim original latitude of a dcterms:Location.",
+            "type": "string",
+            "format": "default",
+            "comments": "The coordinate ellipsoid, geodeticDatum, or full Spatial Reference System (SRS) for these coordinates should be stored in verbatimSRS and the coordinate system should be stored in verbatimCoordinateSystem.",
+            "examples": "`41 05 54.03S`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/verbatimLatitude"
+          },
+          {
+            "name": "verbatimLongitude",
+            "title": "Verbatim Longitude",
+            "description": "A verbatim original longitude of a dcterms:Location.",
+            "type": "string",
+            "format": "default",
+            "comments": "The coordinate ellipsoid, geodeticDatum, or full Spatial Reference System (SRS) for these coordinates should be stored in verbatimSRS and the coordinate system should be stored in verbatimCoordinateSystem.",
+            "examples": "`121d 10' 34 W`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/verbatimLongitude"
+          },
+          {
+            "name": "verbatimCoordinateSystem",
+            "title": "Verbatim Coordinate System",
+            "description": "A coordinate format for dwc:verbatimLatitude and dwc:verbatimLongitude or dwc:verbatimCoordinates.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary.",
+            "examples": "`decimal degrees`; `degrees decimal minutes`; `degrees minutes seconds`; `UTM`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/verbatimCoordinateSystem"
+          },
+          {
+            "name": "verbatimSRS",
+            "title": "Verbatim SRS",
+            "description": "An ellipsoid, geodetic datum, or spatial reference system (SRS) upon which coordinates given in dwc:verbatimLatitude and dwc:verbatimLongitude, or dwc:verbatimCoordinates are based.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use the EPSG code of the SRS, if known. Otherwise use a controlled vocabulary for the name or code of the geodetic datum, if known. Otherwise use a controlled vocabulary for the name or code of the ellipsoid, if known. If none of these is known, use the value `not recorded`.",
+            "examples": "`not recorded`; `EPSG:4326`; `WGS84`; `NAD27`; `Campo Inchauspe`; `European 1950`; `Clarke 1866`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/verbatimSRS"
+          },
+          {
+            "name": "georeferenceVerificationStatus",
+            "title": "Georeference Verification Status",
+            "description": "A categorical description of the extent to which a georeference has been verified to represent the best possible spatial description for a dcterms:Location.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary. This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
+            "examples": "`unable to georeference`; `requires georeference`; `requires verification`; `verified by data custodian`; `verified by contributor`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/georeferenceVerificationStatus"
+          },
+          {
+            "name": "habitat",
+            "title": "Habitat",
+            "description": "A category or description of the habitat in which a dwc:Event occurred.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`oak savanna`; `pre-cordilleran steppe`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/habitat"
+          },
+          {
+            "name": "eventEffort",
+            "title": "Event Effort",
+            "description": "An amount of effort expended during a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`40 trap-nights`; `10 observer-hours`; `10 km by foot`; `30 km by car`",
+            "namespace": "eco",
+            "iri": "http://rs.tdwg.org/eco/terms/eventEffort"
+          },
+          {
+            "name": "fieldNotes",
+            "title": "Field Notes",
+            "description": "One of a) an indicator of the existence of, b) a reference to (publication, URI), or c) the text of notes taken in the field about a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Notes available in the Grinnell-Miller Library.`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/fieldNotes"
+          },
+          {
+            "name": "eventReferences",
+            "title": "Event References",
+            "description": "A list (concatenated and separated) of identifiers (publication, bibliographic reference, global unique identifier, URI) of literature associated with a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to separate the values in a list with space vertical bar space (` | `).",
+            "examples": "`http://www.sciencemag.org/cgi/content/abstract/322/5899/261`; `Christopher J. Conroy, Jennifer L. Neuwald. 2008. Phylogeographic study of the California vole, Microtus californicus Journal of Mammalogy, 89(3):755-767.`; `Steven R. Hoofer and Ronald A. Van Den Bussche. 2001. Phylogenetic Relationships of Plecotine Bats and Allies Based on Mitochondrial Ribosomal Sequences. Journal of Mammalogy 82(1):131-137. | Walker, Faith M., Jeffrey T. Foster, Kevin P. Drees, Carol L. Chambers. 2014. Spotted bat (Euderma maculatum) microsatellite discovery using illumina sequencing. Conservation Genetics Resources.`",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "eventRemarks",
+            "title": "Event Remarks",
+            "description": "Comments or notes about a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`After the recent rains the river is nearly at flood stage.`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/eventRemarks"
+          },
+          {
+            "name": "locationID",
+            "title": "Location ID",
+            "description": "An identifier a dcterms:Location.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "`https://opencontext.org/subjects/768A875F-E205-4D0B-DE55-BAB7598D0FD1`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/locationID"
+          },
+          {
+            "name": "higherGeographyID",
+            "title": "Higher Geography ID",
+            "description": "An identifier for a geographic region within which a dcterms:Location occurs.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "`http://vocab.getty.edu/tgn/1002002`  (Ant\u00e1rtida e Islas del Atl\u00e1ntico Sur, Territorio Nacional de la Tierra del Fuego, Argentina).",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/higherGeographyID"
+          },
+          {
+            "name": "higherGeography",
+            "title": "Higher Geography",
+            "description": "A list (concatenated and separated) of geographic names less specific than the information captured in dwc:locality.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to separate the values in a list with space vertical bar space (` | `), with terms in order from least specific to most specific.",
+            "examples": "`North Atlantic Ocean`; `South America | Argentina | Patagonia | Parque Nacional Nahuel Huapi | Neuqu\u00e9n | Los Lagos` with accompanying values `South America` (continent) `Argentina` (country), `Neuqu\u00e9n` (first order division), and `Los Lagos` (second order division)",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/higherGeography"
+          },
+          {
+            "name": "continent",
+            "title": "Continent",
+            "description": "A name of a continent in which a dcterms:Location occurs.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names. Recommended best practice is to leave this field blank if the dcterms:Location spans multiple entities at this administrative level or if the dcterms:Location might be in one or another of multiple possible entities at this level. Multiplicity and uncertainty of the geographic entity can be captured either in the term dwc:higherGeography or in the term dwc:locality, or both.",
+            "examples": "`Africa`; `Antarctica`; `Asia`; `Europe`; `North America`; `Oceania`; `South America`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/continent"
+          },
+          {
+            "name": "waterBody",
+            "title": "Water Body",
+            "description": "A name of a water body in which a dcterms:Location occurs.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names.",
+            "examples": "`Indian Ocean`; `Baltic Sea`; `Hudson River`; `Lago Nahuel Huapi`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/waterBody"
+          },
+          {
+            "name": "islandGroup",
+            "title": "Island Group",
+            "description": "A name of an island group in which a dcterms:Location occurs.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names.",
+            "examples": "`Alexander Archipelago`; `Archipi\u00e9lago Diego Ram\u00edrez`; `Seychelles`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/islandGroup"
+          },
+          {
+            "name": "island",
+            "title": "Island",
+            "description": "A name of an island on or near which a dcterms:Location occurs.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names.",
+            "examples": "`Nosy Be`; `Bikini Atoll`; `Vancouver`; `Viti Levu`; `Zanzibar`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/island"
+          },
+          {
+            "name": "country",
+            "title": "Country",
+            "description": "A name of a country or major administrative unit in which a dcterms:Location occurs.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names. Recommended best practice is to leave this field blank if the dcterms:Location spans multiple entities at this administrative level or if the dcterms:Location might be in one or another of multiple possible entities at this level. Multiplicity and uncertainty of the geographic entity can be captured either in the term dwc:higherGeography or in the term dwc:locality, or both.",
+            "examples": "`Denmark`; `Colombia`; `Espa\u00f1a`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/country"
+          },
+          {
+            "name": "countryCode",
+            "title": "Country Code",
+            "description": "A standard code for a country in which a dcterms:Location occurs.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use an ISO 3166-1-alpha-2 country code, or 'ZZ' (for an unknown location or a location unassignable to a single country code), or 'XZ' (for the high seas beyond national jurisdictions). Multiplicity and uncertainty of the geographic entity can be captured either in the term dwc:higherGeography or in the term dwc:locality, or both.",
+            "examples": "`AR`; `SV`; `XZ`; `ZZ`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/countryCode"
+          },
+          {
+            "name": "stateProvince",
+            "title": "State Province",
+            "description": "A name of a next smaller administrative region than country (state, province, canton, department, region, etc.) in which a dcterms:Location occurs.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names. Recommended best practice is to leave this field blank if a dcterms:Location spans multiple entities at this administrative level or if a dcterms:Location might be in one or another of multiple possible entities at this level. Multiplicity and uncertainty of the geographic entity can be captured either in the term dwc:higherGeography or in the term dwc:locality, or both.",
+            "examples": "`Montana`; `Minas Gerais`; `C\u00f3rdoba`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/stateProvince"
+          },
+          {
+            "name": "county",
+            "title": "County",
+            "description": "A full, unabbreviated name of a next smaller administrative region than dwc:stateProvince (county, shire, department, etc.) in which a dcterms:Location occurs.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names. Recommended best practice is to leave this field blank if the dcterms:Location spans multiple entities at this administrative level or if the dcterms:Location might be in one or another of multiple possible entities at this level. Multiplicity and uncertainty of the geographic entity can be captured either in the term dwc:higherGeography or in the term dwc:locality, or both.",
+            "examples": "`Missoula`; `Los Lagos`; `Matar\u00f3`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/county"
+          },
+          {
+            "name": "municipality",
+            "title": "Municipality",
+            "description": "A full, unabbreviated name of a next smaller administrative region than county (city, municipality, etc.) in which a dcterms:Location occurs. Do not use this term for a nearby named place that does not contain the actual location.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names. Recommended best practice is to leave this field blank if a dcterms:Location spans multiple entities at this administrative level or if a dcterms:Location might be in one or another of multiple possible entities at this level. Multiplicity and uncertainty of the geographic entity can be captured either in the term `higherGeography` or in the term `locality`, or both.",
+            "examples": "`Holzminden`; `Ara\u00e7atuba`; `Ga-Segonyana`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/municipality"
+          },
+          {
+            "name": "locality",
+            "title": "Locality",
+            "description": "A specific description of the location of a place.",
+            "type": "string",
+            "format": "default",
+            "comments": "Less specific geographic information can be provided in other geographic terms (higherGeography, continent, country, stateProvince, county, municipality, waterBody, island, islandGroup). This term may contain information modified from the original to correct perceived errors or standardize the description.",
+            "examples": "`Bariloche, 25 km NNE via Ruta Nacional 40 (=Ruta 237)`; `Queets Rainforest, Olympic National Park`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/locality"
+          },
+          {
+            "name": "minimumElevationInMeters",
+            "title": "Minimum Elevation In Meters",
+            "description": "A lower limit of a range of elevation (altitude, usually above sea level), in meters.",
+            "type": "number",
+            "format": "default",
+            "comments": "",
+            "examples": "`-100`; `802`",
+            "constraints": {
+              "required": false,
+              "minimum": -430,
+              "maximum": 8850
+            },
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/minimumElevationInMeters"
+          },
+          {
+            "name": "maximumElevationInMeters",
+            "title": "Maximum Elevation In Meters",
+            "description": "An upper limit of a range of elevation (altitude, usually above sea level), in meters.",
+            "type": "number",
+            "format": "default",
+            "comments": "",
+            "examples": "`-205`; `1236`",
+            "constraints": {
+              "required": false,
+              "minimum": -430,
+              "maximum": 8850
+            },
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/maximumElevationInMeters"
+          },
+          {
+            "name": "verticalDatum",
+            "title": "Vertical Datum",
+            "description": "A vertical datum used as a reference upon which the values in the elevation terms are based.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary.",
+            "examples": "`EGM84`; `EGM96`; `EGM2008`; `PGM2000A`; `PGM2004`; `PGM2006`; `PGM2007`; `EPSG:7030`; `not recorded`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/verticalDatum"
+          },
+          {
+            "name": "minimumDepthInMeters",
+            "title": "Minimum Depth In Meters",
+            "description": "A lesser depth of a range of depth below the local surface, in meters.",
+            "type": "number",
+            "format": "default",
+            "comments": "",
+            "examples": "`0`; `100`",
+            "constraints": {
+              "required": false,
+              "minimum": 0,
+              "maximum": 11000
+            },
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/minimumDepthInMeters"
+          },
+          {
+            "name": "maximumDepthInMeters",
+            "title": "Maximum Depth In Meters",
+            "description": "A greater depth of a range of depth below the local surface, in meters.",
+            "type": "number",
+            "format": "default",
+            "comments": "",
+            "examples": "`0`; `200`",
+            "constraints": {
+              "required": false,
+              "minimum": 0,
+              "maximum": 11000
+            },
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/maximumDepthInMeters"
+          },
+          {
+            "name": "minimumDistanceAboveSurfaceInMeters",
+            "title": "Minimum Distance Above Surface In Meters",
+            "description": "A lesser distance in a range of distance from a reference surface in the vertical direction, in meters. Use positive values for locations above the surface, negative values for locations below. If depth measures are given, the reference surface is the location given by the depth, otherwise the reference surface is the location given by the elevation.",
+            "type": "number",
+            "format": "default",
+            "comments": "",
+            "examples": "`-1.5` (below the surface); `4.2` (above the surface); For a 1.5 meter sediment core from the bottom of a lake (at depth 20m) at 300m elevation: verbatimElevation: `300m` minimumElevationInMeters: `300`, maximumElevationInMeters: `300`, verbatimDepth: `20m`, minimumDepthInMeters: `20`, maximumDepthInMeters: `20`, minimumDistanceAboveSurfaceInMeters: `0`, maximumDistanceAboveSurfaceInMeters: `-1.5`.",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/minimumDistanceAboveSurfaceInMeters"
+          },
+          {
+            "name": "maximumDistanceAboveSurfaceInMeters",
+            "title": "Maximum Distance Above Surface In Meters",
+            "description": "A greater distance in a range of distance from a reference surface in the vertical direction, in meters. Use positive values for locations above the surface, negative values for locations below. If depth measures are given, the reference surface is the location given by the depth, otherwise the reference surface is the location given by the elevation.",
+            "type": "number",
+            "format": "default",
+            "comments": "",
+            "examples": "`-1.5` (below the surface); `4.2` (above the surface); For a 1.5 meter sediment core from the bottom of a lake (at depth 20m) at 300m elevation: verbatimElevation: `300m` minimumElevationInMeters: `300`, maximumElevationInMeters: `300`, verbatimDepth: `20m`, minimumDepthInMeters: `20`, maximumDepthInMeters: `20`, minimumDistanceAboveSurfaceInMeters: `0`, maximumDistanceAboveSurfaceInMeters: `-1.5`.",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/maximumDistanceAboveSurfaceInMeters"
+          },
+          {
+            "name": "locationRemarks",
+            "title": "Location Remarks",
+            "description": "Comments or notes about a dcterms:Location.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`under water since 2005`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/locationRemarks"
+          },
+          {
+            "name": "decimalLatitude",
+            "title": "Decimal Latitude",
+            "description": "A geographic latitude (in decimal degrees, using the spatial reference system given in dwc:geodeticDatum) of the geographic center of a dcterms:Location.",
+            "type": "number",
+            "format": "default",
+            "comments": "Positive values are north of the Equator, negative values are south of it. Legal values lie between -90 and 90, inclusive.",
+            "examples": "`-41.0983423`",
+            "constraints": {
+              "required": false,
+              "minimum": -90,
+              "maximum": 90
+            },
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/decimalLatitude"
+          },
+          {
+            "name": "decimalLongitude",
+            "title": "Decimal Longitude",
+            "description": "A geographic longitude (in decimal degrees, using the spatial reference system given in dwc:geodeticDatum) of the geographic center of a dcterms:Location.",
+            "type": "number",
+            "format": "default",
+            "comments": "Positive values are east of the Greenwich Meridian, negative values are west of it. Legal values lie between -180 and 180, inclusive.",
+            "examples": "`-121.1761111`",
+            "constraints": {
+              "required": false,
+              "minimum": -180,
+              "maximum": 180
+            },
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/decimalLongitude"
+          },
+          {
+            "name": "geodeticDatum",
+            "title": "Geodetic Datum",
+            "description": "An ellipsoid, geodetic datum, or spatial reference system (SRS) upon which the geographic coordinates given in dwc:decimalLatitude and dwc:decimalLongitude as based.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use the EPSG code of the SRS, if known. Otherwise use a controlled vocabulary for the name or code of the geodetic datum, if known. Otherwise use a controlled vocabulary for the name or code of the ellipsoid, if known. If none of these is known, use the value `not recorded`.",
+            "examples": "`EPSG:4326`; `WGS84`; `NAD27`; `Campo Inchauspe`; `European 1950`; `Clarke 1866`; `not recorded`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/geodeticDatum"
+          },
+          {
+            "name": "coordinateUncertaintyInMeters",
+            "title": "Coordinate Uncertainty In Meters",
+            "description": "A horizontal distance (in meters) from a given dwc:decimalLatitude and dwc:decimalLongitude describing the smallest circle containing the whole of the dcterms:Location.",
+            "type": "number",
+            "format": "default",
+            "comments": "Leave the value empty if the uncertainty is unknown, cannot be estimated, or is not applicable (because there are no coordinates). Zero is not a valid value for this term.",
+            "examples": "`30` (reasonable lower limit on or after 2000-05-01 of a GPS reading under good conditions if the actual precision was not recorded at the time); `100` (reasonable lower limit before 2000-05-01 of a GPS reading under good conditions if the actual precision was not recorded at the time); `71` (uncertainty for a UTM coordinate having 100 meter precision and a known spatial reference system)",
+            "constraints": {
+              "required": false,
+              "minimum": 1,
+              "maximum": 20037509
+            },
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters"
+          },
+          {
+            "name": "coordinatePrecision",
+            "title": "Coordinate Precision",
+            "description": "A decimal representation of the precision of the coordinates given in a dwc:decimalLatitude and dwc:decimalLongitude.",
+            "type": "number",
+            "format": "default",
+            "comments": "",
+            "examples": "`0.00001` (normal GPS limit for decimal degrees); `0.000278` (nearest second); `0.01667` (nearest minute); `1.0` (nearest degree)",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/coordinatePrecision"
+          },
+          {
+            "name": "pointRadiusSpatialFit",
+            "title": "Point Radius Spatial Fit",
+            "description": "A ratio of the area of a point-radius (dwc:decimalLatitude, dwc:decimalLongitude, dwc:coordinateUncertaintyInMeters) to the area of a true (original, or most specific) spatial representation of a dcterms:Location.",
+            "type": "number",
+            "format": "default",
+            "comments": "Legal values are 0, greater than or equal to 1, or undefined. A value of 1 is an exact match or 100% overlap. A value of 0 should be used if the given point-radius does not completely contain the original representation. The pointRadiusSpatialFit is undefined (and should be left empty) if the original representation is any geometry without area (e.g., a point or polyline) and without uncertainty and the given georeference is not that same geometry (without uncertainty). If both the original and the given georeference are the same point, the pointRadiusSpatialFit is 1. Detailed explanations with graphical examples can be found in the Georeferencing Best Practices, Chapman and Wieczorek, 2020 (https://doi.org/10.15468/doc-gg7h-s853).",
+            "examples": "`0`; `1`; `1.5708`",
+            "constraints": {
+              "required": false,
+              "minimum": 0
+            },
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/pointRadiusSpatialFit"
+          },
+          {
+            "name": "footprintWKT",
+            "title": "Footprint WKT",
+            "description": "A Well-Known Text (WKT) representation of the shape (footprint, geometry) that defines a dcterms:Location.",
+            "type": "string",
+            "format": "default",
+            "comments": "A dcterms:Location may have both a point-radius representation (see dwc:decimalLatitude) and a footprint representation, and they may differ from each other.",
+            "examples": "`POLYGON ((10 20, 11 20, 11 21, 10 21, 10 20))` (the one-degree bounding box with opposite corners at longitude=10, latitude=20 and longitude=11, latitude=21)",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/footprintWKT"
+          },
+          {
+            "name": "footprintSRS",
+            "title": "Footprint SRS",
+            "description": "An ellipsoid, geodetic datum, or spatial reference system (SRS) upon which a geometry given in dwc:footprintWKT is based.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use the EPSG code of the SRS, if known. Otherwise use a controlled vocabulary for the name or code of the geodetic datum, if known. Otherwise use a controlled vocabulary for the name or code of the ellipsoid, if known. If none of these is known, use the value `not recorded`. It is also permitted to provide the SRS in Well-Known-Text, especially if no EPSG code provides the necessary values for the attributes of the SRS. Do not use this term to describe the SRS of a dwc:decimalLatitude and dwc:decimalLongitude, nor of any verbatim coordinates - use dwc:geodeticDatum and dwc:verbatimSRS instead.",
+            "examples": "`EPSG:4326`; `GEOGCS['GCS_WGS_1984', DATUM['D_WGS_1984', SPHEROID['WGS_1984',6378137,298.257223563]], PRIMEM['Greenwich',0], UNIT['Degree',0.0174532925199433]]` (WKT for the standard WGS84 Spatial Reference System EPSG:4326)",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/footprintSRS"
+          },
+          {
+            "name": "footprintSpatialFit",
+            "title": "Footprint Spatial Fit",
+            "description": "A ratio of the area of a footprint (dwc:footprintWKT) to the area of a true (original, or most specific) spatial representation of a dcterms:Location.",
+            "type": "number",
+            "format": "default",
+            "comments": "Legal values are 0, greater than or equal to 1, or undefined. A value of 1 is an exact match or 100% overlap. A value of 0 should be used if the given footprint does not completely contain the original representation. A dwc:footprintSpatialFit is undefined (and should be left empty) if the original representation is any geometry without area (e.g., a point or polyline) and without uncertainty and the given georeference is not that same geometry (without uncertainty). If both the original and the given georeference are the same point, a dwc:footprintSpatialFit is 1.",
+            "examples": "`0`; `1`; `1.5708`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/footprintSpatialFit"
+          },
+          {
+            "name": "georeferencedBy",
+            "title": "Georeferenced By",
+            "description": "A list (concatenated and separated) of names of Agents responsible for determining a georeference (spatial representation) for a dcterms:Location.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to separate the values in a list with space vertical bar space (` | `).",
+            "examples": "`Brad Millen (ROM)`; `Kristina Yamamoto | Janet Fang`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/georeferencedBy"
+          },
+          {
+            "name": "georeferencedByID",
+            "title": "Georeferenced By ID",
+            "description": "An identifier for the Agent responsible for determining a georeference for a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "`https://orcid.org/0000-0002-1825-0097`",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "georeferencedDate",
+            "title": "Georeferenced Date",
+            "description": "A date on which a dcterms:Location was georeferenced.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a date that conforms to ISO 8601-1:2019.",
+            "examples": "`2023-05-04`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/georeferencedDate"
+          },
+          {
+            "name": "georeferenceProtocol",
+            "title": "Georeference Protocol",
+            "description": "A description or reference to a Protocol used to determine the spatial footprint, coordinates, and uncertainties.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Georeferencing Quick Reference Guide (Zermoglio et al. 2020, https://doi.org/10.35035/e09p-h128)`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/georeferenceProtocol"
+          },
+          {
+            "name": "georeferenceProtocolID",
+            "title": "Georeference Protocol ID",
+            "description": "An identifier for a Protocol used to georeference a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwciri",
+            "iri": "http://rs.tdwg.org/dwc/iri/georeferenceProtocol"
+          },
+          {
+            "name": "georeferenceSources",
+            "title": "Georeference Sources",
+            "description": "A list (concatenated and separated) of maps, gazetteers, or other resources used to georeference a dcterms:Location, described specifically enough to allow anyone in the future to use the same resources.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to separate the values in a list with space vertical bar space (` | `).",
+            "examples": "`https://www.geonames.org/`; `USGS 1:24000 Florence Montana Quad 1967 | Terrametrics 2008 on Google Earth`; `GeoLocate`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/georeferenceSources"
+          },
+          {
+            "name": "georeferenceRemarks",
+            "title": "Georeference Remarks",
+            "description": "Comments or notes about a spatial description determination, explaining assumptions made in addition or opposition to the those formalized in the method referred to in dwc:georeferenceProtocol.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Assumed distance by road (Hwy. 101)`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/georeferenceRemarks"
+          },
+          {
+            "name": "informationWithheld",
+            "title": "Information Withheld",
+            "description": "Additional information that exists, but that has not been shared in the given record.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`location information not given for endangered species`; `collector identities withheld | ask about tissue samples`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/informationWithheld"
+          },
+          {
+            "name": "dataGeneralizations",
+            "title": "Data Generalizations",
+            "description": "Actions taken to make the shared data less specific or complete than in its original form. Suggests that alternative data of higher quality may be available on request.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`coordinates generalized from original GPS coordinates to the nearest half degree grid cell`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/dataGeneralizations"
+          },
+          {
+            "name": "preferredSpatialRepresentation",
+            "title": "Preferred Spatial Representation",
+            "description": "An indication of which spatial representation best represents the dcterms:Location.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`point-radius`; `footprint`",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "projectID",
+            "title": "Project ID",
+            "description": "A list (concatenated and separated) of identifiers for projects that contributed to a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "A projectID can be may be shared in multiple distinct datasets. The nature of the association can be described in the metadata project description element. This term should be used to provide a globally unique identifier (GUID) for a project, if available. This could be a DOI, URI, or any other persistent identifier that ensures a project can be uniquely distinguished from others. The recommended best practice is to separate the values in a list with space vertical bar space ( | ).",
+            "examples": "`RCN276730`; `RCN276730 | Artsproject_7-24`; `OC202405`; `https://arvenetternansen.com/`; `https://doi.org/10.3030/101180559`; `https://doi.org/10.26259/3b15eca7`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/projectID"
+          },
+          {
+            "name": "projectTitle",
+            "title": "Project Title",
+            "description": "A list (concatenated and separated) of titles or names for projects that contributed to a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "Use this term to provide the official name or title of a project as it is commonly known and cited. Avoid abbreviations unless they are widely understood. The recommended best practice is to separate the values in a list with space vertical bar space ( | ).",
+            "examples": "`The Nansen Legacy`; `Scalidophora i Noreg`; `Arctic Deep`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/projectTitle"
+          },
+          {
+            "name": "fundingAttribution",
+            "title": "Funding Attribution",
+            "description": "A list (concatenated and separated) of names of the funding organizations or agencies that provided funding for the project.",
+            "type": "string",
+            "format": "default",
+            "comments": "Specify the full official name of the funding body. This should include the complete name without abbreviations, unless the abbreviation is an official and commonly recognized form (e.g., NSF for the National Science Foundation). The recommended best practice is to separate the values in a list with space vertical bar space ( | ).",
+            "examples": "`Norges forskningsr\u00e5d`; `Artsdatabanken`; `Ocean Census | Nippon Foundation`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/fundingAttribution"
+          },
+          {
+            "name": "fundingAttributionID",
+            "title": "Funding Attribution ID",
+            "description": "A list (concatenated and separated) of the globally unique identifiers for the funding organizations or agencies that supported the project.",
+            "type": "string",
+            "format": "default",
+            "comments": "Provide a unique identifier for the funding body, such as an identifier used in governmental or international databases. If no official identifier exists, use a persistent and unique identifier within your organization or dataset. The recommended best practice is to separate the values in a list with space vertical bar space ( | ).",
+            "examples": "`https://ror.org/00epmv149`; `https://ror.org/00epmv149 | https://ror.org/04jnzhb65`; `https://www.wikidata.org/wiki/Q13102615`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/fundingAttributionID"
+          },
+          {
+            "name": "feedbackURL",
+            "title": "Feedback URL",
+            "description": "",
+            "type": "string",
+            "format": "default",
+            "comments": "A uniform resource locator (URL) that points to a webpage on which a form may be submitted to gather feedback about the record.",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/feedbackURL"
+          }
+        ],
+        "primaryKey": "eventID",
+        "foreignKeys": [
+          {
+            "fields": "parentEventID",
+            "reference": {
+              "resource": "event",
+              "fields": "eventID"
+            }
+          }
+        ]
+      },
+      "dialect": {
+        "delimiter": "\t",
+        "quoteChar": "\"",
+        "lineTerminator": "\n",
+        "header": true,
+        "doubleQuote": true,
+        "skipInitialSpace": false,
+        "commentChar": "#",
+        "caseSensitiveHeader": false
+      }
+    },
+    {
+      "profile": "tabular-data-resource",
+      "name": "event-media",
+      "path": "event-media.tsv",
+      "format": "tsv",
+      "mediatype": "text/tab-separated-values",
+      "schema": {
+        "name": "event-media",
+        "identifier": "http://rs.tdwg.org/dwc/dwc-dp/event-media",
+        "url": "https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/event-media.json",
+        "title": "EventMedia",
+        "description": "A link establishing a dwc:Event as content of a Media entity.",
+        "fields": [
+          {
+            "name": "mediaID",
+            "title": "Media ID",
+            "description": "An identifier for a Media instance.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": "",
+            "constraints": {
+              "required": true,
+              "unique": false
+            }
+          },
+          {
+            "name": "eventID",
+            "title": "Event ID",
+            "description": "An identifier for a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/eventID",
+            "constraints": {
+              "required": true,
+              "unique": false
+            }
+          },
+          {
+            "name": "mediaSubjectCategory",
+            "title": "Media Subject Category",
+            "description": "A term to describe the content of the image by a value from a controlled vocabulary.",
+            "type": "string",
+            "format": "default",
+            "comments": "Controlled vocabulary of subjects to support broad classification of media items. Terms from various controlled vocabularies may be used. AC-recommended vocabularies are preferred and MAY be unqualified literals (not a full URI). For terms from other vocabularies either a precise URI SHOULD be used, or, as long as all unqualified terms in all vocabularies are unique, metadata SHOULD provide the source vocabularies using the Subject Category Vocabulary term. The value SHOULD be a string, whose text can also be in the form of a URL. These guidelines on value format are less restrictive than is specified by the IPTC guidelines.",
+            "examples": "`herbarium sheet scan`",
+            "namespace": "Iptc4xmpExt",
+            "iri": "http://iptc.org/std/Iptc4xmpExt/2008-02-29/CVterm"
+          },
+          {
+            "name": "mediaSubjectCategoryIRI",
+            "title": "Media Subject Category IRI",
+            "description": "An IRI of a controlled vocabulary value for the subject category of a Media instance.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "Iptc4xmpExt",
+            "iri": "http://iptc.org/std/Iptc4xmpExt/2008-02-29/CVterm"
+          },
+          {
+            "name": "mediaSubjectCategoryVocabulary",
+            "title": "Media Subject Category Vocabulary",
+            "description": "Any vocabulary or formal classification from which terms in the Subject Category have been drawn.",
+            "type": "string",
+            "format": "default",
+            "comments": "The AC recommended vocabularies do not need to be cited here. There is no required linkage between individual Subject Category terms and the vocabulary; the mechanism is intended to support discovery of the normative URI for a term, but not guarantee it.",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/subjectCategoryVocabulary"
+          },
+          {
+            "name": "subjectPart",
+            "title": "SubjectPart",
+            "description": "The portion or product of organism morphology, behaviour, environment, etc. that is either predominantly shown or particularly well exemplified by the media resource.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`head`; `herbarium sheet`; `habitat`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/subjectPart"
+          },
+          {
+            "name": "subjectOrientation",
+            "title": "SubjectOrientation",
+            "description": "Specific orientation (= direction, view angle) of the subject represented in the media resource with respect to the acquisition device.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`frontal`; `dorsal`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/subjectOrientation"
+          },
+          {
+            "name": "physicalSetting",
+            "title": "PhysicalSetting",
+            "description": "The setting of the content represented in media such as images, sounds, and movies if the provider deems them relevant. Constrained vocabulary of: `Natural` = Object in its natural setting of the object (e. g. living organisms in their natural environment); `Artificial` = Object in an artificial environment (e. g. living organisms in an artificial environment such as a zoo, garden, greenhouse, or laboratory); `Edited` = Human media editing of a natural setting or media acquisition with a separate media background such as a photographic backdrop.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/physicalSetting"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "fields": "mediaID",
+            "reference": {
+              "resource": "media",
+              "fields": "mediaID"
+            }
+          },
+          {
+            "fields": "eventID",
+            "reference": {
+              "resource": "event",
+              "fields": "eventID"
+            }
+          }
+        ]
+      },
+      "dialect": {
+        "delimiter": "\t",
+        "quoteChar": "\"",
+        "lineTerminator": "\n",
+        "header": true,
+        "doubleQuote": true,
+        "skipInitialSpace": false,
+        "commentChar": "#",
+        "caseSensitiveHeader": false
+      }
+    },
+    {
+      "profile": "tabular-data-resource",
+      "name": "occurrence",
+      "path": "occurrence.tsv",
+      "format": "tsv",
+      "mediatype": "text/tab-separated-values",
+      "schema": {
+        "name": "occurrence",
+        "identifier": "http://rs.tdwg.org/dwc/dwc-dp/occurrence",
+        "url": "https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/occurrence.json",
+        "title": "Occurrence",
+        "description": "A state of a dwc:Organism in a dwc:Event.",
+        "fields": [
+          {
+            "name": "occurrenceID",
+            "title": "Occurrence ID",
+            "description": "An identifier for a dwc:Occurrence.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a persistent, globally unique identifier. In the absence of a persistent global unique identifier, construct one from a combination of identifiers in the record that will most closely make a dwc:occurrenceID globally unique.",
+            "examples": "`http://arctos.database.museum/guid/MSB:Mamm:233627`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/occurrenceID",
+            "constraints": {
+              "required": true,
+              "unique": true
+            }
+          },
+          {
+            "name": "eventID",
+            "title": "Event ID",
+            "description": "An identifier for a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": "http://rs.tdwg.org/dwc/terms/eventID",
+            "constraints": {
+              "required": true,
+              "unique": false
+            }
+          },
+          {
+            "name": "surveyTargetID",
+            "title": "Survey Target ID",
+            "description": "An identifier for a SurveyTarget.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "recordedBy",
+            "title": "Recorded By",
+            "description": "A list (concatenated and separated) of names of Agents responsible for recording a dwc:Occurrence.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to separate the values in a list with space vertical bar space ( | ).",
+            "examples": "`Jos\u00e9 E. Crespo`; `Oliver P. Pearson | Anita K. Pearson`; `FMNH`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/recordedBy"
+          },
+          {
+            "name": "recordedByID",
+            "title": "Recorded By ID",
+            "description": "An identifier for the Agent responsible for recording a dwc:Occurrence.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "`https://orcid.org/0000-0002-1825-0097`; `https://ror.org/00mh9zx15`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/recordedByID"
+          },
+          {
+            "name": "organismQuantity",
+            "title": "Organism Quantity",
+            "description": "A number or enumeration value for the quantity of dwc:Organisms.",
+            "type": "string",
+            "format": "default",
+            "comments": "A dwc:organismQuantity must have a corresponding dwc:organismQuantityType.",
+            "examples": "`27` (organismQuantity) with `individuals` (organismQuantityType); `12.5` (organismQuantity) with `% biomass` (organismQuantityType); `r` (organismQuantity) with `Braun-Blanquet Scale` (organismQuantityType); `many` (organismQuantity) with `individuals` (organismQuantityType)",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/organismQuantity"
+          },
+          {
+            "name": "organismQuantityType",
+            "title": "Organism Quantity Type",
+            "description": "A type of quantification system used for the quantity of dwc:Organisms.",
+            "type": "string",
+            "format": "default",
+            "comments": "A dwc:organismQuantityType must have a corresponding dwc:organismQuantity. This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
+            "examples": "`27` (organismQuantity) with `individuals` (organismQuantityType); `12.5` (organismQuantity) with `% biomass` (organismQuantityType); `r` (organismQuantity) with `Braun-Blanquet Scale` (organismQuantityType); `many` (organismQuantity) with `individuals` (organismQuantityType)",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/organismQuantity"
+          },
+          {
+            "name": "sex",
+            "title": "Sex",
+            "description": "A sex of a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary. This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
+            "examples": "`male`; `female`; `hermaphrodite`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/sex"
+          },
+          {
+            "name": "lifeStage",
+            "title": "Life Stage",
+            "description": "An age class or life stage of a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary. This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
+            "examples": "`zygote`; `larva`; `juvenile`; `adult`; `seedling`; `flowering`; `fruiting`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/lifeStage"
+          },
+          {
+            "name": "reproductiveCondition",
+            "title": "Reproductive Condition",
+            "description": "A reproductive condition of a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary. This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
+            "examples": "`non-reproductive`; `pregnant`; `in bloom`; `fruit-bearing`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/reproductiveCondition"
+          },
+          {
+            "name": "caste",
+            "title": "Caste",
+            "description": "A social caste of a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary that aligns best with a dwc:Taxon. This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
+            "examples": "`queen`; `male alate`; `intercaste`; `soldier`; `ergatoid`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/caste"
+          },
+          {
+            "name": "behavior",
+            "title": "Behavior",
+            "description": "A behavior shown by a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
+            "examples": "`roosting`; `foraging`; `running`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/behavior"
+          },
+          {
+            "name": "vitality",
+            "title": "Vitality",
+            "description": "An indication of whether a dwc:Organism was alive or dead at the time of collection or observation.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary. Intended to be used with records having a dwc:basisOfRecord of 'PreservedSpecimen', 'MaterialEntity', 'MaterialSample', 'HumanObservation', or 'MachineObservation'. This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
+            "examples": "`alive`; `dead`; `mixedLot`; `uncertain`; `notAssessed`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/vitality"
+          },
+          {
+            "name": "establishmentMeans",
+            "title": "Establishment Means",
+            "description": "Statement about whether a dwc:Organism has been introduced to a given place and time through the direct or indirect activity of modern humans.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use controlled value strings from the controlled vocabulary designated for use with this term, listed at http://rs.tdwg.org/dwc/doc/em/. For details, refer to https://doi.org/10.3897/biss.3.38084. This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
+            "examples": "`native`; `nativeIntroduced`; `introduced`; `introducedAssistedColinisation`; `vagrant`; `uncertain`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/establishmentMeans"
+          },
+          {
+            "name": "degreeOfEstablishment",
+            "title": "Degree Of Establishment",
+            "description": "The degree to which a dwc:Organism survives, reproduces, and expands its range at a given place and time.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use controlled value strings from the controlled vocabulary designated for use with this term, listed at http://rs.tdwg.org/dwc/doc/doe/. For details, refer to https://doi.org/10.3897/biss.3.38084. This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
+            "examples": "`native`; `captive`; `cultivated`; `released`; `failing`; `casual`; `reproducing`; `established`; `colonising`; `invasive`; `widespreadInvasive`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/degreeOfEstablishment"
+          },
+          {
+            "name": "pathway",
+            "title": "Pathway",
+            "description": "A process by which a dwc:Organism came to be in a given place at a given time.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use controlled value strings from the controlled vocabulary designated for use with this term, listed at http://rs.tdwg.org/dwc/doc/pw/. For details, refer to https://doi.org/10.3897/biss.3.38084. This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
+            "examples": "`releasedForUse`; `otherEscape`; `transportContaminant`; `transportStowaway`; `corridor`; `unaided`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/pathway"
+          },
+          {
+            "name": "substrate",
+            "title": "Substrate",
+            "description": "A biotic or abiotic material to which an dwc:Organism is attached when a dwc:Event occurs.",
+            "type": "string",
+            "format": "default",
+            "comments": "This may or may not imply that the organism influenced/took resources from the substrate (such as during parasitization or decomposition). Declaration of a host-parasite relationship is better expressed as an organism interaction.",
+            "examples": "`stone`; `wall`; `decaying wood`; `wooden board fence`; `animal bones`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/substrate"
+          },
+          {
+            "name": "occurrenceStatus",
+            "title": "Occurrence Status",
+            "description": "A statement about the detection or non-detection of a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "For dwc:Occurrences, the default vocabulary is recommended to consist of 'detected' and 'notDetected', but can be extended by implementers with good justification. This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
+            "examples": "`detected`; `notDetected`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/occurrenceStatus",
+            "default": "detected"
+          },
+          {
+            "name": "occurrenceReferences",
+            "title": "Occurrence References",
+            "description": "A list (concatenated and separated) of identifiers (publication, bibliographic reference, global unique identifier, URI) of literature associated with a dwc:Occurrence.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to separate the values in a list with space vertical bar space (` | `).",
+            "examples": "`Christopher J. Conroy, Jennifer L. Neuwald. 2008. Phylogeographic study of the California vole, Microtus californicus Journal of Mammalogy, 89(3):755-767.`; `Steven R. Hoofer and Ronald A. Van Den Bussche. 2001. Phylogenetic Relationships of Plecotine Bats and Allies Based on Mitochondrial Ribosomal Sequences. Journal of Mammalogy 82(1):131-137. | Walker, Faith M., Jeffrey T. Foster, Kevin P. Drees, Carol L. Chambers. 2014. Spotted bat (Euderma maculatum) microsatellite discovery using illumina sequencing. Conservation Genetics Resources.`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/associatedReferences"
+          },
+          {
+            "name": "informationWithheld",
+            "title": "Information Withheld",
+            "description": "Additional information that exists, but that has not been shared in the given record.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`location information not given for endangered species`; `collector identities withheld | ask about tissue samples`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/informationWithheld"
+          },
+          {
+            "name": "dataGeneralizations",
+            "title": "Data Generalizations",
+            "description": "Actions taken to make the shared data less specific or complete than in its original form. Suggests that alternative data of higher quality may be available on request.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`coordinates generalized from original GPS coordinates to the nearest half degree grid cell`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/dataGeneralizations"
+          },
+          {
+            "name": "occurrenceRemarks",
+            "title": "Occurrence Remarks",
+            "description": "Comments or notes about a dwc:Occurrence.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`found dead on road`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/occurrenceRemarks"
+          },
+          {
+            "name": "organismID",
+            "title": "Organism ID",
+            "description": "An identifier for a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/organismID"
+          },
+          {
+            "name": "organismScope",
+            "title": "Organism Scope",
+            "description": "A description of the type of dwc:Organism instance.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary. Can be used to indicate whether a dwc:Organism instance represents a discrete organism or if it represents a particular type of aggregation.",
+            "examples": "`multicellular organism`; `virus`; `clone`; `pack`; `colony`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/organismScope"
+          },
+          {
+            "name": "organismName",
+            "title": "Organism Name",
+            "description": "A name or label assigned to a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Huberta`; `Boab Prison Tree`; `J pod`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/organismName"
+          },
+          {
+            "name": "causeOfDeath",
+            "title": "Cause Of Death",
+            "description": "An indication of the known or suspected cause of death of a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "The cause may be due to natural causes (e.g., disease, predation), human-related activities (e.g., roadkill, pollution), or other environmental factors (e.g., extreme weather events).",
+            "examples": "`trapped`; `poisoned`; `starved`; `drowned`; `shot`; `old age`; `roadkill`; `disease`; `herbicide`; `burned`; `infanticide`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/causeOfDeath"
+          },
+          {
+            "name": "organismRemarks",
+            "title": "Organism Remarks",
+            "description": "Comments or notes about a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/organismRemarks"
+          },
+          {
+            "name": "verbatimIdentification",
+            "title": "Verbatim Identification",
+            "description": "A string representing a taxonomic identification as it appeared in the original record.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/verbatimIdentification"
+          },
+          {
+            "name": "taxonFormula",
+            "title": "Taxon Formula",
+            "description": "A string representing the pattern to use to construct a dwc:Identification from dwc:Taxon names and identification qualifiers.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary such as https://arctos.database.museum/info/ctDocumentation.cfm?table=cttaxa_formula.",
+            "examples": "`A`; `A ?`; `A or B`; `A and B`; `A x B`; `A cf.`; `A aff.`",
+            "namespace": "dwcdp",
+            "iri": "",
+            "default": "A"
+          },
+          {
+            "name": "identifiedBy",
+            "title": "Identified By",
+            "description": "A list (concatenated and separated) of names of Agents responsible for making a taxonomic determination of a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "When used in the context of a Survey, the subject consists of all of the dwc:Identifications related to the Event. Recommended best practice is to separate the values in a list with space vertical bar space ( | ).",
+            "examples": "`James L. Patton`; `Theodore Pappenfuss | Robert Macey`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/identifiedBy"
+          },
+          {
+            "name": "identifiedByID",
+            "title": "Identified By ID",
+            "description": "An identifier for the Agent responsible for making a taxonomic determination of a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "When used in the context of a Survey, the subject consists of all of the dwc:Identifications related to the Survey. Recommended best practice is to provide a single identifier that disambiguates the details of the identifying agent. If a list is used, the order of the identifiers on the list should not be assumed to convey any semantics. Recommended best practice is to separate the values in a list with space vertical bar space (` | `).",
+            "examples": "`https://orcid.org/0000-0002-1825-0097`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/identifiedByID"
+          },
+          {
+            "name": "dateIdentified",
+            "title": "Date Identified",
+            "description": "A date on which the subject was determined as representing a dwc:Taxon.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a date that conforms to ISO 8601-1:2019.",
+            "examples": "`2023-05-04`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/dateIdentified"
+          },
+          {
+            "name": "identificationReferences",
+            "title": "Identification References",
+            "description": "A list (concatenated and separated) of identifiers for References (publication, bibliographic reference, global unique identifier, URI, metabarcoding reference database) used in a dwc:Identification.",
+            "type": "string",
+            "format": "default",
+            "comments": "When used in the context of a Survey, the subject consists of all of the dwc:Identifications related to the Survey. Recommended best practice is to separate the values in a list with space vertical bar space (` | `).",
+            "examples": "`Aves del Noroeste Patagonico. Christie et al. 2004.`; `Stebbins, R. Field Guide to Western Reptiles and Amphibians. 3rd Edition. 2003. | Irschick, D.J. and Shaffer, H.B. (1997). The polytypic species revisited: Morphological differentiation among tiger salamanders (Ambystoma tigrinum) (Amphibia: Caudata). Herpetologica, 53(1), 30-49.`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/identificationReferences"
+          },
+          {
+            "name": "identificationVerificationStatus",
+            "title": "Identification Verification Status",
+            "description": "A categorical indicator of the extent to which a taxonomic determination has been verified to be correct.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary such as that used in HISPID and ABCD.",
+            "examples": "`0` ('unverified' in HISPID/ABCD)",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/identificationVerificationStatus"
+          },
+          {
+            "name": "identificationRemarks",
+            "title": "Identification Remarks",
+            "description": "Comments or notes about a dwc:Identification.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Distinguished between Anthus correndera and Anthus hellmayri based on the comparative lengths of the u\u00f1as.`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/identificationRemarks"
+          },
+          {
+            "name": "taxonID",
+            "title": "Taxon ID",
+            "description": "An identifier for a dwc:Taxon.",
+            "type": "string",
+            "format": "default",
+            "comments": "In DwC-DP, the taxonID is always an external link to a taxon record. As such, if present, it should be a resolvable globally unique identifier. See the Identifiers section of https://github.com/CatalogueOfLife/coldp/blob/master/README.md.",
+            "examples": "`col:6W3C4`; `worms:212808`; `ipni:320035-2`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/taxonID"
+          },
+          {
+            "name": "higherClassificationName",
+            "title": "Higher Classification Name",
+            "description": "A full scientific name at a higher rank than the taxonRank of a dwc:scientificName.",
+            "type": "string",
+            "format": "default",
+            "comments": "A higherClassificationName must have a corresponding higherClassificationRank.",
+            "examples": "`Animalia` (higherClassificationName) with `kingdom` (higherClassificationRank); `Laphriinae`  (higherClassificationName) with `subfamily` (higherClassificationRank)",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "higherClassificationRank",
+            "title": "Higher Classification Rank",
+            "description": "A taxonomic rank of a higherClassificationName.",
+            "type": "string",
+            "format": "default",
+            "comments": "A higherClassificationRank must have a corresponding higherClassificationName.",
+            "examples": "`Acanthaceae` (higherClassificationName) with `family` (higherClassificationRank); `Pyrenomycetes` (higherClassificationName) with `class` (higherClassificationRank",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "scientificName",
+            "title": "Scientific Name",
+            "description": "A full scientific name, with authorship and date information if known. When forming part of a dwc:Identification, this should be the name in lowest level taxonomic rank that can be determined. This term should not contain identification qualifications, which should instead be supplied in dwc:verbatimIdentification.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/scientificName"
+          },
+          {
+            "name": "taxonRank",
+            "title": "Taxon Rank",
+            "description": "A taxonomic rank of the most specific name in a dwc:scientificName.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/taxonRank"
+          },
+          {
+            "name": "taxonRemarks",
+            "title": "Taxon Remarks",
+            "description": "Comments or notes about a dwc:Taxon.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`this name is a misspelling in common use`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/taxonRemarks"
+          },
+          {
+            "name": "feedbackURL",
+            "title": "Feedback URL",
+            "description": "",
+            "type": "string",
+            "format": "default",
+            "comments": "A uniform resource locator (URL) that points to a webpage on which a form may be submitted to gather feedback about the record.",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/feedbackURL"
+          }
+        ],
+        "primaryKey": "occurrenceID",
+        "foreignKeys": [
+          {
+            "fields": "eventID",
+            "reference": {
+              "resource": "event",
+              "fields": "eventID"
+            }
+          }
+        ]
+      },
+      "dialect": {
+        "delimiter": "\t",
+        "quoteChar": "\"",
+        "lineTerminator": "\n",
+        "header": true,
+        "doubleQuote": true,
+        "skipInitialSpace": false,
+        "commentChar": "#",
+        "caseSensitiveHeader": false
+      }
+    },
+    {
+      "profile": "tabular-data-resource",
+      "name": "organism-interaction-media",
+      "path": "organism-interaction-media.tsv",
+      "format": "tsv",
+      "mediatype": "text/tab-separated-values",
+      "schema": {
+        "name": "organism-interaction-media",
+        "identifier": "http://rs.tdwg.org/dwc/dwc-dp/organism-interaction-media",
+        "url": "https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/organism-interaction-media.json",
+        "title": "OrganismInteractionMedia",
+        "description": "A link establishing an OrganismInteraction as content of a Media entity.",
+        "fields": [
+          {
+            "name": "mediaID",
+            "title": "Media ID",
+            "description": "An identifier for a Media instance.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": "",
+            "constraints": {
+              "required": true,
+              "unique": false
+            }
+          },
+          {
+            "name": "organismInteractionID",
+            "title": "Organism Interaction ID",
+            "description": "An identifier for an OrganismInteraction.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": "",
+            "constraints": {
+              "required": true,
+              "unique": false
+            }
+          },
+          {
+            "name": "mediaSubjectCategory",
+            "title": "Media Subject Category",
+            "description": "A term to describe the content of the image by a value from a controlled vocabulary.",
+            "type": "string",
+            "format": "default",
+            "comments": "Controlled vocabulary of subjects to support broad classification of media items. Terms from various controlled vocabularies may be used. AC-recommended vocabularies are preferred and MAY be unqualified literals (not a full URI). For terms from other vocabularies either a precise URI SHOULD be used, or, as long as all unqualified terms in all vocabularies are unique, metadata SHOULD provide the source vocabularies using the Subject Category Vocabulary term. The value SHOULD be a string, whose text can also be in the form of a URL. These guidelines on value format are less restrictive than is specified by the IPTC guidelines.",
+            "examples": "`herbarium sheet scan`",
+            "namespace": "Iptc4xmpExt",
+            "iri": "http://iptc.org/std/Iptc4xmpExt/2008-02-29/CVterm"
+          },
+          {
+            "name": "mediaSubjectCategoryIRI",
+            "title": "Media Subject Category IRI",
+            "description": "An IRI of a controlled vocabulary value for the subject category of a Media instance.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "Iptc4xmpExt",
+            "iri": "http://iptc.org/std/Iptc4xmpExt/2008-02-29/CVterm"
+          },
+          {
+            "name": "mediaSubjectCategoryVocabulary",
+            "title": "Media Subject Category Vocabulary",
+            "description": "Any vocabulary or formal classification from which terms in the Subject Category have been drawn.",
+            "type": "string",
+            "format": "default",
+            "comments": "The AC recommended vocabularies do not need to be cited here. There is no required linkage between individual Subject Category terms and the vocabulary; the mechanism is intended to support discovery of the normative URI for a term, but not guarantee it.",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/subjectCategoryVocabulary"
+          },
+          {
+            "name": "subjectPart",
+            "title": "SubjectPart",
+            "description": "The portion or product of organism morphology, behaviour, environment, etc. that is either predominantly shown or particularly well exemplified by the media resource.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`head`; `herbarium sheet`; `habitat`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/subjectPart"
+          },
+          {
+            "name": "subjectOrientation",
+            "title": "SubjectOrientation",
+            "description": "Specific orientation (= direction, view angle) of the subject represented in the media resource with respect to the acquisition device.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`frontal`; `dorsal`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/subjectOrientation"
+          },
+          {
+            "name": "physicalSetting",
+            "title": "PhysicalSetting",
+            "description": "The setting of the content represented in media such as images, sounds, and movies if the provider deems them relevant. Constrained vocabulary of: `Natural` = Object in its natural setting of the object (e. g. living organisms in their natural environment); `Artificial` = Object in an artificial environment (e. g. living organisms in an artificial environment such as a zoo, garden, greenhouse, or laboratory); `Edited` = Human media editing of a natural setting or media acquisition with a separate media background such as a photographic backdrop.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/physicalSetting"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "fields": "mediaID",
+            "reference": {
+              "resource": "media",
+              "fields": "mediaID"
+            }
+          },
+          {
+            "fields": "organismInteractionID",
+            "reference": {
+              "resource": "organism-interaction",
+              "fields": "organismInteractionID"
+            }
+          }
+        ]
+      },
+      "dialect": {
+        "delimiter": "\t",
+        "quoteChar": "\"",
+        "lineTerminator": "\n",
+        "header": true,
+        "doubleQuote": true,
+        "skipInitialSpace": false,
+        "commentChar": "#",
+        "caseSensitiveHeader": false
+      }
+    },
+    {
+      "profile": "tabular-data-resource",
+      "name": "organism-interaction",
+      "path": "organism-interaction.tsv",
+      "format": "tsv",
+      "mediatype": "text/tab-separated-values",
+      "schema": {
+        "name": "organism-interaction",
+        "identifier": "http://rs.tdwg.org/dwc/dwc-dp/organism-interaction",
+        "url": "https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/organism-interaction.json",
+        "title": "OrganismInteraction",
+        "description": "An interaction between two dwc:Organisms during a dwc:Event.",
+        "fields": [
+          {
+            "name": "organismInteractionID",
+            "title": "Organism Interaction ID",
+            "description": "An identifier for an OrganismInteraction.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": "",
+            "constraints": {
+              "required": true,
+              "unique": true
+            }
+          },
+          {
+            "name": "eventID",
+            "title": "Event ID",
+            "description": "An identifier for a dwc:Event.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/eventID",
+            "constraints": {
+              "required": true,
+              "unique": false
+            }
+          },
+          {
+            "name": "organismInteractionDescription",
+            "title": "Organism Interaction Description",
+            "description": "A verbatim description of an OrganismInteraction.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Mallophora ruficauda capturing an Apis mellifera worker in flight.`",
+            "namespace": "dcterms",
+            "iri": "http://purl.org/dc/terms/description"
+          },
+          {
+            "name": "subjectOccurrenceID",
+            "title": "Subject Occurrence ID",
+            "description": "An identifier for a subject dwc:Occurrence in an OrganismInteraction.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": "http://rs.tdwg.org/dwc/terms/resourceID",
+            "constraints": {
+              "required": true,
+              "unique": false
+            }
+          },
+          {
+            "name": "subjectOrganismPart",
+            "title": "Subject Organism Part",
+            "description": "A part of a subject dwc:Organism involved in an OrganismInteraction.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`stomach`",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "organismInteractionType",
+            "title": "Organism Interaction Type",
+            "description": "A category that best matches the nature of an OrganismInteraction.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary.",
+            "examples": "`visited flower of`; `pollinated by`; `parasitoid of`; `mated with`; `was attached to`",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "relatedOccurrenceID",
+            "title": "Related Occurrence ID",
+            "description": "An identifier for a related dwc:Occurrence in an OrganismInteraction.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": "http://rs.tdwg.org/dwc/terms/relatedResourceID",
+            "constraints": {
+              "required": true,
+              "unique": false
+            }
+          },
+          {
+            "name": "relatedOrganismPart",
+            "title": "Related Organism Part",
+            "description": "A part of a object dwc:Organism involved in an OrganismInteraction.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`flower`",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "feedbackURL",
+            "title": "Feedback URL",
+            "description": "",
+            "type": "string",
+            "format": "default",
+            "comments": "A uniform resource locator (URL) that points to a webpage on which a form may be submitted to gather feedback about the record.",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/feedbackURL"
+          }
+        ],
+        "primaryKey": "organismInteractionID",
+        "foreignKeys": [
+          {
+            "fields": "eventID",
+            "reference": {
+              "resource": "event",
+              "fields": "eventID"
+            }
+          },
+          {
+            "fields": "subjectOccurrenceID",
+            "reference": {
+              "resource": "occurrence",
+              "fields": "occurrenceID"
+            }
+          },
+          {
+            "fields": "relatedOccurrenceID",
+            "reference": {
+              "resource": "occurrence",
+              "fields": "occurrenceID"
+            }
+          }
+        ]
+      },
+      "dialect": {
+        "delimiter": "\t",
+        "quoteChar": "\"",
+        "lineTerminator": "\n",
+        "header": true,
+        "doubleQuote": true,
+        "skipInitialSpace": false,
+        "commentChar": "#",
+        "caseSensitiveHeader": false
+      }
+    },
+    {
+      "profile": "tabular-data-resource",
+      "name": "media",
+      "path": "media.tsv",
+      "format": "tsv",
+      "mediatype": "text/tab-separated-values",
+      "schema": {
+        "name": "media",
+        "identifier": "http://rs.tdwg.org/dwc/dwc-dp/media",
+        "url": "https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/media.json",
+        "title": "Media",
+        "description": "A dcmi:MediaType (dcmi:Sounds, dcmi:StillImages, dcmi:MovingImages or dcmi:Text) with other entities as content.",
+        "fields": [
+          {
+            "name": "mediaID",
+            "title": "Media ID",
+            "description": "An identifier for a Media instance.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": "",
+            "constraints": {
+              "required": true,
+              "unique": true
+            }
+          },
+          {
+            "name": "mediaType",
+            "title": "Media Type",
+            "description": "A category that best matches the nature of an instance of Media.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Sound`; `StillImage`; `MovingImage`; `Text`",
+            "namespace": "dcterms",
+            "iri": "http://purl.org/dc/terms/type"
+          },
+          {
+            "name": "subtypeLiteral",
+            "title": "SubtypeLiteral",
+            "description": "The subtype should provide more specialization than the type. Possible values are community-defined. For examples see the non-normative page AC_Subtype_Examples.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/subtypeLiteral"
+          },
+          {
+            "name": "subtype",
+            "title": "Subtype",
+            "description": "Any URI may be used that provides for more specialization than the type. Possible values are community-defined. For exmamples see the non-normative page AC_Subtype_Examples.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Photograph`; `Animation`; `Drawing`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/subtype"
+          },
+          {
+            "name": "title",
+            "title": "Title",
+            "description": "Concise title, name, or brief descriptive label of institution, resource collection, or individual resource. This field should include the complete title with all the subtitles, if any.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Epistenia coeruleata: head frontal view`",
+            "namespace": "dcterms",
+            "iri": "http://purl.org/dc/terms/title"
+          },
+          {
+            "name": "modified",
+            "title": "Modified",
+            "description": "Date that the media resource was altered. The date and time must comply with the World Wide Web Consortium (W3C) datetime practice, which requires that date and time representation correspond to ISO 8601:1998, but with year fields always comprising 4 digits. This makes datetime records compliant with 8601:2004. AC datetime values may also follow 8601:2004 for ranges by separating two IS0 8601 datetime fields by a solidus (`forward slash`; '/'). See also the wikipedia IS0 8601 entry for further explanation and examples.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`2007-02-16`",
+            "namespace": "dcterms",
+            "iri": "http://purl.org/dc/terms/modified"
+          },
+          {
+            "name": "MetadataDate",
+            "title": "MetadataDate",
+            "description": "Point in time recording when the last modification to metadata (not necessarily the media object itself) occurred. The date and time must comply with the World Wide Web Consortium (W3C) datetime practice, which requires that date and time representation correspond to ISO 8601:1998, but with year fields always comprising 4 digits. This makes datetime records compliant with 8601:2004. AC datetime values may also follow 8601:2004 for ranges by separating two IS0 8601 datetime fields by a solidus (`forward slash`; '/'). See also the wikipedia IS0 8601 entry for further explanation and examples.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "xmp",
+            "iri": "http://ns.adobe.com/xap/1.0/MetadataDate"
+          },
+          {
+            "name": "metadataLanguageLiteral",
+            "title": "MetadataLanguageLiteral",
+            "description": "Language of description and other metadata (but not necessarily of the image itself) represented as an ISO639-2 three letter language code. ISO639-1 two-letter codes are permitted but deprecated. Note: At least one of ac:metadataLanguage and ac:metadataLanguageLiteral must be supplied but, when feasible, supplying both may make the metadata more widely useful.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`eng`; `fre`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/metadataLanguageLiteral"
+          },
+          {
+            "name": "metadataLanguage",
+            "title": "MetadataLanguage",
+            "description": "URI from the ISO639-2 list of URIs for ISO 3-letter language codes. Note: At least one of ac:metadataLanguage and ac:metadataLanguageLiteral must be supplied but, when feasible, supplying both may make the metadata more widely useful",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`http://www.lexvo.org/page/iso639-3/eng`; `http://www.lexvo.org/page/iso639-3/fra`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/metadataLanguage"
+          },
+          {
+            "name": "commenterLiteral",
+            "title": "CommenterLiteral",
+            "description": "A name or the literal `anonymous` (= anonymously commented).",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/commenterLiteral"
+          },
+          {
+            "name": "commenter",
+            "title": "Commenter",
+            "description": "A URI denoting a person, using some controlled vocabulary such as FOAF. Implementers and communities of practice may produce restrictions or recommendations on the choice of vocabularies. See also the entry for ac:commenterLiteral in this document and the section Namespaces, Prefixes and Term Names for discussion of the rationale for separate terms taking URI values from those taking Literal values where both are possible. Normal practice is to use the same Label if both are provided. Labels have no effect on information discovery and are only suggestions.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/commenter"
+          },
+          {
+            "name": "comments",
+            "title": "Comments",
+            "description": "Any comment provided on the media resource, as free-form text. Best practice would also identify the commenter.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/comments"
+          },
+          {
+            "name": "reviewerLiteral",
+            "title": "ReviewerLiteral",
+            "description": "String providing the name of a reviewer. If present, then resource is peer-reviewed, even if Reviewer Comments is absent or empty. Its presence tells whether an expert in the subject featured in the media has reviewed the media item or collection and approved its metadata description; must display a name or the literal `anonymous` (= anonymously reviewed).",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/reviewerLiteral"
+          },
+          {
+            "name": "reviewer",
+            "title": "Reviewer",
+            "description": "URI for a reviewer. If present, then resource is peer-reviewed, even if there are Reviewer Comments is absent or empty. Its presence tells whether an expert in the subject featured in the media has reviewed the media item or collection and approved its metadata description; must display a name or the literal `anonymous` (= anonymously reviewed).",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/reviewer"
+          },
+          {
+            "name": "reviewerComments",
+            "title": "ReviewerComments",
+            "description": "Any comment provided by a reviewer with expertise in the subject, as free-form text.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/reviewerComments"
+          },
+          {
+            "name": "available",
+            "title": "Available",
+            "description": "The date (often a range) that the resource became or will become available. The date and time must comply with the World Wide Web Consortium (W3C) datetime practice, which requires that date and time representation correspond to ISO 8601:1998, but with year fields always comprising 4 digits. This makes datetime records compliant with 8601:2004. AC datetime values may also follow 8601:2004 for ranges by separating two IS0 8601 datetime fields by a solidus (`forward slash`; '/'). See also the wikipedia IS0 8601 entry for further explanation and examples.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`2007-02-16`",
+            "namespace": "dcterms",
+            "iri": "http://purl.org/dc/terms/available"
+          },
+          {
+            "name": "hasServiceAccessPoint",
+            "title": "HasServiceAccessPoint",
+            "description": "In a chosen serialization (RDF, XML Schema, etc.) the potentially multiple service access points (e.g., for different resolutions of an image) might be provided in a referenced or in a nested object. This property identifies one such access point. That is, each of potentially multiple values of hasServiceAccessPoint identifies a set of representation-dependent metadata using the properties defined under the section Service Access Point Vocabulary.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/hasServiceAccessPoint"
+          },
+          {
+            "name": "rights",
+            "title": "Rights",
+            "description": "Information about rights held in and over the resource. A full-text, readable copyright statement, as required by the national legislation of the copyright holder. On collections, this applies to all contained objects, unless the object itself has a different statement. Examples: \u201cCopyright XY 2008, all rights reserved\u201d, \u201c\u00a9 2008 XY Museum\u201d , `Public Domain.`; `Copyright unknown.` Do not place just the name of the copyright holder(s) here! That belongs in a list in the xmpRights:Owner field, which should be supplied if dc:rights is not 'Public Domain', which is appropriate only if the resource is known to be not under copyright. See also the entry for dcterms:rights in this document and see the DCMI FAQ on DC and DCTERMS Namespaces for discussion of the rationale for terms in two namespaces. Normal practice is to use the same Label if both are provided. Labels have no effect on information discovery and are only suggestions.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Copyright 2014 Ron Thomas` or a URI like `http://creativecommons.org/licenses/by/3.0/legalcode`",
+            "namespace": "dc",
+            "iri": "http://purl.org/dc/elements/1.1/rights"
+          },
+          {
+            "name": "rightsIRI",
+            "title": "Rights IRI",
+            "description": "A URI pointing to structured information about rights held in and over the resource. Examples include http://creativecommons.org/licenses/by/3.0/legalcode and http://creativecommons.org/publicdomain/zero/1.0/. At least one of dcterms:rights and dc:rights must be supplied but, when feasible, supplying both may make the metadata more widely useful. They must specify the same rights. In case of ambiguity, dcterms:rights prevails.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "dcterms",
+            "iri": "http://purl.org/dc/terms/rights"
+          },
+          {
+            "name": "Owner",
+            "title": "Owner",
+            "description": "A list of the names of the owners of the copyright. 'Unknown' is an acceptable value, but 'Public Domain' is not.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`The names of the owners `Ron Thomas, Roz Thomas` or a URI that identifies the owner`",
+            "namespace": "xmpRights",
+            "iri": "http://ns.adobe.com/xap/1.0/rights/Owner"
+          },
+          {
+            "name": "UsageTerms",
+            "title": "UsageTerms",
+            "description": "The license statement defining how resources may be used. Information on a collection applies to all contained objects unless the object has a different statement.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "xmpRights",
+            "iri": "http://ns.adobe.com/xap/1.0/rights/UsageTerms"
+          },
+          {
+            "name": "WebStatement",
+            "title": "WebStatement",
+            "description": "A URL defining or further elaborating on the license statement (e. g., a web page explaining the precise terms of use).",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`http://creativecommons.org/licenses/by-nc-sa/3.0/us/`",
+            "namespace": "xmpRights",
+            "iri": "http://ns.adobe.com/xap/1.0/rights/WebStatement"
+          },
+          {
+            "name": "licenseLogoURL",
+            "title": "LicenseLogoURL",
+            "description": "A URL providing access to a logo that symbolizes the License.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`http://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/licenseLogoURL"
+          },
+          {
+            "name": "Credit",
+            "title": "Credit",
+            "description": "free text for `Please cite this as\u2026`",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "photoshop",
+            "iri": "http://ns.adobe.com/photoshop/1.0/Credit"
+          },
+          {
+            "name": "attributionLogoURL",
+            "title": "AttributionLogoURL",
+            "description": "The URL of the icon or logo image to appear in source attribution.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`http://www.morphbank.net/images/userLogos/11a.jpg`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/attributionLogoURL"
+          },
+          {
+            "name": "attributionLinkURL",
+            "title": "AttributionLinkURL",
+            "description": "The URL where information about ownership, attribution, etc. of the resource may be found.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/attributionLinkURL"
+          },
+          {
+            "name": "fundingAttribution",
+            "title": "FundingAttribution",
+            "description": "Organizations or individuals who funded the creation of the resource.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/fundingAttribution"
+          },
+          {
+            "name": "fundingAttributionID",
+            "title": "Funding Atribution ID",
+            "description": "A list (concatenated and separated) of the globally unique identifiers for the funding organizations or agencies that supported the project.",
+            "type": "string",
+            "format": "default",
+            "comments": "Provide a unique identifier for the funding body, such as an identifier used in governmental or international databases. If no official identifier exists, use a persistent and unique identifier within your organization or dataset. The recommended best practice is to separate the values in a list with space vertical bar space ( | ).",
+            "examples": "`https://ror.org/00epmv149`; `https://ror.org/00epmv149 | https://ror.org/04jnzhb65`; `https://www.wikidata.org/wiki/Q13102615`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/fundingAttributionID"
+          },
+          {
+            "name": "source",
+            "title": "Source",
+            "description": "A string providing an identifiable source from which the described resources was derived.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "dc",
+            "iri": "http://purl.org/dc/elements/1.1/source"
+          },
+          {
+            "name": "sourceIRI",
+            "title": "Source IRI",
+            "description": "URI for an identifiable source from which the described resources was derived.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`http://biocol.org/institution/australian-national-insect-collection`",
+            "namespace": "dcterms",
+            "iri": "http://purl.org/dc/terms/source"
+          },
+          {
+            "name": "creator",
+            "title": "Creator",
+            "description": "The person or organization responsible for creating the media resource.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Michael Gates`",
+            "namespace": "dc",
+            "iri": "http://purl.org/dc/elements/1.1/creator"
+          },
+          {
+            "name": "creatorIRI",
+            "title": "Creator IRI",
+            "description": "A URI representing the person or organization responsible for creating the media resource.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`http://orcid.org/0000-0002-4879-3367`",
+            "namespace": "dcterms",
+            "iri": "http://purl.org/dc/terms/creator"
+          },
+          {
+            "name": "providerLiteral",
+            "title": "ProviderLiteral",
+            "description": "Person or organization responsible for presenting the media resource. If no separate Metadata Provider is given, this also attributes the metadata.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/providerLiteral"
+          },
+          {
+            "name": "provider",
+            "title": "Provider",
+            "description": "URI for person or organization responsible for presenting the media resource. If no separate Metadata Provider is given, this also attributes the metadata.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`http://morphbank.net`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/provider"
+          },
+          {
+            "name": "metadataCreatorLiteral",
+            "title": "MetadataCreatorLiteral",
+            "description": "Person or organization originally creating the resource metadata record.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Michael Gates`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/metadataCreatorLiteral"
+          },
+          {
+            "name": "metadataCreator",
+            "title": "MetadataCreator",
+            "description": "Person or organization originally creating the resource metadata record.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`http://www.morphbank.net/?id=77638`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/metadataCreator"
+          },
+          {
+            "name": "metadataProviderLiteral",
+            "title": "MetadataProviderLiteral",
+            "description": "Person or organization originally responsible for providing the resource metadata record.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Morphbank`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/metadataProviderLiteral"
+          },
+          {
+            "name": "metadataProvider",
+            "title": "MetadataProvider",
+            "description": "URI of person or organization originally responsible for providing the resource metadata record.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`http://morphbank.net`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/metadataProvider"
+          },
+          {
+            "name": "description",
+            "title": "Description",
+            "description": "Description of collection or individual resource, containing the Who, What, When, Where and Why as free-form text. This normative document is silent on the nature of formatting in the text. It is the role of implementers of an AC concrete representation (e.g., an XML Schema, an RDF representation, etc.) to decide and document how formatting advice will be represented in descriptions serialized according to such representations.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Epistenia coeruleata: head frontal view`",
+            "namespace": "dcterms",
+            "iri": "http://purl.org/dc/terms/description"
+          },
+          {
+            "name": "caption",
+            "title": "Caption",
+            "description": "As alternative or in addition to description, a caption is free-form text to be displayed together with (rather than instead of) a resource that is suitable for captions (especially images).",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/caption"
+          },
+          {
+            "name": "language",
+            "title": "Language",
+            "description": "Language(s) of resource itself represented in the ISO639-2 three-letter language code. ISO639-1 two-letter codes are permitted but deprecated.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`eng`; `fre`",
+            "namespace": "dc",
+            "iri": "http://purl.org/dc/elements/1.1/language"
+          },
+          {
+            "name": "languageIRI",
+            "title": "Language IRI",
+            "description": "URI from the ISO639-2 list of URIs for ISO 3-letter language codes.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`http://lexvo.org/id/iso639-3/eng`",
+            "namespace": "dcterms",
+            "iri": "http://purl.org/dc/terms/language"
+          },
+          {
+            "name": "CreateDate",
+            "title": "CreateDate",
+            "description": "The date of the creation of the original resource from which the digital media was derived or created. The date and time must comply with the World Wide Web Consortium (W3C) datetime practice, which requires that date and time representation correspond to ISO 8601:1998, but with year fields always comprising 4 digits. This makes datetime records compliant with 8601:2004. AC datetime values may also follow 8601:2004 for ranges by separating two IS0 8601 datetime fields by a solidus (`forward slash`; '/'). See also the wikipedia IS0 8601 entry for further explanation and examples.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "xmp",
+            "iri": "http://ns.adobe.com/xap/1.0/CreateDate"
+          },
+          {
+            "name": "timeOfDay",
+            "title": "TimeOfDay",
+            "description": "Free text information beyond exact clock times.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/timeOfDay"
+          },
+          {
+            "name": "captureDevice",
+            "title": "CaptureDevice",
+            "description": "Free form text describing the device or devices used to create the resource.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`digital camera, UV pass filter`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/captureDevice"
+          },
+          {
+            "name": "resourceCreationTechnique",
+            "title": "ResourceCreationTechnique",
+            "description": "Information about technical aspects of the creation and digitization process of the resource. This includes modification steps (`retouching`) after the initial resource capture.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Cleared in KOH, platinum-coated`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/resourceCreationTechnique"
+          },
+          {
+            "name": "collectionCode",
+            "title": "Collection Code",
+            "description": "A name, acronym, coden, or initialism identifying a Collection.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Mammals`; `Hildebrandt`; `EBIRD`; `VP`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/collectionCode"
+          },
+          {
+            "name": "collectionID",
+            "title": "Collection ID",
+            "description": "An identifier for a Collection.",
+            "type": "string",
+            "format": "default",
+            "comments": "For physical specimens, the recommended best practice is to use a globally unique and resolvable identifier from a collections registry such as the Global Registry of Scientific Collections (https://scientific-collections.gbif.org/).",
+            "examples": "`https://scientific-collections.gbif.org/collection/fbd3ed74-5a21-4e01-b86a-33d36f032d9c`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/collectionID"
+          },
+          {
+            "name": "derivedFrom",
+            "title": "DerivedFrom",
+            "description": "A reference to an original resource from which the current one is derived.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/derivedFrom"
+          },
+          {
+            "name": "accessURI",
+            "title": "AccessURI",
+            "description": "A URI that uniquely identifies a service that provides a representation of the underlying resource. If this resource can be acquired by an http request, its http URL should be given. If not, but it has some URI in another URI scheme, that may be given here.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`http://images.morphbank.net/?id=135233&imgType=jpeg`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/accessURI"
+          },
+          {
+            "name": "format",
+            "title": "Format",
+            "description": "A string describing the technical format of the resource (file format or physical medium).",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`tiff`; `jpeg`",
+            "namespace": "dc",
+            "iri": "http://purl.org/dc/elements/1.1/format"
+          },
+          {
+            "name": "formatIRI",
+            "title": "Format",
+            "description": "URI referencing the technical format of the resource (file format or physical medium).",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`http://mediatypes.appspot.com/jpeg`",
+            "namespace": "dcterms",
+            "iri": "http://purl.org/dc/terms/format"
+          },
+          {
+            "name": "variantLiteral",
+            "title": "VariantLiteral",
+            "description": "Text that describes this Service Access Point variant.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Best Quality`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/variantLiteral"
+          },
+          {
+            "name": "variant",
+            "title": "Variant",
+            "description": "A URI designating what this Service Access Point provides. Some suggested values are the URIs ac:Thumbnail, ac:Trailer, ac:LowerQuality, ac:MediumQuality, ac:GoodQuality, ac:BestQuality, and ac:Offline. Additional URIs from communities of practice may be introduced.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/variant"
+          },
+          {
+            "name": "variantDescription",
+            "title": "VariantDescription",
+            "description": "Text that describes this Service Access Point variant",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/variantDescription"
+          },
+          {
+            "name": "furtherInformationURL",
+            "title": "FurtherInformationURL",
+            "description": "The URL of a Web site that provides additional information about the version of the media resource that is provided by the Service Access Point.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`http://www.morphbank.net/135233`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/furtherInformationURL"
+          },
+          {
+            "name": "licensingException",
+            "title": "LicensingException",
+            "description": "The licensing statement for this variant of the media resource if different from that given in the License Statement property of the resource.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/licensingException"
+          },
+          {
+            "name": "serviceExpectation",
+            "title": "ServiceExpectation",
+            "description": "A term that describes what service expectations users may have of the ac:accessURL. Recommended terms include online (denotes that the URL is expected to deliver the resource), authenticate (denotes that the URL delivers a login or other authentication interface requiring completion before delivery of the resource) published(non digital) (denotes that the URL is the identifier of a non-digital published work, for example a doi.) Communities should develop their own controlled vocabularies for Service Expectations.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/serviceExpectation"
+          },
+          {
+            "name": "hashFunction",
+            "title": "HashFunction",
+            "description": "The cryptographic hash function used to compute the value given in the Hash Value.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/hashFunction"
+          },
+          {
+            "name": "hashValue",
+            "title": "HashValue",
+            "description": "The value computed by a hash function applied to the media that will be delivered at the access point.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/hashValue"
+          },
+          {
+            "name": "PixelXDimension",
+            "title": "PixelXDimension",
+            "description": "The width in pixels of the media specified by the access point.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`2000 x 1500`",
+            "namespace": "exif",
+            "iri": "http://ns.adobe.com/exif/1.0/PixelXDimension",
+            "constraint": {
+              "required": "FALSE",
+              "minimum": 1
+            }
+          },
+          {
+            "name": "PixelYDimension",
+            "title": "PixelYDimension",
+            "description": "The height in pixels of the media specified by the access point.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "exif",
+            "iri": "http://ns.adobe.com/exif/1.0/PixelYDimension",
+            "constraint": {
+              "required": "FALSE",
+              "minimum": 1
+            }
+          },
+          {
+            "name": "feedbackURL",
+            "title": "Feedback URL",
+            "description": "",
+            "type": "string",
+            "format": "default",
+            "comments": "A uniform resource locator (URL) that points to a webpage on which a form may be submitted to gather feedback about the record.",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/feedbackURL"
+          }
+        ],
+        "primaryKey": "mediaID",
+        "foreignKeys": []
+      },
+      "dialect": {
+        "delimiter": "\t",
+        "quoteChar": "\"",
+        "lineTerminator": "\n",
+        "header": true,
+        "doubleQuote": true,
+        "skipInitialSpace": false,
+        "commentChar": "#",
+        "caseSensitiveHeader": false
+      }
+    },
+    {
+      "profile": "tabular-data-resource",
+      "name": "identification",
+      "path": "identification.tsv",
+      "format": "tsv",
+      "mediatype": "text/tab-separated-values",
+      "schema": {
+        "name": "identification",
+        "identifier": "http://rs.tdwg.org/dwc/dwc-dp/identification",
+        "url": "https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/identification.json",
+        "title": "Identification",
+        "description": "A taxonomic determination (i.e., the assignment of dwc:Taxa to dwc:Organisms).",
+        "fields": [
+          {
+            "name": "identificationID",
+            "title": "Identification ID",
+            "description": "An identifier for a dwc:Identification.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/identificationID",
+            "constraints": {
+              "required": true,
+              "unique": true
+            }
+          },
+          {
+            "name": "basedOnOccurrenceID",
+            "title": "Based On Occurrence ID",
+            "description": "An identifier for a dwc:Occurrence based on which a dwc:Identification was made.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "basedOnMaterialEntityID",
+            "title": "Based On Material Entity ID",
+            "description": "An identifier for a dwc:MaterialEntity based on which a dwc:Identification was made.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "basedOnNucleotideSequenceID",
+            "title": "Based On Nucleotide Sequence ID",
+            "description": "An identifier for a NucleotideSequence based on which a dwc:Identification was made.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "basedOnNucleotideAnalysisID",
+            "title": "Based On Nucleotide Analysis ID",
+            "description": "An identifier for a NucleotideAnalysis based on which a dwc:Identification was made.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "basedOnMediaID",
+            "title": "Based On Media ID",
+            "description": "An identifier for a Media instance based on which a dwc:Identification was made.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "identificationType",
+            "title": "Identification Type",
+            "description": "A category that best matches the nature of a dwc:Identification.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary.",
+            "examples": "`GeneticSequence`; `TaxonDistribution`; `MaterialEntity`; `Sound`; `StillImage`; `MovingImage`; `Text`; `HumanObservation`; `MachineObservation`",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "verbatimIdentification",
+            "title": "Verbatim Identification",
+            "description": "A string representing a taxonomic identification as it appeared in the original record.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Ctenomys sociabilis`; `social tuco-tuco`; `Peromyscus sp.`; `Ministrymon sp. nov. 1`; `Anser anser \u00d7 Branta canadensis`; `Pachyporidae?`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/verbatimIdentification"
+          },
+          {
+            "name": "isAcceptedIdentification",
+            "title": "Is Accepted Identification",
+            "description": "A dwc:Identification of a dwc:Organism is a currently an accepted one.",
+            "type": "boolean",
+            "format": "default",
+            "comments": "",
+            "examples": "`true`; `false`",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "taxonFormula",
+            "title": "Taxon Formula",
+            "description": "A string representing the pattern to use to construct a dwc:Identification from dwc:Taxon names and identification qualifiers.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary such as https://arctos.database.museum/info/ctDocumentation.cfm?table=cttaxa_formula.",
+            "examples": "`A`; `A ?`; `A or B`; `A and B`; `A x B`; `A cf.`; `A aff.`",
+            "namespace": "dwcdp",
+            "iri": "",
+            "default": "A"
+          },
+          {
+            "name": "typeStatus",
+            "title": "Type Status",
+            "description": "A list (concatenated and separated) of nomenclatural types (type status, typified scientific name, publication) applied to the subject.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to separate the values in a list with space vertical bar space ( | ). This term has an equivalent in the dwciri: namespace that allows only an IRI as a value, whereas this term allows for any string literal value.",
+            "examples": "`holotype of Ctenomys sociabilis. Pearson O. P., and M. I. Christie. 1985. Historia Natural, 5(37):388`; `holotype of Pinus abies | holotype of Picea abies`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/typeStatus"
+          },
+          {
+            "name": "typeDesignationType",
+            "title": "typeDesignationType",
+            "description": "A category that best matches the nature of a type designation.",
+            "type": "string",
+            "format": "default",
+            "comments": " From https://rs.gbif.org/extension/gbif/1.0/typesandspecimen.xml.",
+            "examples": "`monotypy`; `original designation`; `tautonomy`",
+            "namespace": "gbif",
+            "iri": "http://rs.gbif.org/terms/1.0/typeDesignationType"
+          },
+          {
+            "name": "identifiedBy",
+            "title": "Identified By",
+            "description": "A list (concatenated and separated) of names of Agents responsible for making a taxonomic determination of a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "When used in the context of a Survey, the subject consists of all of the dwc:Identifications related to the Event. Recommended best practice is to separate the values in a list with space vertical bar space ( | ).",
+            "examples": "`James L. Patton`; `Theodore Pappenfuss | Robert Macey`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/identifiedBy"
+          },
+          {
+            "name": "identifiedByID",
+            "title": "Identified By ID",
+            "description": "An identifier for the Agent responsible for making a taxonomic determination of a dwc:Organism.",
+            "type": "string",
+            "format": "default",
+            "comments": "When used in the context of a Survey, the subject consists of all of the dwc:Identifications related to the Survey. Recommended best practice is to provide a single identifier that disambiguates the details of the identifying agent. If a list is used, the order of the identifiers on the list should not be assumed to convey any semantics. Recommended best practice is to separate the values in a list with space vertical bar space (` | `).",
+            "examples": "`https://orcid.org/0000-0002-1825-0097`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/identifiedByID"
+          },
+          {
+            "name": "dateIdentified",
+            "title": "Date Identified",
+            "description": "A date on which the subject was determined as representing a dwc:Taxon.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a date that conforms to ISO 8601-1:2019.",
+            "examples": "`2023-05-04`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/dateIdentified"
+          },
+          {
+            "name": "identificationReferences",
+            "title": "Identification References",
+            "description": "A list (concatenated and separated) of identifiers for References (publication, bibliographic reference, global unique identifier, URI, metabarcoding reference database) used in a dwc:Identification.",
+            "type": "string",
+            "format": "default",
+            "comments": "When used in the context of a Survey, the subject consists of all of the dwc:Identifications related to the Survey. Recommended best practice is to separate the values in a list with space vertical bar space (` | `).",
+            "examples": "`Aves del Noroeste Patagonico. Christie et al. 2004.`; `Stebbins, R. Field Guide to Western Reptiles and Amphibians. 3rd Edition. 2003. | Irschick, D.J. and Shaffer, H.B. (1997). The polytypic species revisited: Morphological differentiation among tiger salamanders (Ambystoma tigrinum) (Amphibia: Caudata). Herpetologica, 53(1), 30-49.` ; `UNITE v10.0, https://doi.org/10.15156/BIO/3301231`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/identificationReferences"
+          },
+          {
+            "name": "taxonAssignmentMethod",
+            "title": "Taxon Assignment Method",
+            "description": "Tool and thresholds used to compare sequences when computing 'species-level' OTUs.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`blastn;2.6.0+;e-value cutoff: 0.001;identity cutoff: 0.97`",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "identificationVerificationStatus",
+            "title": "Identification Verification Status",
+            "description": "A categorical indicator of the extent to which a taxonomic determination has been verified to be correct.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a controlled vocabulary such as that used in HISPID and ABCD.",
+            "examples": "`0` ('unverified' in HISPID/ABCD)",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/identificationVerificationStatus"
+          },
+          {
+            "name": "identificationRemarks",
+            "title": "Identification Remarks",
+            "description": "Comments or notes about a dwc:Identification.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Distinguished between Anthus correndera and Anthus hellmayri based on the comparative lengths of the u\u00f1as.`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/identificationRemarks"
+          },
+          {
+            "name": "taxonID",
+            "title": "Taxon ID",
+            "description": "An identifier for a dwc:Taxon.",
+            "type": "string",
+            "format": "default",
+            "comments": "In DwC-DP, the taxonID is always an external link to a taxon record. As such, if present, it should be a resolvable globally unique identifier. See the Identifiers section of https://github.com/CatalogueOfLife/coldp/blob/master/README.md.",
+            "examples": "`col:6W3C4`; `worms:212808`; `ipni:320035-2`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/taxonID"
+          },
+          {
+            "name": "higherClassificationName",
+            "title": "Higher Classification Name",
+            "description": "A full scientific name at a higher rank than the taxonRank of dwc:scientificName.",
+            "type": "string",
+            "format": "default",
+            "comments": "A higherClassificationName must have a corresponding higherClassificationRank.",
+            "examples": "`Animalia` (higherClassificationName) with `kingdom` (higherClassificationRank); `Laphriinae`  (higherClassificationName) with `subfamily` (higherClassificationRank)",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "higherClassificationRank",
+            "title": "Higher Classification Rank",
+            "description": "A taxonomic rank of the higherClassificationName.",
+            "type": "string",
+            "format": "default",
+            "comments": "A higherClassificationRank must have a corresponding higherClassificationName.",
+            "examples": "`Acanthaceae` (higherClassificationName) with `family` (higherClassificationRank); `Pyrenomycetes` (higherClassificationName) with `class` (higherClassificationRank)",
+            "namespace": "dwcdp",
+            "iri": ""
+          },
+          {
+            "name": "scientificName",
+            "title": "Scientific Name",
+            "description": "A full scientific name, with authorship and date information if known. When forming part of a dwc:Identification, this should be the name in lowest level taxonomic rank that can be determined. This term should not contain identification qualifications, which should instead be supplied in dwc:verbatimIdentification.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`Coleoptera` (order); `Vespertilionidae` (family); `Manis` (genus); `Ctenomys sociabilis` (genus + specificEpithet); `Ambystoma tigrinum diaboli` (genus + specificEpithet + infraspecificEpithet); `Roptrocerus typographi (Gy\u00f6rfi, 1952)` (genus + specificEpithet + scientificNameAuthorship); `Quercus agrifolia var. oxyadenia (Torr.) J.T. Howell` (genus + specificEpithet + taxonRank + infraspecificEpithet + scientificNameAuthorship)",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/scientificName"
+          },
+          {
+            "name": "taxonRank",
+            "title": "Taxon Rank",
+            "description": "A taxonomic rank of the most specific name in a dwc:scientificName.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`subspecies`; `varietas`; `forma`; `species`; `genus`; `nothogenus`; `nothospecies`; `nothosubspecies`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/taxonRank"
+          },
+          {
+            "name": "taxonRemarks",
+            "title": "Taxon Remarks",
+            "description": "Comments or notes about a dwc:Taxon.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`This name is a misspelling in common use.`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/taxonRemarks"
+          },
+          {
+            "name": "feedbackURL",
+            "title": "Feedback URL",
+            "description": "",
+            "type": "string",
+            "format": "default",
+            "comments": "A uniform resource locator (URL) that points to a webpage on which a form may be submitted to gather feedback about the record.",
+            "examples": "",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/feedbackURL"
+          }
+        ],
+        "primaryKey": "identificationID",
+        "foreignKeys": [
+          {
+            "fields": "basedOnOccurrenceID",
+            "reference": {
+              "resource": "occurrence",
+              "fields": "occurrenceID"
+            }
+          },
+          {
+            "fields": "basedOnMediaID",
+            "reference": {
+              "resource": "media",
+              "fields": "mediaID"
+            }
+          }
+        ]
+      },
+      "dialect": {
+        "delimiter": "\t",
+        "quoteChar": "\"",
+        "lineTerminator": "\n",
+        "header": true,
+        "doubleQuote": true,
+        "skipInitialSpace": false,
+        "commentChar": "#",
+        "caseSensitiveHeader": false
+      }
+    },
+    {
+      "profile": "tabular-data-resource",
+      "name": "occurrence-media",
+      "path": "occurrence-media.tsv",
+      "format": "tsv",
+      "mediatype": "text/tab-separated-values",
+      "schema": {
+        "name": "occurrence-media",
+        "identifier": "http://rs.tdwg.org/dwc/dwc-dp/occurrence-media",
+        "url": "https://rs.gbif.org/sandbox/experimental/data-packages/dwc-dp/0.1/table-schemas/occurrence-media.json",
+        "title": "OccurrenceMedia",
+        "description": "A link establishing a dwc:Occurrence as content of a Media entity.",
+        "fields": [
+          {
+            "name": "mediaID",
+            "title": "Media ID",
+            "description": "An identifier for a Media instance.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a globally unique identifier.",
+            "examples": "",
+            "namespace": "dwcdp",
+            "iri": "",
+            "constraints": {
+              "required": true,
+              "unique": false
+            }
+          },
+          {
+            "name": "occurrenceID",
+            "title": "Occurrence ID",
+            "description": "An identifier for a dwc:Occurrence.",
+            "type": "string",
+            "format": "default",
+            "comments": "Recommended best practice is to use a persistent, globally unique identifier. In the absence of a persistent global unique identifier, construct one from a combination of identifiers in the record that will most closely make a dwc:occurrenceID globally unique.",
+            "examples": "`http://arctos.database.museum/guid/MSB:Mamm:233627`",
+            "namespace": "dwc",
+            "iri": "http://rs.tdwg.org/dwc/terms/occurrenceID",
+            "constraints": {
+              "required": true,
+              "unique": false
+            }
+          },
+          {
+            "name": "mediaSubjectCategory",
+            "title": "Media Subject Category",
+            "description": "A term to describe the content of the image by a value from a controlled vocabulary.",
+            "type": "string",
+            "format": "default",
+            "comments": "Controlled vocabulary of subjects to support broad classification of media items. Terms from various controlled vocabularies may be used. AC-recommended vocabularies are preferred and MAY be unqualified literals (not a full URI). For terms from other vocabularies either a precise URI SHOULD be used, or, as long as all unqualified terms in all vocabularies are unique, metadata SHOULD provide the source vocabularies using the Subject Category Vocabulary term. The value SHOULD be a string, whose text can also be in the form of a URL. These guidelines on value format are less restrictive than is specified by the IPTC guidelines.",
+            "examples": "`herbarium sheet scan`",
+            "namespace": "Iptc4xmpExt",
+            "iri": "http://iptc.org/std/Iptc4xmpExt/2008-02-29/CVterm"
+          },
+          {
+            "name": "mediaSubjectCategoryIRI",
+            "title": "Media Subject Category IRI",
+            "description": "An IRI of a controlled vocabulary value for the subject category of a Media instance.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "Iptc4xmpExt",
+            "iri": "http://iptc.org/std/Iptc4xmpExt/2008-02-29/CVterm"
+          },
+          {
+            "name": "mediaSubjectCategoryVocabulary",
+            "title": "Media Subject Category Vocabulary",
+            "description": "Any vocabulary or formal classification from which terms in the Subject Category have been drawn.",
+            "type": "string",
+            "format": "default",
+            "comments": "The AC recommended vocabularies do not need to be cited here. There is no required linkage between individual Subject Category terms and the vocabulary; the mechanism is intended to support discovery of the normative URI for a term, but not guarantee it.",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/subjectCategoryVocabulary"
+          },
+          {
+            "name": "subjectPart",
+            "title": "SubjectPart",
+            "description": "The portion or product of organism morphology, behaviour, environment, etc. that is either predominantly shown or particularly well exemplified by the media resource.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`head`; `herbarium sheet`; `habitat`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/subjectPart"
+          },
+          {
+            "name": "subjectOrientation",
+            "title": "SubjectOrientation",
+            "description": "Specific orientation (= direction, view angle) of the subject represented in the media resource with respect to the acquisition device.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "`frontal`; `dorsal`",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/subjectOrientation"
+          },
+          {
+            "name": "physicalSetting",
+            "title": "PhysicalSetting",
+            "description": "The setting of the content represented in media such as images, sounds, and movies if the provider deems them relevant. Constrained vocabulary of: `Natural` = Object in its natural setting of the object (e. g. living organisms in their natural environment); `Artificial` = Object in an artificial environment (e. g. living organisms in an artificial environment such as a zoo, garden, greenhouse, or laboratory); `Edited` = Human media editing of a natural setting or media acquisition with a separate media background such as a photographic backdrop.",
+            "type": "string",
+            "format": "default",
+            "comments": "",
+            "examples": "",
+            "namespace": "ac",
+            "iri": "http://rs.tdwg.org/ac/terms/physicalSetting"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "fields": "mediaID",
+            "reference": {
+              "resource": "media",
+              "fields": "mediaID"
+            }
+          },
+          {
+            "fields": "occurrenceID",
+            "reference": {
+              "resource": "occurrence",
+              "fields": "occurrenceID"
+            }
+          }
+        ]
+      },
+      "dialect": {
+        "delimiter": "\t",
+        "quoteChar": "\"",
+        "lineTerminator": "\n",
+        "header": true,
+        "doubleQuote": true,
+        "skipInitialSpace": false,
+        "commentChar": "#",
+        "caseSensitiveHeader": false
+      }
+    }
+  ]
+}

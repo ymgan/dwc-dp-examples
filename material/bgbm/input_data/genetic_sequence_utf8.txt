@@ -1,2 +1,0 @@
-﻿"geneticSequenceID","eventID","derivedFromMaterialEntityID","geneticSequenceType","geneticSequence","geneticSequenceRemarks"
-"11622","B 10 0479552_gat","DB 16392","petD","","https://www.ncbi.nlm.nih.gov/nucleotide/JX914919"

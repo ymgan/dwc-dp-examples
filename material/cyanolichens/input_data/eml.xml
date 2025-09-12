@@ -1,0 +1,46 @@
+<eml:eml xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0"
+         xmlns:dc="http://purl.org/dc/terms/"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://rs.gbif.org/schema/eml-gbif-profile/1.3/eml.xsd"
+         packageId="https://dwcdp-ipt.gbif-test.org/resource?id=pelt_yeast_fungi/v1.0" system="http://gbif.org" scope="system"
+         xml:lang="eng">
+    <dataset>
+        <title xml:lang="eng">Integrated Dataset of Fungi Associated with Peltigera Cyanolichens from Southern Chile</title>
+        <pubDate>
+        </pubDate>
+        <language>eng</language>
+        <abstract>
+            This integrated dataset compiles fungal diversity data associated with Peltigera cyanolichens collected across southern Chile by the Microbial Ecology Lab at Universidad de Chile. It merges three occurrence resources: (1) a collection of over 1,000 Peltigera lichen thalli sampled from diverse environments, with molecular identification of the main symbionts; (2) 180 basidiomycete yeasts; and (3) 45 ascomycete fungi, both isolated from a subset of the previously collected Peltigera thalli. The isolates were identified by sequencing the ITS marker and through subsequent phylogenetic analyses.
+
+The purpose of creating this integrated resource was to test and explore the structure and flexibility of the new Darwin Core data format, using a case study that links macro- and micro-organismal diversity within lichen symbioses.
+
+Note:
+- All data included here are publicly available and were originally published as three separate datasets: https://doi.org/10.15468/ef76hj, https://doi.org/10.15468/ceh6sr, and https://doi.org/10.15468/hw7k9r.
+
+- Please note that some data inconsistencies or errors may be present and could be addressed in future updates.
+
+- The use and integration of these datasets have been authorized by Yosbany Pérez and Julieta Orlando.
+        </abstract>
+        <intellectualRights>
+            <para>This work is licensed under a <ulink url="http://creativecommons.org/licenses/by/4.0/legalcode"><citetitle>Creative Commons Attribution (CC-BY 4.0) License</citetitle></ulink>.</para>
+        </intellectualRights>
+        <licensed>
+            <licenseName>Creative Commons Attribution 4.0 International</licenseName>
+            <url>https://spdx.org/licenses/CC-BY-4.0.html</url>
+            <identifier>CC-BY-4.0</identifier>
+        </licensed>
+        <maintenance>
+            <description>
+                <para></para>
+            </description>
+            <maintenanceUpdateFrequency>unknown</maintenanceUpdateFrequency>
+        </maintenance>
+    </dataset>
+    <additionalMetadata>
+        <metadata>
+            <gbif>
+                <hierarchyLevel>dataset</hierarchyLevel>
+            </gbif>
+        </metadata>
+    </additionalMetadata>
+</eml:eml>

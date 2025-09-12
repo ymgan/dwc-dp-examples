@@ -3,6 +3,7 @@ INSERT INTO event (
     event_id, 
     parent_event_id, 
     preferred_event_name,
+    event_category,
     event_type, 
     event_conducted_by, 
     event_conducted_by_id,
@@ -11,9 +12,7 @@ INSERT INTO event (
     month,
     day,
     verbatim_locality, 
-    sample_size_value,
-    sample_size_unit,
-    event_citation,
+    event_references,
     event_remarks,
     location_id,
     water_body,
@@ -30,6 +29,7 @@ INSERT INTO event (
     eventID AS event_id,
     parentEventID AS parent_event_id,
     preferredEventName AS preferred_event_name,
+    'survey' AS event_category, -- This is a kludge in the absence of correct values
     eventType AS event_type, 
     eventConductedBy AS event_conducted_by, 
     eventConductedByID AS event_conducted_by_id, 
@@ -38,9 +38,7 @@ INSERT INTO event (
     month,
     day,
     verbatimLocality AS verbatim_locality,
-    sampleSizeValue AS sample_size_value,
-    sampleSizeUnit AS sample_size_unit,
-    eventCitation AS event_citation,
+    eventCitation AS event_references,
     eventRemarks AS event_remarks,
     locationID AS location_id,
     waterBody AS water_body,
@@ -69,13 +67,14 @@ INSERT INTO material (
     material_entity_remarks,
     derived_from_material_entity_id,
     derivation_type,
-    part_of_material_entity_id,
+    is_part_of_material_entity_id,
     verbatim_identification,
     identified_by,
     identified_by_id,
     identification_remarks,
     taxon_id,
-    kingdom,
+    higher_classification_name,
+    higher_classification_rank,
     scientific_name,
     taxon_rank
 )
@@ -83,6 +82,7 @@ INSERT INTO material (
 SELECT 
     materialEntityID AS material_entity_id,
     eventID AS event_id,
+    materialCategory AS material_category,
     materialEntityType AS material_entity_type,
     collectedBy AS collected_by,
     collectedByID AS collected_by_id,
@@ -91,13 +91,14 @@ SELECT
     materialEntityRemarks AS material_entity_remarks,
     derivedFromMaterialEntityID AS derived_from_material_entity_id,
     derivationType AS derivation_type,
-    partOfMaterialEntityID as part_of_material_entity_id,
+    partOfMaterialEntityID as is_part_of_material_entity_id,
     verbatimIdentification AS verbatim_identification,
     identifiedBy AS identified_by,
     identifiedByID AS identified_by_id,
     identificationRemarks AS identification_remarks,
     taxonID AS taxon_id,
-    kingdom,
+    kingdom AS higher_classification_name,
+    'kingdom' AS higher_classification_rank,
     scientificName AS scientific_name,
     taxonRank AS taxon_rank
 FROM input_material
@@ -108,6 +109,7 @@ FROM input_material
 INSERT INTO occurrence (
     occurrence_id,
     event_id,
+    survey_target_id,
     recorded_by,
     recorded_by_id,
     organism_quantity,
@@ -118,13 +120,16 @@ INSERT INTO occurrence (
     identified_by,
     identified_by_id,
     taxon_id,
-    kingdom,
+    higher_classification_name,
+    higher_classification_rank,
     scientific_name,
     taxon_rank
 )
-(SELECT
+(
+SELECT
     occurrenceID AS occurrence_id,
     eventID AS event_id,
+    surveyTargetID AS survey_target_id,
     recordedBy AS recorded_by,
     recordedByID AS recorded_by_id,
     organismQuantity AS organism_quantity,
@@ -135,7 +140,8 @@ INSERT INTO occurrence (
     identifiedBy AS identified_by,
     identifiedByID AS identified_by_id,
     taxonID AS taxon_id,
-    kingdom,
+    kingdom AS higher_classification_name,
+    'kingdom' AS higher_classification_rank,
     scientificName AS scientific_name,
     taxonRank AS taxon_rank
 FROM input_occurrence
@@ -148,28 +154,13 @@ INSERT INTO agent (
     agent_type,
     preferred_agent_name
 )
-(SELECT
+(
+SELECT
     agentID AS agent_id,
     agentType AS agent_type,
     preferredAgentName AS preferred_agent_name
 FROM input_agent
 );
--- n = 2
-
--- Fill the agent_agent_role table.
-/* NOTE: table is missing related_agent_id
-INSERT INTO agent_agent_role (
-    agent_id,
-    related_agent_id,
-    agent_role
-)
-(SELECT
-    agentID AS identification_id,
-    relatedAgentID AS agent_id,
-    agentRole AS agent_role
-FROM input_identification_agent_role
-);
-*/
 -- n = 1
 
 -- Fill the agent_identifier table.
@@ -191,31 +182,31 @@ FROM input_agent_identifier
 -- Fill the identification table.
 INSERT INTO identification (
     identification_id,
-    identification_based_on_material_entity_id,
+    based_on_material_entity_id,
     identification_type,
-    identification_type_iri,
     verbatim_identification,
     identified_by,
     identified_by_id,
     identification_references,
     identification_remarks,
     taxon_id,
-    kingdom,
+    higher_classification_name,
+    higher_classification_rank,
     scientific_name,
     taxon_rank
 )
 (SELECT
     identificationID AS identification_id,
-    identificationBasedOnMaterialEntityID AS identification_based_on_material_entity_id,
+    identificationBasedOnMaterialEntityID AS based_on_material_entity_id,
     identificationType AS identification_type,
-    identificationTypeIRI AS identification_type_iri,
     verbatimIdentification AS verbatim_identification,
     identifiedBy AS identified_by,
     identifiedByID AS identified_by_id,
     identificationReferences AS identification_references,
     identificationRemarks AS identification_remarks,
     taxonID AS taxon_id,
-    kingdom,
+    kingdom AS higher_classification_name,
+    'kingdom' AS higher_classification_rank,
     scientificName AS scientific_name,
     taxonRank AS taxon_rank
 FROM input_identification
@@ -246,7 +237,7 @@ INSERT INTO material_assertion (
     assertionUnitIRI AS assertion_unit_iri
 FROM input_material_assertion
 );
--- n = 1013
+-- n = 1679
 
 -- Fill the media table.
 INSERT INTO media (
@@ -256,20 +247,20 @@ INSERT INTO media (
     format,
     rights,
     creator,
-    creator_id,
-    media_language,
-    media_description
+    creator_iri,
+    language,
+    description
 )
 (SELECT
     mediaID AS media_id,
     mediaType AS media_type,
     accessURI AS access_uri,
-    format,
-    rights,
-    creator,
-    creatorID AS creator_id,
-    mediaLanguage AS media_language,
-    mediaDescription AS media_description
+    format AS format,
+    rights AS rights,
+    creator AS creator,
+    creatorID AS creator_iri,
+    mediaLanguage AS language,
+    mediaDescription AS description
 FROM input_media
 );
 -- n = 215
@@ -300,7 +291,7 @@ INSERT INTO event_assertion (
     assertion_unit,
     assertion_unit_iri,
     assertion_unit_vocabulary,
-    assertion_protocol,
+    assertion_protocols,
     assertion_protocol_id
 )
 (SELECT
@@ -315,7 +306,7 @@ INSERT INTO event_assertion (
     assertionUnit AS assertion_unit,
     assertionUnitIRI AS assertion_unit_iri,
     assertionUnitVocabulary AS assertion_unit_vocabulary,
-    assertionProtocol AS assertion_protocol,
+    assertionProtocol AS assertion_protocols,
     assertionProtocolID AS assertion_protocol_id
 FROM input_event_assertion
 );
@@ -327,19 +318,20 @@ INSERT INTO protocol (
     protocol_type,
     protocol_name,
     protocol_description,
-    protocol_citation
+    protocol_reference
 )
 (SELECT
     protocolID AS protocol_id,
     protocolType AS protocol_type,
     protocolName AS protocol_name,
     protocolDescription AS protocol_description,
-    protocolCitation AS protocol_citation
+    protocolCitation AS protocol_reference
 FROM input_protocol
 );
 -- n = 6
 
 -- Fill the survey table.
+
 INSERT INTO survey (
     survey_id,
     event_id,
@@ -347,7 +339,6 @@ INSERT INTO survey (
     site_nesting_description,
     verbatim_site_descriptions,
     verbatim_site_names,
-    event_duration_unit,
     is_absence_reported,
     are_non_target_taxa_fully_reported,
     compilation_types,
@@ -355,6 +346,8 @@ INSERT INTO survey (
     protocol_names,
     protocol_references,
     is_least_specific_target_category_quantity_inclusive,
+    sample_size_value,
+    sample_size_unit,
     sampling_performed_by,
     sampling_performed_by_id,
     is_sampling_effort_reported,
@@ -362,14 +355,14 @@ INSERT INTO survey (
     sampling_effort_value,
     sampling_effort_unit
 )
-(SELECT
+(
+SELECT
     surveyID AS survey_id,
-    eventID AS event_id,
+    a.eventID AS event_id,
     NULLIF(siteCount, '')::SMALLINT AS site_count,
     siteNestingDescription AS site_nesting_description,
     verbatimSiteDescriptions AS verbatim_site_descriptions,
     verbatimSiteNames AS verbatim_site_names,
-    eventDurationUnit AS event_duration_unit,
     NULLIF(isAbsenceReported, '')::BOOLEAN AS is_absence_reported,
     NULLIF(areNonTargetTaxaFullyReported, '')::BOOLEAN AS are_non_target_taxa_fully_reported,
     compilationType as compilation_types,
@@ -377,13 +370,15 @@ INSERT INTO survey (
     protocolNames AS protocol_names,
     protocolReferences AS protocol_references,
     NULLIF(isLeastSpecificTargetCategoryQuantityInclusive, '')::BOOLEAN AS is_least_specific_target_category_quantity_inclusive,
+    sampleSizeValue AS sample_size_value,
+    sampleSizeUnit AS sample_size_unit,
     samplingPerformedBy AS sampling_performed_by,
     samplingPerformedByID AS sampling_performed_by_id,
     NULLIF(isSamplingEffortReported, '')::BOOLEAN AS is_sampling_effort_reported,
     samplingEffortProtocol AS sampling_effort_protocol,
     NULLIF(samplingEffortValue, '')::NUMERIC AS sampling_effort_value,
     samplingEffortUnit AS sampling_effort_unit
-FROM input_survey
+FROM input_survey a JOIN input_event b ON a.eventID=b.eventID
 );
 -- n = 250
 
@@ -392,7 +387,8 @@ INSERT INTO survey_protocol (
     survey_id,
     protocol_id
 )
-(SELECT
+(
+SELECT
     surveyID AS event_id,
     protocolID AS protocol_id
 FROM input_survey_protocol
@@ -405,18 +401,19 @@ INSERT INTO survey_target (
     survey_id,
     survey_target_type,
     survey_target_value,
-    survey_target_value_iri,
     survey_target_unit,
-    survey_target_unit_iri
+    include_or_exclude,
+    is_survey_target_fully_reported
 )
-(SELECT
+(
+SELECT
     surveyTargetID AS survey_target_id,
     surveyID AS survey_id,
     surveyTargetType AS survey_target_type,
     surveyTargetValue AS survey_target_value,
-    surveyTargetValueIRI AS survey_target_value_iri,
     surveyTargetUnit AS survey_target_unit,
-    surveyTargetUnitIRI AS survey_target_unit_iri
+    NULLIF(includeOrExclude, '')::INCLUDE_OR_EXCLUDE AS include_or_exclude,
+    NULLIF(isSurveyTargetFullyReported, '')::BOOLEAN AS is_survey_target_fully_reported
 FROM input_survey_target
 );
 -- n = 10750

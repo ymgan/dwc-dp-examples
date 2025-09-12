@@ -3,6 +3,7 @@ INSERT INTO event (
   event_id,
   parent_event_id,
   preferred_event_name,
+  event_category,
   event_type,
   dataset_name,
   dataset_id,
@@ -27,11 +28,9 @@ INSERT INTO event (
   verbatim_srs,
   georeference_verification_status,
   habitat,
-  sample_size_value,
-  sample_size_unit,
   event_effort,
   field_notes,
-  event_citation,
+  event_references,
   event_remarks,
   location_id,
   higher_geography_id,
@@ -78,6 +77,7 @@ SELECT
   'NEON_fish' AS event_id, 
   NULL AS parent_event_id,
   NULL AS preferred_event_name,
+  'Event' AS event_category,
   'Project' AS event_type, 
   'Fish electrofishing, gill netting, and fyke netting counts' AS dataset_name,
   'https://data.neonscience.org/data-products/DP1.20107.001' AS dataset_id,
@@ -102,11 +102,9 @@ SELECT
   NULL AS verbatim_srs,
   NULL AS georeference_verification_status,
   NULL AS habitat,
-  NULL AS sample_size_value,
-  NULL AS sample_size_unit,
   NULL AS event_effort,
   NULL AS field_notes,
-  'NEON (National Ecological Observatory Network). Fish electrofishing, gill netting, and fyke netting counts (DP1.20107.001), RELEASE-2025. https://doi.org/10.48443/ap3d-rp07. Dataset accessed from https://data.neonscience.org/data-products/DP1.20107.001/RELEASE-2025 on March 3, 2025.' AS event_citation,
+  'NEON (National Ecological Observatory Network). Fish electrofishing, gill netting, and fyke netting counts (DP1.20107.001), RELEASE-2025. https://doi.org/10.48443/ap3d-rp07. Dataset accessed from https://data.neonscience.org/data-products/DP1.20107.001/RELEASE-2025 on March 3, 2025.' AS event_references,
   NULL AS event_remarks,
   NULL AS location_id,
   NULL AS higher_geography_id,
@@ -156,6 +154,7 @@ INSERT INTO event (
   event_id,
   parent_event_id,
   preferred_event_name,
+  event_category,
   event_type,
   dataset_name,
   dataset_id,
@@ -180,11 +179,9 @@ INSERT INTO event (
   verbatim_srs,
   georeference_verification_status,
   habitat,
-  sample_size_value,
-  sample_size_unit,
   event_effort,
   field_notes,
-  event_citation,
+  event_references,
   event_remarks,
   location_id,
   higher_geography_id,
@@ -231,6 +228,7 @@ SELECT
   'BIGC' AS event_id, 
   'NEON_fish' AS parent_event_id,
   NULL AS preferred_event_name,
+  'Survey' AS event_category, 
   'Site' AS event_type, 
   'Fish electrofishing, gill netting, and fyke netting counts' AS dataset_name,
   'https://data.neonscience.org/data-products/DP1.20107.001' AS dataset_id,
@@ -255,11 +253,9 @@ SELECT
   NULL AS verbatim_srs,
   NULL AS georeference_verification_status,
   'Aquatic Wadeable Stream' AS habitat,
-  NULL AS sample_size_value,
-  NULL AS sample_size_unit,
   NULL AS event_effort,
   NULL AS field_notes,
-  NULL AS event_citation,
+  NULL AS event_references,
   NULL AS event_remarks,
   NULL AS location_id,
   NULL AS higher_geography_id,
@@ -308,6 +304,7 @@ SELECT
 INSERT INTO event (
   event_id, 
   parent_event_id,
+  event_category,
   event_type,
   dataset_name,
   dataset_id,
@@ -335,6 +332,7 @@ INSERT INTO event (
 SELECT DISTINCT
   namedLocation AS event_id, 
   'BIGC' AS parent_event_id,
+  'Survey' AS event_category, 
   'Reach' AS event_type, 
   'Fish electrofishing, gill netting, and fyke netting counts' AS dataset_name,
   'https://data.neonscience.org/data-products/DP1.20107.001' AS dataset_id,
@@ -392,6 +390,7 @@ GROUP BY reachID;
 INSERT INTO event (
   event_id, 
   parent_event_id,
+  event_category,
   event_type, 
   dataset_name,
   dataset_id,
@@ -420,6 +419,7 @@ INSERT INTO event (
 SELECT 
   a.reachID AS event_id, 
   namedLocation AS parent_event_id,
+  'Survey' AS event_category, 
   'Reach Sampling' AS event_type, 
   'Fish electrofishing, gill netting, and fyke netting counts' AS dataset_name,
   'https://data.neonscience.org/data-products/DP1.20107.001' AS dataset_id,
@@ -459,6 +459,7 @@ SELECT
 INSERT INTO event (
   event_id, 
   parent_event_id,
+  event_category,
   event_type, 
   dataset_name,
   dataset_id,
@@ -489,6 +490,7 @@ INSERT INTO event (
 SELECT 
   a.eventID AS event_id, 
   a.reachID AS parent_event_id,
+  'Survey' AS event_category, 
   'Pass Sampling' AS event_type, 
   'Fish electrofishing, gill netting, and fyke netting counts' AS dataset_name,
   'https://data.neonscience.org/data-products/DP1.20107.001' AS dataset_id,
@@ -546,7 +548,8 @@ INSERT INTO occurrence (
   taxon_formula,
   identified_by_id,
   taxon_id,
-  kingdom,
+  higher_classification_name,
+  higher_classification_rank,
   scientific_name,
   taxon_rank
 )
@@ -559,7 +562,8 @@ SELECT
   'A' AS taxon_formula,
   identifiedBy AS identified_by_id,
   taxonID AS taxon_id,
-  'Animalia' AS kingdom,
+  'Animalia' AS higher_classification_name,
+  'kingdom' AS higher_classification_rank,
   CASE 
     WHEN RIGHT(scientificName, 4) = ' sp.' THEN LEFT(scientificName, LENGTH(scientificName) - 4)
     ELSE scientificName
@@ -579,7 +583,8 @@ INSERT INTO occurrence (
   taxon_formula,
   identified_by_id,
   taxon_id,
-  kingdom,
+  higher_classification_name,
+  higher_classification_rank,
   scientific_name,
   taxon_rank
 )
@@ -592,7 +597,8 @@ SELECT
   'A' AS taxon_formula,
   identifiedBy AS identified_by_id,
   taxonID AS taxon_id,
-  'Animalia' AS kingdom,
+  'Animalia' AS higher_classification_name,
+  'kingdom' AS higher_classification_rank,
   CASE 
     WHEN RIGHT(scientificName, 4) = ' sp.' THEN LEFT(scientificName, LENGTH(scientificName) - 4)
     ELSE scientificName
@@ -618,11 +624,12 @@ INSERT INTO material (
   evidence_for_occurrence_id,
   derived_from_material_entity_id,
   derivation_type,
-  part_of_material_entity_id,
+  is_part_of_material_entity_id,
   taxon_formula,
   identified_by_id,
   taxon_id,
-  kingdom,
+  higher_classification_name,
+  higher_classification_rank,
   scientific_name,
   taxon_rank
 )
@@ -639,11 +646,12 @@ SELECT
   a.uid AS evidence_for_occurrence_id,
   NULL AS derived_from_material_entity_id,
   NULL AS derivation_type,
-  NULL AS part_of_material_entity_id,
+  NULL AS is_part_of_material_entity_id,
   'A' AS taxon_formula,
   identifiedBy AS identified_by_id,
   taxonID AS taxon_id,
-  'Animalia' AS kingdom,
+  'Animalia' AS higher_classification_name,
+  'kingdom' AS higher_classification_rank,
   CASE 
     WHEN RIGHT(scientificName, 4) = ' sp.' THEN LEFT(scientificName, LENGTH(scientificName) - 4)
     ELSE scientificName
@@ -671,7 +679,8 @@ INSERT INTO material (
   taxon_formula,
   identified_by_id,
   taxon_id,
-  kingdom,
+  higher_classification_name,
+  higher_classification_rank,
   scientific_name,
   taxon_rank
 )
@@ -690,7 +699,8 @@ SELECT
   'A' AS taxon_formula,
   identifiedBy AS identified_by_id,
   taxonID AS taxon_id,
-  'Animalia' AS kingdom,
+  'Animalia' AS higher_classification_name,
+  'kingdom' AS higher_classification_rank,
   CASE 
     WHEN RIGHT(scientificName, 4) = ' sp.' THEN LEFT(scientificName, LENGTH(scientificName) - 4)
     ELSE scientificName
@@ -706,27 +716,29 @@ WHERE dnaSampleID<>'NA';
 -- Create the identification table from occurrences without associated material.
 INSERT INTO identification (
   identification_id,
-  identification_based_on_occurrence_id,
+  based_on_occurrence_id,
   identification_type,
   is_accepted_identification,
   taxon_formula,
   identified_by_id,
   date_identified,
   taxon_id,
-  kingdom,
+  higher_classification_name,
+  higher_classification_rank,
   scientific_name,
   taxon_rank
 )
 SELECT
   gen_random_uuid() AS identification_id,
-  a.occurrence_id AS identification_based_on_occurrence_id,
+  a.occurrence_id AS based_on_occurrence_id,
   'Observation' AS identification_type,
   TRUE AS is_accepted_identification,
   'A' AS taxon_formula,
   b.identifiedBy AS identified_by_id,
   c.event_date AS date_identified,
   b.taxonID AS taxon_id,
-  'Animalia' AS kingdom,
+  'Animalia' AS higher_classification_name,
+  'kingdom' AS higher_classification_rank,
   CASE 
     WHEN RIGHT(scientificName, 4) = ' sp.' THEN LEFT(scientificName, LENGTH(scientificName) - 4)
     ELSE scientificName
@@ -741,27 +753,29 @@ JOIN event c ON a.event_id=c.event_id;
 -- Add identifications from perFish material.
 INSERT INTO identification (
   identification_id,
-  identification_based_on_material_entity_id,
+  based_on_material_entity_id,
   identification_type,
   is_accepted_identification,
   taxon_formula,
   identified_by_id,
   date_identified,
   taxon_id,
-  kingdom,
+  higher_classification_name,
+  higher_classification_rank,
   scientific_name,
   taxon_rank
 )
 SELECT
   gen_random_uuid() AS identification_id,
-  a.material_entity_id AS identification_based_on_material_entity_id,
+  a.material_entity_id AS based_on_material_entity_id,
   'Material' AS identification_type,
   TRUE AS is_accepted_identification,
   'A' AS taxon_formula,
   b.identifiedBy AS identified_by_id,
   c.event_date AS date_identified,
   b.taxonID AS taxon_id,
-  'Animalia' AS kingdom,
+  'Animalia' AS higher_classification_name,
+  'kingdom' AS higher_classification_rank,
   CASE 
     WHEN RIGHT(scientificName, 4) = ' sp.' THEN LEFT(scientificName, LENGTH(scientificName) - 4)
     ELSE scientificName
@@ -777,25 +791,27 @@ JOIN event c ON a.event_id=c.event_id;
 -- Add identifications from perFish genetic sequences.
 INSERT INTO identification (
   identification_id,
-  identification_based_on_genetic_sequence_id,
+  based_on_nucleotide_sequence_id,
   identification_type,
   is_accepted_identification,
   taxon_formula,
   identified_by_id,
   taxon_id,
-  kingdom,
+  higher_classification_name,
+  higher_classification_rank,
   scientific_name,
   taxon_rank
 )
 SELECT
   gen_random_uuid() AS identification_id,
-  b.dnaSampleID AS identification_based_on_genetic_sequence_id,
+  b.dnaSampleID AS based_on_nucleotide_sequence_id,
   'GeneticSequence' AS identification_type,
   TRUE AS is_accepted_identification,
   'A' AS taxon_formula,
   b.identifiedBy AS identified_by_id,
   b.taxonID AS taxon_id,
-  'Animalia' AS kingdom,
+  'Animalia' AS higher_classification_name,
+  'kingdom' AS higher_classification_rank,
   CASE 
     WHEN RIGHT(scientificName, 4) = ' sp.' THEN LEFT(scientificName, LENGTH(scientificName) - 4)
     ELSE scientificName
@@ -809,27 +825,29 @@ JOIN fsh_perFish b on a.material_entity_id=b.dnaSampleID;
 -- Add identifications from bulkCount observations.
 INSERT INTO identification (
   identification_id,
-  identification_based_on_occurrence_id,
+  based_on_occurrence_id,
   identification_type,
   is_accepted_identification,
   taxon_formula,
   identified_by_id,
   date_identified,
   taxon_id,
-  kingdom,
+  higher_classification_name,
+  higher_classification_rank,
   scientific_name,
   taxon_rank
 )
 SELECT
   gen_random_uuid() AS identification_id,
-  a.occurrence_id AS identification_based_on_occurrence_id,
+  a.occurrence_id AS based_on_occurrence_id,
   'Observation' AS identification_type,
   TRUE AS is_accepted_identification,
   'A' AS taxon_formula,
   b.identifiedBy AS identified_by_id,
   c.event_date AS date_identified,
   b.taxonID AS taxon_id,
-  'Animalia' AS kingdom,
+  'Animalia' AS higher_classification_name,
+  'kingdom' AS higher_classification_rank,
   CASE 
     WHEN RIGHT(scientificName, 4) = ' sp.' THEN LEFT(scientificName, LENGTH(scientificName) - 4)
     ELSE scientificName
@@ -929,9 +947,9 @@ INSERT INTO event_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -949,9 +967,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_fieldData a,
@@ -979,9 +997,9 @@ INSERT INTO event_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -999,9 +1017,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_fieldData a,
@@ -1029,9 +1047,9 @@ INSERT INTO event_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1049,9 +1067,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perFish a,
@@ -1079,9 +1097,9 @@ INSERT INTO event_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1099,9 +1117,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perPass a,
@@ -1129,9 +1147,9 @@ INSERT INTO event_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1149,9 +1167,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perPass a,
@@ -1179,9 +1197,9 @@ INSERT INTO event_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1199,9 +1217,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perPass a,
@@ -1229,9 +1247,9 @@ INSERT INTO event_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1249,9 +1267,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perPass a,
@@ -1279,9 +1297,9 @@ INSERT INTO event_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1299,9 +1317,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perPass a,
@@ -1329,9 +1347,9 @@ INSERT INTO event_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1349,9 +1367,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perPass a,
@@ -1379,9 +1397,9 @@ INSERT INTO event_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1399,9 +1417,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perPass a,
@@ -1429,9 +1447,9 @@ INSERT INTO event_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1449,9 +1467,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perPass a,
@@ -1479,9 +1497,9 @@ INSERT INTO event_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1499,9 +1517,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perPass a,
@@ -1529,9 +1547,9 @@ INSERT INTO event_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1549,9 +1567,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perPass a,
@@ -1579,9 +1597,9 @@ INSERT INTO event_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1599,9 +1617,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perPass a,
@@ -1629,9 +1647,9 @@ INSERT INTO event_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1649,9 +1667,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perPass a,
@@ -1679,9 +1697,9 @@ INSERT INTO event_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1699,9 +1717,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perPass a,
@@ -1729,9 +1747,9 @@ INSERT INTO event_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1749,9 +1767,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perPass a,
@@ -1779,9 +1797,9 @@ INSERT INTO occurrence_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1799,9 +1817,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perFish a,
@@ -1829,9 +1847,9 @@ INSERT INTO occurrence_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1849,9 +1867,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perFish a,
@@ -1879,9 +1897,9 @@ INSERT INTO occurrence_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1899,9 +1917,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perFish a,
@@ -1929,9 +1947,9 @@ INSERT INTO occurrence_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1949,9 +1967,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perFish a,
@@ -1979,9 +1997,9 @@ INSERT INTO occurrence_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -1999,9 +2017,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perFish a,
@@ -2029,9 +2047,9 @@ INSERT INTO occurrence_assertion (
   assertion_unit_vocabulary,
   assertion_by, 
   assertion_by_id,
-  assertion_protocol,
+  assertion_protocols,
   assertion_protocol_id,
-  assertion_citation,
+  assertion_references,
   assertion_remarks
 )
 SELECT
@@ -2049,9 +2067,9 @@ SELECT
   NULL AS assertion_unit_vocabulary,
   NULL AS assertion_by,
   NULL AS assertion_by_id,
-  NULL AS assertion_protocol,
+  NULL AS assertion_protocols,
   NULL AS assertion_protocol_id,
-  NULL AS assertion_citation,
+  NULL AS assertion_references,
   NULL AS assertion_remarks
 FROM 
   fsh_perFish a,
@@ -2063,25 +2081,53 @@ WHERE
 -- n=672 rows
 -- n=2027 rows total
 
--- Create the GeneticSequence table
-INSERT INTO genetic_sequence (
-  genetic_sequence_id,
+-- Create the NucleotideSequence table
+INSERT INTO nucleotide_sequence (
+  nucleotide_sequence_id,
+  nucleotide_sequence
+)
+(
+SELECT 
+  gen_random_uuid() AS nucleotide_sequence_id,
+  DNA_sequence
+FROM dwcav1_dna_derived_data
+GROUP BY DNA_sequence
+);
+-- n=4 rows
+-- n=4 rows total
+
+-- Create the MolecularProtocol table
+INSERT INTO molecular_protocol (
+  molecular_protocol_id,
+  target_gene
+)
+(
+SELECT
+  gen_random_uuid() AS molecular_protocol_id,
+  target_gene AS target_gene
+FROM dwcav1_dna_derived_data
+GROUP BY target_gene
+);
+-- n=1 rows
+-- n=1 rows total
+
+-- Create the NucleotideAnalysis table
+INSERT INTO nucleotide_analysis (
+  nucleotide_analysis_id,
   event_id,
-  derived_from_material_entity_id,
-  genetic_sequence_type,
-  genetic_sequence,
-  genetic_sequence_citation,
-  genetic_sequence_remarks
+  molecular_protocol_id,
+  nucleotide_sequence_id,
+  material_entity_id
 )
 SELECT
-  gen_random_uuid() AS genetic_sequence_id,
+  gen_random_uuid() AS nucleotide_sequence_id,
   b.eventID AS event_id,
-  voucherSampleID AS derived_from_material_entity_id,
-  target_gene AS genetic_sequence_type,
-  DNA_sequence AS genetic_sequence,
-  url AS genetic_sequence_citation,
-  NULL AS genetic_sequence_remarks
+  d.molecular_protocol_id AS molecular_protocol_id,
+  c.nucleotide_sequence_id AS nucleotide_sequence_id,
+  b.voucherSampleID AS material_entity_id
 FROM dwcav1_dna_derived_data a
-JOIN fsh_perFish b ON a.occurrenceID=b.uid;
+JOIN fsh_perFish b ON a.occurrenceID=b.uid
+JOIN nucleotide_sequence c ON a.DNA_sequence=c.nucleotide_sequence
+JOIN molecular_protocol d ON a.target_gene=d.target_gene;
 -- n=11 rows
 -- n=11 rows total

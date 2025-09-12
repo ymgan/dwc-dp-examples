@@ -1,6 +1,0 @@
-assertionID,materialEntityID,assertionType,assertionTypeIRI,assertionTypeVocabulary,assertionMadeDate,assertionEffectiveDate,assertionValue,assertionValueIRI,assertionValueVocabulary,assertionValueNumeric,assertionUnit,assertionUnitIRI,assertionUnitVocabulary,assertionBy,assertionByID,assertionProtocol,assertionProtocolID,assertionCitation,assertionRemarks
-B GT 0004898,B GT 0004898,tissue type,,,,,leaf,,,,,,,,,,,,
-DB 5634_abs230,DB 5634,RatioOfAbsorbance260_230,http://data.ggbn.org/schemas/ggbn/terms/ratioOfAbsorbance260_230,http://data.ggbn.org/schemas/ggbn/terms/,2009-10-29,,0.91,,,0.91,,,,,,,,,Ratio of absorbance at 260nm and 230nm assessing DNA purity
-DB 5634_abs280,DB 5634,RatioOfAbsorbance260_280,http://data.ggbn.org/schemas/ggbn/terms/ratioOfAbsorbance260_280,http://data.ggbn.org/schemas/ggbn/terms/,2009-10-29,,1.98,,,1.98,,,,,,,,,Ratio of absorbance at 260nm and 280nm assessing DNA purity
-DB 5634_con,DB 5634,Concentration,http://data.ggbn.org/schemas/ggbn/terms/concentration,http://data.ggbn.org/schemas/ggbn/terms/,2009-10-29,,6.15,,,6.15,ng/µl,,,,,,,,Concentration of DNA
-DB 16392_con,DB 16392,Concentration,http://data.ggbn.org/schemas/ggbn/terms/concentration,http://data.ggbn.org/schemas/ggbn/terms/,,,54.82,,,54.82,ng/µl,,,,,,,,Concentration of DNA

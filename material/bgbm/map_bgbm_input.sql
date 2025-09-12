@@ -2,17 +2,19 @@
 -- values in the target database structure at 
 -- https://github.com/gbif/model-dwc-dp/blob/master/gbif/dwc_dp_schema.sql
 
-UPDATE input_occurrence
-SET 
-occurrenceStatus = LOWER(occurrenceStatus);
--- n = 4
+-- Temporary measure to remove duplicate eventIDs on input from event.txt
+INSERT INTO input_event (
+SELECT DISTINCT ON (eventID) *
+FROM temp_event
+ORDER BY eventID
+);
 
 -- Fill the event table.
-
 INSERT INTO event (
     event_id, 
     field_number,
     event_type, 
+    event_category, 
     event_conducted_by, 
     event_conducted_by_id,
     event_date, 
@@ -32,6 +34,7 @@ INSERT INTO event (
     eventID AS event_id,
     fieldNumber AS field_number, 
     eventType AS event_type, 
+    eventCategory AS event_category, 
     eventConductedBy AS event_conducted_by, 
     eventConductedByID AS event_conducted_by_id, 
     eventDate AS event_date, 
@@ -48,22 +51,22 @@ INSERT INTO event (
     eventRemarks AS event_remarks 
 FROM input_event
 );
--- n = 11
+-- n = 529704
 
 -- Fill the material table.
-
 INSERT INTO material (
     material_entity_id,
     event_id,
-    material_category,
     evidence_for_occurrence_id,
     material_entity_type,
+    material_category,
     preparations,
     institution_code,
     institution_id,
     owner_institution_code,
     owner_institution_id,
     collection_code,
+    collection_id,
     catalog_number,
     record_number,
     material_entity_remarks,
@@ -73,17 +76,18 @@ INSERT INTO material (
 )
 (
 SELECT 
-    materialEntityID AS material_entity_id,
+    TRIM(materialEntityID) AS material_entity_id,
     eventID AS event_id,
-    'preserved' AS material_category,
     evidenceForOccurrenceID AS evidence_for_occurrence_id,
     materialEntityType AS material_entity_type,
+    'preserved' AS material_category,
     preparations,
     institutionCode AS institution_code,
     institutionID AS institution_id,
     ownerInstitutionCode AS owner_institution_code,
     owner_institutionID AS owner_institution_id,
     collectionCode AS collection_code,
+    collectionID AS collection_id,
     catalogNumber AS catalog_number,
     recordNumber AS record_number,
     materialEntityRemarks AS material_entity_remarks,
@@ -92,16 +96,16 @@ SELECT
     derivationEventID AS derivation_event_id
 FROM input_material
 );
--- n = 7
+-- n = 529704
 
-UPDATE material a
-SET 
-    scientific_name = b.scientificName,
-    taxon_rank = b.taxonRank
-FROM input_identification b
-WHERE a.material_entity_id=b.identificationBasedOnMaterialEntityID
-AND b.isAcceptedIdentification = True;
--- n = 4
+--UPDATE material a
+--SET 
+--    scientific_name = b.scientificName,
+--    taxon_rank = b.taxonRank
+--FROM input_identification b
+--WHERE a.material_entity_id=b.identificationBasedOnMaterialEntityID
+--AND b.isAcceptedIdentification = True;
+-- n = 
 
 -- Fill the occurrence table.
 INSERT INTO occurrence (
@@ -112,26 +116,20 @@ INSERT INTO occurrence (
     recorded_by_id,
     sex,
     occurrence_status,
-    occurrence_remarks,
-    scientific_name,
-    taxon_rank
+    occurrence_remarks
 )
 (SELECT
-    occurrenceID AS occurrence_id,
+    TRIM(occurrenceID) AS occurrence_id,
     eventID AS event_id,
     organismID AS organism_id,
     recordedBy AS recorded_by,
     recordedByID AS recorded_by_id,
     sex,
     NULLIF(occurrenceStatus, '')::OCCURRENCE_STATUS AS occurrence_status,
-    occurrenceRemarks as occurrence_remarks,
-    b.scientificName AS scientific_name,
-    b.taxonRank AS taxon_rank
+    occurrenceRemarks as occurrence_remarks
 FROM input_occurrence a
-LEFT OUTER JOIN input_identification b ON a.organismID=b.identificationBasedOnMaterialEntityID
-WHERE b.isAcceptedIdentification = True
 );
--- n = 4
+-- n = 503395
 
 -- Fill the agent table.
 INSERT INTO agent (
@@ -147,48 +145,51 @@ FROM input_agent
 );
 -- n = 1
 
--- Fill the collection table.
-INSERT INTO collection (
-    collection_id,
-    collection_type,
-    collection_code,
-    institution_code,
-    institution_id
+-- Kludge to further test despite missing molecular_protocol table.
+INSERT INTO molecular_protocol (
+    molecular_protocol_id
 )
 (SELECT
-    collection_id,
-    collection_type,
-    collection_code,
-    institution_code,
-    grscicoll_id AS institution_id
-FROM input_collection
+    'petD' AS molecular_protocol_id
 );
 -- n = 1
 
--- Fill the genetic_sequence table.
-INSERT INTO genetic_sequence (
-    genetic_sequence_id,
-    event_id,
-    derived_from_material_entity_id,
-    genetic_sequence_type,
-    genetic_sequence,
-    genetic_sequence_remarks
+-- Fill the nucleotide_sequence table.
+INSERT INTO nucleotide_sequence (
+    nucleotide_sequence_id,
+    nucleotide_sequence,
+    nucleotide_sequence_remarks
 )
 (SELECT
-    geneticSequenceID AS genetic_sequence_id,
-    eventID AS event_id,
-    derivedFromMaterialEntityID AS derived_from_material_entity_id,
-    geneticSequenceType AS genetic_sequence_type,
-    geneticSequence AS genetic_sequence,
-    geneticSequenceRemarks AS genetic_sequence_remarks
-FROM input_genetic_sequence
+    nucleotideSequenceID AS nucleotide_sequence_id,
+    nucleotideSequence AS nucleotide_sequence,
+    nucleotideSequenceRemarks AS nucleotide_sequence_remarks
+FROM input_nucleotide_sequence
 );
--- n = 1
+-- n = 224
+
+-- Fill the nucleotide_analysis table.
+INSERT INTO nucleotide_analysis (
+    nucleotide_analysis_id,
+    nucleotide_sequence_id,
+    event_id,
+    material_entity_id,
+    molecular_protocol_id
+)
+(SELECT
+    nucleotideAnalysisID AS nucleotide_analysis_id,
+    nucleotideSequenceID AS nucleotide_sequence_id,
+    eventID AS event_id,
+    materialEntityID AS material_entity_id,
+    molecularProtocolID AS molecular_protocol_id
+FROM input_nucleotide_analysis
+);
+-- n = 224
 
 -- Fill the identification table.
 INSERT INTO identification (
     identification_id,
-    identification_based_on_material_entity_id,
+    based_on_material_entity_id,
     taxon_formula,
     type_status,
     identified_by,
@@ -199,7 +200,7 @@ INSERT INTO identification (
 )
 (SELECT
     identificationID AS identification_id,
-    identificationBasedOnMaterialEntityID AS identification_based_on_material_entity_id,
+    identificationBasedOnMaterialEntityID AS based_on_material_entity_id,
     taxonFormula AS taxon_formula,
     typeStatus AS type_status,
     identifiedBy AS identified_by,
@@ -209,7 +210,7 @@ INSERT INTO identification (
     isAcceptedIdentification AS is_accepted_identification
 FROM input_identification
 );
--- n = 9
+-- n = 578109
 
 -- Fill the material_assertion table.
 
@@ -231,15 +232,14 @@ INSERT INTO material_assertion (
     assertionType AS assertion_type,
     assertionTypeIRI AS assertion_type_iri,
     assertionTypeVocabulary AS assertion_type_vocabulary,
-    assertionMadeDate AS assertion_made_date,
-    assertionValue AS assertion_value,
-    NULLIF(assertionValueNumeric, '')::NUMERIC AS assertion_value_numeric,
-    assertionUnit AS assertion_unit,
-    assertionRemarks AS assertion_remarks
+    assertion_made_date AS assertion_made_date,
+    assertion_value AS assertion_value,
+    NULLIF(assertion_value_numeric, '')::NUMERIC AS assertion_value_numeric,
+    assertion_unit AS assertion_unit,
+    assertion_remarks AS assertion_remarks
 FROM input_material_assertion
 );
-
--- n = 5
+-- n = 28081
 
 -- Fill the material_identifier table.
 
@@ -250,11 +250,11 @@ INSERT INTO material_identifier (
 )
 (SELECT
     identifier,
-    materialEntityID AS material_entity_id,
-    identifier_type
+    TRIM(materialEntityID) AS material_entity_id,
+    identifier_type AS identifier_type
 FROM input_material_identifier
 );
--- n = 7
+-- n = 529704
 
 -- Fill the media table.
 
@@ -279,7 +279,7 @@ INSERT INTO media (
     creator
 FROM input_media
 );
--- n = 12
+-- n = 454098
 
 -- Fill the material_media table.
 
@@ -294,10 +294,10 @@ INSERT INTO material_media (
     mediaSubjectCategory AS media_subject_category
 FROM input_material_media
 );
--- n = 10
+-- n = 369194
 
 -- Fill the occurrence_media table.
-
+-- Kludge: one occurrenceID isn't present in the input_occurrence table, even after trimming.
 INSERT INTO occurrence_media (
     media_id,
     occurrence_id,
@@ -308,5 +308,6 @@ INSERT INTO occurrence_media (
     occurrenceID AS occurrence_id,
     mediaSubjectCategory AS media_subject_category
 FROM input_occurrence_media
+WHERE occurrenceID<>'B -W 07872x-00 0'
 );
--- n = 2
+-- n = 84901

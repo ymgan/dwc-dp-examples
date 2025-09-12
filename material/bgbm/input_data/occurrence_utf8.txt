@@ -1,5 +1,0 @@
-﻿occurrenceID,eventID,organismID,recordedBy,recordedByID,sex,occurrenceStatus,occurrenceRemarks
-B 10 0356094_occ,B 10 0356094_occ,B 10 0356094,T. Dürbye & A. Kirchhoff,,,PRESENT,silica preserved tissue and DNA available at BGBM (same individual)
-B 10 0242900_occ,B 10 0242900_occ,B 10 0242900,C. G. Pringle,http://purl.oclc.org/net/edu.harvard.huh/guid/uuid/7ddb21fc-fa2f-4575-a594-322e837faa88 | http://viaf.org/viaf/74992245 | http://www.wikidata.org/entity/Q3009492 | https://bionomia.net/Q3009492,,PRESENT,
-B 10 1088912_occ,B 10 1088912_occ,B 10 1088912,"Willing,E. & Willing,R.",,,PRESENT,EK 95.19.96
-B 10 0479552_occ,B 10 0479552_occ,B 10 0479552,G. Mansion,http://purl.oclc.org/net/edu.harvard.huh/guid/uuid/b13ff28a-8c37-42bd-9b5b-db1ca3f36ff5 | http://www.wikidata.org/entity/Q18986804,,PRESENT,

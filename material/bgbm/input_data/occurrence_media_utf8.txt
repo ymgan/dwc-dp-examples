@@ -1,3 +1,0 @@
-﻿"mediaID","occurrenceID","mediaSubjectCategory"
-"855636","B 10 1088912_occ","Photograph of living plant"
-"855638","B 10 1088912_occ","Photograph of living plant"

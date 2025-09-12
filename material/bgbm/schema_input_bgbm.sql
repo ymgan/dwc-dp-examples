@@ -8,18 +8,11 @@ CREATE TABLE input_agent (
   preferred_agent_name TEXT
 );
 
-CREATE TABLE input_collection (
-  collection_id TEXT PRIMARY KEY,
-  collection_type TEXT,
-  collection_code TEXT,
-  institution_code TEXT,
-  grscicoll_id TEXT
-);
-
-CREATE TABLE input_event (
-  eventID TEXT PRIMARY KEY,
+CREATE TABLE temp_event (
+  eventID TEXT,
   fieldNumber TEXT,
-  eventType TEXT NOT NULL,
+  eventType TEXT,
+  eventCategory TEXT NOT NULL,
   eventConductedBy TEXT,
   eventConductedByID TEXT,
   eventDate TEXT,
@@ -36,13 +29,25 @@ CREATE TABLE input_event (
   eventRemarks TEXT
 );
 
-CREATE TABLE input_genetic_sequence (
-  geneticSequenceID TEXT PRIMARY KEY,
-  eventID TEXT,
-  derivedFromMaterialEntityID TEXT,
-  geneticSequenceType TEXT,
-  geneticSequence TEXT NOT NULL,
-  geneticSequenceRemarks TEXT
+CREATE TABLE input_event (
+  eventID TEXT PRIMARY KEY,
+  fieldNumber TEXT,
+  eventType TEXT,
+  eventCategory TEXT NOT NULL,
+  eventConductedBy TEXT,
+  eventConductedByID TEXT,
+  eventDate TEXT,
+  verbatimEventDate TEXT,
+  locality TEXT,
+  habitat TEXT,
+  continent TEXT,
+  verbatimElevation TEXT,
+  country TEXT,
+  countryCode CHAR(2),
+  decimalLatitude TEXT,
+  decimalLongitude TEXT,
+  geodeticDatum TEXT,
+  eventRemarks TEXT
 );
 
 CREATE TABLE input_identification (
@@ -63,11 +68,11 @@ CREATE TABLE input_material_assertion (
   assertionType TEXT NOT NULL,
   assertionTypeIRI TEXT,
   assertionTypeVocabulary TEXT,
-  assertionMadeDate TEXT,
-  assertionValue TEXT,
-  assertionValueNumeric TEXT,
-  assertionUnit TEXT,
-  assertionRemarks TEXT
+  assertion_made_date TEXT,
+  assertion_value TEXT,
+  assertion_value_numeric TEXT,
+  assertion_unit TEXT,
+  assertion_remarks TEXT
 );
 
 CREATE TABLE input_material_identifier (
@@ -114,6 +119,20 @@ CREATE TABLE input_media (
   rights TEXT,
   owner TEXT,
   creator TEXT
+);
+
+CREATE TABLE input_nucleotide_analysis (
+  nucleotideAnalysisID TEXT PRIMARY KEY,
+  nucleotideSequenceID TEXT,
+  eventID TEXT,
+  materialEntityID TEXT,
+  molecularProtocolID TEXT
+);
+
+CREATE TABLE input_nucleotide_sequence (
+  nucleotideSequenceID TEXT PRIMARY KEY,
+  nucleotideSequence TEXT,
+  nucleotideSequenceRemarks TEXT
 );
 
 CREATE TABLE input_occurrence_media (

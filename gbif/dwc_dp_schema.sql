@@ -1,5 +1,6 @@
 ---
 -- Database schema for the Darwin Core Data Package (DwC-DP) publishing model.
+-- Matches DwC-DP version 2025-06-04
 -- 
 
 -- ENUMs
@@ -109,20 +110,76 @@ UNIQUE (agent_id, related_agent_id, agent_role, agent_role_iri, agent_role_date)
 CREATE TABLE media (
   media_id TEXT PRIMARY KEY,
   media_type TEXT,
-  access_uri TEXT,
-  web_statement TEXT,
-  format TEXT,
-  rights TEXT,
-  owner TEXT,
-  source TEXT,
-  creator TEXT,
-  creator_id TEXT,
-  create_date TEXT,
+  subtype_literal TEXT,
+  subtype TEXT,
+  title TEXT,
   modified TEXT,
-  media_language TEXT,
-  media_description TEXT
+  metadata_date TEXT,
+  metadata_language_literal TEXT,
+  metadata_language TEXT,
+  commenter_literal TEXT,
+  commenter TEXT,
+  comments TEXT,
+  reviewer_literal TEXT,
+  reviewer TEXT,
+  reviewer_comments TEXT,
+  available TEXT,
+  has_service_access_point TEXT,
+  rights TEXT,
+  rights_iri TEXT,
+  owner TEXT,
+  usage_terms TEXT,
+  web_statement TEXT,
+  license_logo_url TEXT,
+  credit TEXT,
+  attribution_logo_url TEXT,
+  attribution_link_url TEXT,
+  funding_attribution TEXT,
+  funding_attribution_id TEXT,
+  source TEXT,
+  source_iri TEXT,
+  creator TEXT,
+  creator_iri TEXT,
+  provider_literal TEXT,
+  provider TEXT,
+  metadata_creator_literal TEXT,
+  metadata_creator TEXT,
+  metadata_provider_literal TEXT,
+  metadata_provider TEXT,
+  description TEXT,
+  caption TEXT,
+  language TEXT,
+  language_iri TEXT,
+  tag TEXT,
+  create_date TEXT,
+  time_of_day TEXT,
+  capture_device TEXT,
+  resource_creation_technique TEXT,
+  collection_code TEXT,
+  collection_id TEXT,
+  derived_from TEXT,
+  access_uri TEXT,
+  format TEXT,
+  format_iri TEXT,
+  variant_literal TEXT,
+  variant TEXT,
+  variant_description TEXT,
+  further_information_url TEXT,
+  licensing_exception TEXT,
+  service_expectation TEXT,
+  hash_function TEXT,
+  hash_value TEXT,
+  pixel_x_dimension INTEGER,
+  pixel_y_dimension INTEGER,
+  feedback_url TEXT
 );
-CREATE INDEX ON media(creator_id);
+CREATE INDEX ON media(commenter);
+CREATE INDEX ON media(reviewer);
+CREATE INDEX ON media(source_iri);
+CREATE INDEX ON media(creator_iri);
+CREATE INDEX ON media(provider);
+CREATE INDEX ON media(metadata_creator);
+CREATE INDEX ON media(metadata_provider);
 
 -- MediaAssertion
 --    An Assertion made by an Agent about a Media entity.
@@ -130,6 +187,7 @@ CREATE INDEX ON media(creator_id);
 CREATE TABLE media_assertion (
   assertion_id TEXT PRIMARY KEY,
   media_id TEXT REFERENCES media ON DELETE CASCADE DEFERRABLE NOT NULL,
+  verbatim_assertion_type TEXT,
   assertion_type TEXT NOT NULL,
   assertion_type_iri TEXT,
   assertion_type_vocabulary TEXT,
@@ -194,14 +252,17 @@ CREATE TABLE agent_media (
   agent_id TEXT REFERENCES agent ON DELETE CASCADE DEFERRABLE NOT NULL,
   media_subject_category TEXT,
   media_subject_category_iri TEXT,
-  media_subject_category_vocabulary TEXT
+  media_subject_category_vocabulary TEXT,
+  subject_part TEXT,
+  subject_orientation TEXT,
+  physical_setting TEXT
 );
 CREATE INDEX ON agent_media(agent_id);
 
 -- Collection (see Latimer Core)
 --   A persistent formal repository in which dwc:MaterialEntities and/or Media are 
 --   preserved.
-
+/*
 CREATE TABLE collection (
   collection_id TEXT PRIMARY KEY,
   collection_type TEXT,
@@ -219,6 +280,7 @@ CREATE INDEX ON collection(institution_id);
 CREATE TABLE collection_assertion (
   assertion_id TEXT PRIMARY KEY,
   collection_id TEXT REFERENCES collection ON DELETE CASCADE DEFERRABLE NOT NULL,
+  verbatim_assertion_type TEXT,
   assertion_type TEXT NOT NULL,
   assertion_type_iri TEXT,
   assertion_type_vocabulary TEXT,
@@ -267,9 +329,13 @@ CREATE TABLE collection_media (
   collection_id TEXT REFERENCES collection ON DELETE CASCADE DEFERRABLE NOT NULL,
   media_subject_category TEXT,
   media_subject_category_iri TEXT,
-  media_subject_category_vocabulary TEXT
+  media_subject_category_vocabulary TEXT,
+  subject_part TEXT,
+  subject_orientation TEXT,
+  physical_setting TEXT
 );
 CREATE INDEX ON collection_media(collection_id);
+*/
 
 -- Reference
 --   A bibliographic reference in which an entity is mentioned.
@@ -337,7 +403,7 @@ CREATE TABLE event (
   habitat TEXT,
   event_effort TEXT,
   field_notes TEXT,
-  event_citation TEXT,
+  event_references TEXT,
   event_remarks TEXT,
   location_id TEXT,
   higher_geography_id TEXT,
@@ -378,12 +444,18 @@ CREATE TABLE event (
   georeference_remarks TEXT,
   information_withheld TEXT,
   data_generalizations TEXT,
-  preferred_spatial_representation TEXT
+  preferred_spatial_representation TEXT,
+  project_id TEXT,
+  project_title TEXT,
+  funding_attribution TEXT,
+  funding_attribution_id TEXT,
+  feedback_url TEXT
 );
 CREATE INDEX ON event(parent_event_id);
 CREATE INDEX ON event(event_conducted_by_id);
 CREATE INDEX ON event(georeferenced_by_id);
 CREATE INDEX ON event(georeference_protocol_id);
+CREATE INDEX ON event(funding_attribution_id);
 
 -- EventAssertion
 --    An Assertion made by an Agent about a dwc:Event.
@@ -391,6 +463,7 @@ CREATE INDEX ON event(georeference_protocol_id);
 CREATE TABLE event_assertion (
   assertion_id TEXT PRIMARY KEY,
   event_id TEXT REFERENCES event ON DELETE CASCADE DEFERRABLE NOT NULL,
+  verbatim_assertion_type TEXT,
   assertion_type TEXT NOT NULL,
   assertion_type_iri TEXT,
   assertion_type_vocabulary TEXT,
@@ -455,7 +528,10 @@ CREATE TABLE event_media (
   event_id TEXT REFERENCES event ON DELETE CASCADE DEFERRABLE NOT NULL,
   media_subject_category TEXT,
   media_subject_category_iri TEXT,
-  media_subject_category_vocabulary TEXT
+  media_subject_category_vocabulary TEXT,
+  subject_part TEXT,
+  subject_orientation TEXT,
+  physical_setting TEXT
 );
 CREATE INDEX ON event_media(event_id);
 
@@ -519,6 +595,7 @@ CREATE INDEX ON chronometric_age(chronometric_age_determined_by_id);
 CREATE TABLE chronometric_age_assertion (
   assertion_id TEXT PRIMARY KEY,
   chronometric_age_id TEXT REFERENCES chronometric_age ON DELETE CASCADE DEFERRABLE NOT NULL,
+  verbatim_assertion_type TEXT,
   assertion_type TEXT NOT NULL,
   assertion_type_iri TEXT,
   assertion_type_vocabulary TEXT,
@@ -567,7 +644,10 @@ CREATE TABLE chronometric_age_media (
   chronometric_age_id TEXT REFERENCES chronometric_age ON DELETE CASCADE DEFERRABLE NOT NULL,
   media_subject_category TEXT,
   media_subject_category_iri TEXT,
-  media_subject_category_vocabulary TEXT
+  media_subject_category_vocabulary TEXT,
+  subject_part TEXT,
+  subject_orientation TEXT,
+  physical_setting TEXT
 );
 CREATE INDEX ON chronometric_age_media(chronometric_age_id);
 
@@ -625,7 +705,10 @@ CREATE TABLE geological_context_media (
   geological_context_id TEXT REFERENCES geological_context ON DELETE CASCADE DEFERRABLE NOT NULL,
   media_subject_category TEXT,
   media_subject_category_iri TEXT,
-  media_subject_category_vocabulary TEXT
+  media_subject_category_vocabulary TEXT,
+  subject_part TEXT,
+  subject_orientation TEXT,
+  physical_setting TEXT
 );
 CREATE INDEX ON geological_context_media(geological_context_id);
 
@@ -674,8 +757,8 @@ CREATE TABLE survey (
   voucher_institutions TEXT,
   has_material_samples BOOLEAN,
   material_sample_types TEXT,
-  sampleSizeValue TEXT,
-  sampleSizeUnit TEXT,
+  sample_size_value TEXT,
+  sample_size_unit TEXT,
   sampling_performed_by TEXT,
   sampling_performed_by_id TEXT,
   is_sampling_effort_reported BOOLEAN,
@@ -684,7 +767,8 @@ CREATE TABLE survey (
   sampling_effort_value NUMERIC CHECK (sampling_effort_value >= 0),
   sampling_effort_unit TEXT,
   information_withheld TEXT,
-  data_generalizations TEXT
+  data_generalizations TEXT,
+  feedback_url TEXT
 );
 CREATE INDEX ON survey(event_id);
 CREATE INDEX ON survey(identified_by_id);
@@ -711,6 +795,7 @@ CREATE INDEX ON survey_target(survey_id);
 CREATE TABLE survey_assertion (
   assertion_id TEXT PRIMARY KEY,
   survey_id TEXT REFERENCES survey ON DELETE CASCADE DEFERRABLE NOT NULL,
+  verbatim_assertion_type TEXT,
   assertion_type TEXT NOT NULL,
   assertion_type_iri TEXT,
   assertion_type_vocabulary TEXT,
@@ -807,6 +892,7 @@ CREATE TABLE occurrence (
   establishment_means TEXT,
   degree_of_establishment TEXT,
   pathway TEXT,
+  substrate TEXT,
   occurrence_status OCCURRENCE_STATUS DEFAULT 'detected' NOT NULL,
   occurrence_references TEXT,
   information_withheld TEXT,
@@ -815,6 +901,7 @@ CREATE TABLE occurrence (
   organism_id TEXT,
   organism_scope TEXT DEFAULT 'multicellular organism',
   organism_name TEXT,
+  cause_of_death TEXT,
   organism_remarks TEXT,
   verbatim_identification TEXT,
   taxon_formula TEXT DEFAULT 'A',
@@ -823,13 +910,14 @@ CREATE TABLE occurrence (
   date_identified TEXT,
   identification_references TEXT,
   identification_verification_status TEXT,
-  identificationRemarks TEXT,
+  identification_remarks TEXT,
   taxon_id TEXT,
   higher_classification_name TEXT,
   higher_classification_rank TEXT,
   scientific_name TEXT,
   taxon_rank TEXT,
-  taxon_remarks TEXT
+  taxon_remarks TEXT,
+  feedback_url TEXT
 );
 CREATE INDEX ON occurrence(event_id);
 CREATE INDEX ON occurrence(survey_target_id);
@@ -842,6 +930,7 @@ CREATE INDEX ON occurrence(identified_by_id);
 CREATE TABLE occurrence_assertion (
   assertion_id TEXT PRIMARY KEY,
   occurrence_id TEXT REFERENCES occurrence ON DELETE CASCADE DEFERRABLE NOT NULL,
+  verbatim_assertion_type TEXT,
   assertion_type TEXT NOT NULL,
   assertion_type_iri TEXT,
   assertion_type_vocabulary TEXT,
@@ -906,7 +995,10 @@ CREATE TABLE occurrence_media (
   occurrence_id TEXT REFERENCES occurrence ON DELETE CASCADE DEFERRABLE NOT NULL,
   media_subject_category TEXT,
   media_subject_category_iri TEXT,
-  media_subject_category_vocabulary TEXT
+  media_subject_category_vocabulary TEXT,
+  subject_part TEXT,
+  subject_orientation TEXT,
+  physical_setting TEXT
 );
 CREATE INDEX ON occurrence_media(occurrence_id);
 
@@ -943,8 +1035,10 @@ CREATE TABLE organism_interaction (
   subject_organism_part TEXT,
   organism_interaction_type TEXT,
   related_occurrence_id TEXT REFERENCES occurrence ON DELETE CASCADE DEFERRABLE NOT NULL,
-  related_organism_part TEXT
+  related_organism_part TEXT,
+  feedback_url TEXT
 );
+CREATE INDEX ON organism_interaction(event_id);
 CREATE INDEX ON organism_interaction(subject_occurrence_id);
 CREATE INDEX ON organism_interaction(related_occurrence_id);
 
@@ -954,6 +1048,7 @@ CREATE INDEX ON organism_interaction(related_occurrence_id);
 CREATE TABLE organism_interaction_assertion (
   assertion_id TEXT PRIMARY KEY,
   organism_interaction_id TEXT REFERENCES organism_interaction ON DELETE CASCADE DEFERRABLE NOT NULL,
+  verbatim_assertion_type TEXT,
   assertion_type TEXT NOT NULL,
   assertion_type_iri TEXT,
   assertion_type_vocabulary TEXT,
@@ -1002,7 +1097,10 @@ CREATE TABLE organism_interaction_media (
   organism_interaction_id TEXT REFERENCES organism_interaction ON DELETE CASCADE DEFERRABLE NOT NULL,
   media_subject_category TEXT,
   media_subject_category_iri TEXT,
-  media_subject_category_vocabulary TEXT
+  media_subject_category_vocabulary TEXT,
+  subject_part TEXT,
+  subject_orientation TEXT,
+  physical_setting TEXT
 );
 CREATE INDEX ON organism_interaction_media(organism_interaction_id);
 
@@ -1021,8 +1119,10 @@ CREATE INDEX ON organism_interaction_reference(organism_interaction_id);
 
 CREATE TABLE material (
   material_entity_id TEXT PRIMARY KEY,
+  digital_specimen_id TEXT,
   event_id TEXT REFERENCES event ON DELETE CASCADE DEFERRABLE NOT NULL,
   material_category TEXT,
+  discipline TEXT,
   material_entity_type TEXT,
   institution_code TEXT,
   institution_id TEXT, 
@@ -1066,11 +1166,13 @@ CREATE TABLE material (
   higher_classification_rank TEXT,
   scientific_name TEXT,
   taxon_rank TEXT,
-  taxon_remarks TEXT  
+  taxon_remarks TEXT,
+  feedback_url TEXT
 );
 CREATE INDEX ON material(event_id);
 CREATE INDEX ON material(institution_id);
-CREATE INDEX ON material(collection_id);
+CREATE INDEX ON material(owner_institution_id);
+--CREATE INDEX ON material(collection_id);
 CREATE INDEX ON material(collected_by_id);
 CREATE INDEX ON material(evidence_for_occurrence_id);
 CREATE INDEX ON material(derived_from_material_entity_id);
@@ -1084,6 +1186,7 @@ CREATE INDEX ON material(identified_by_id);
 CREATE TABLE material_assertion (
   assertion_id TEXT PRIMARY KEY,
   material_entity_id TEXT REFERENCES material ON DELETE CASCADE DEFERRABLE NOT NULL,
+  verbatim_assertion_type TEXT,
   assertion_type TEXT NOT NULL,
   assertion_type_iri TEXT,
   assertion_type_vocabulary TEXT,
@@ -1148,7 +1251,10 @@ CREATE TABLE material_media (
   material_entity_id TEXT REFERENCES material ON DELETE CASCADE DEFERRABLE NOT NULL,
   media_subject_category TEXT,
   media_subject_category_iri TEXT,
-  media_subject_category_vocabulary TEXT
+  media_subject_category_vocabulary TEXT,
+  subject_part TEXT,
+  subject_orientation TEXT,
+  physical_setting TEXT
 );
 CREATE INDEX ON material_media(material_entity_id);
 
@@ -1186,7 +1292,7 @@ CREATE TABLE nucleotide_sequence (
 
 CREATE TABLE molecular_protocol (
   molecular_protocol_id TEXT PRIMARY KEY,
-  assayType TEXT,
+  assay_type TEXT,
   samp_name TEXT,
   project_name TEXT,
   experimental_factor TEXT,
@@ -1317,6 +1423,7 @@ CREATE TABLE molecular_protocol (
 CREATE TABLE molecular_protocol_assertion (
   assertion_id TEXT PRIMARY KEY,
   molecular_protocol_id TEXT REFERENCES molecular_protocol ON DELETE CASCADE DEFERRABLE NOT NULL,
+  verbatim_assertion_type TEXT,
   assertion_type TEXT NOT NULL,
   assertion_type_iri TEXT,
   assertion_type_vocabulary TEXT,
@@ -1377,11 +1484,11 @@ CREATE TABLE nucleotide_analysis (
   nucleotide_sequence_id TEXT REFERENCES nucleotide_sequence ON DELETE CASCADE DEFERRABLE NOT NULL,
   material_entity_id TEXT REFERENCES material ON DELETE CASCADE DEFERRABLE NOT NULL,
   read_count INTEGER,
-  total_read_count INTEGER,
-  nucleotide_sequence_remarks TEXT
+  total_read_count INTEGER
 );
 CREATE INDEX ON nucleotide_analysis(event_id);
 CREATE INDEX ON nucleotide_analysis(molecular_protocol_id);
+CREATE INDEX ON nucleotide_analysis(nucleotide_sequence_id);
 CREATE INDEX ON nucleotide_analysis(material_entity_id);
 
 -- NucleotideAnalysisAssertion
@@ -1390,6 +1497,7 @@ CREATE INDEX ON nucleotide_analysis(material_entity_id);
 CREATE TABLE nucleotide_analysis_assertion (
   assertion_id TEXT PRIMARY KEY,
   nucleotide_analysis_id TEXT REFERENCES nucleotide_analysis ON DELETE CASCADE DEFERRABLE NOT NULL,
+  verbatim_assertion_type TEXT,
   assertion_type TEXT NOT NULL,
   assertion_type_iri TEXT,
   assertion_type_vocabulary TEXT,
@@ -1429,7 +1537,6 @@ CREATE TABLE identification (
   taxon_formula TEXT DEFAULT 'A',
   type_status TEXT,
   type_designation_type TEXT,
-  typified_name TEXT,
   identified_by TEXT,
   identified_by_id TEXT,
   date_identified TEXT,
@@ -1442,7 +1549,8 @@ CREATE TABLE identification (
   higher_classification_rank TEXT,
   scientific_name TEXT,
   taxon_rank TEXT,
-  taxon_remarks TEXT
+  taxon_remarks TEXT,
+  feedback_url TEXT
 );
 CREATE INDEX ON identification(based_on_occurrence_id);
 CREATE INDEX ON identification(based_on_material_entity_id);
@@ -1474,7 +1582,7 @@ UNIQUE (agent_id, identification_id, agent_role, agent_role_iri, agent_role_date
 CREATE TABLE identification_taxon (
   identification_id TEXT REFERENCES identification ON DELETE CASCADE DEFERRABLE NOT NULL,
   taxon_id TEXT,
-  taxon_order SMALLINT CHECK (taxon_order >= 1),
+  taxon_sort_order SMALLINT CHECK (taxon_sort_order >= 1),
   higher_classification_name TEXT,
   higher_classification_rank TEXT,
   scientific_name TEXT NOT NULL,
@@ -1500,6 +1608,7 @@ CREATE INDEX ON phylogenetic_tree(phylogenetic_tree_protocol_id);
 CREATE TABLE phylogenetic_tree_assertion (
   assertion_id TEXT PRIMARY KEY,
   phylogenetic_tree_id TEXT REFERENCES phylogenetic_tree ON DELETE CASCADE DEFERRABLE NOT NULL,
+  verbatim_assertion_type TEXT,
   assertion_type TEXT NOT NULL,
   assertion_type_iri TEXT,
   assertion_type_vocabulary TEXT,
@@ -1547,7 +1656,10 @@ CREATE TABLE phylogenetic_tree_media (
   phylogenetic_tree_id TEXT REFERENCES phylogenetic_tree ON DELETE CASCADE DEFERRABLE NOT NULL,
   media_subject_category TEXT,
   media_subject_category_iri TEXT,
-  media_subject_category_vocabulary TEXT
+  media_subject_category_vocabulary TEXT,
+  subject_part TEXT,
+  subject_orientation TEXT,
+  physical_setting TEXT
 );
 CREATE INDEX ON phylogenetic_tree_media(phylogenetic_tree_id);
 
@@ -1593,6 +1705,7 @@ CREATE INDEX ON phylogenetic_tree_tip(nucleotide_sequence_id);
 CREATE TABLE phylogenetic_tree_tip_assertion (
   assertion_id TEXT PRIMARY KEY,
   phylogenetic_tree_tip_id TEXT REFERENCES phylogenetic_tree_tip ON DELETE CASCADE DEFERRABLE NOT NULL,
+  verbatim_assertion_type TEXT,
   assertion_type TEXT NOT NULL,
   assertion_type_iri TEXT,
   assertion_type_vocabulary TEXT,
