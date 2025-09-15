@@ -2,7 +2,7 @@
 -- Schema for input data to be mapped to dwc-dp publishing model.
 --
 
-Not yet configured
+-- Not yet configured
 
 -- From the original data set: https://datsu.ices.dk/web/selRep.aspx?Dataset=157
 CREATE TABLE file_info (
