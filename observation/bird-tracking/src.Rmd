@@ -199,8 +199,15 @@ parent_event <-
     eventID = paste(.data$`animal-id`, .data$`tag-id`, sep = "_"),
     parentEventID = paste(.data$`animal-id`, .data$`tag-id`, sep = "_"), # Will be set to NA later
     eventType = "deployment",
-    eventDate = format(.data$`deploy-on-date`, format = "%Y-%m-%dT%H:%M:%SZ"),
-    # TODO: include deploy-off-date if available as start/end
+    eventDate = dplyr::case_when(
+      !is.na(.data$`deploy-off-date`) ~
+        paste(
+          format(.data$`deploy-on-date`, format = "%Y-%m-%dT%H:%M:%SZ"),
+          format(.data$`deploy-off-date`, format = "%Y-%m-%dT%H:%M:%SZ"),
+          sep = "/"
+        ),
+        .default = format(.data$`deploy-on-date`, format = "%Y-%m-%dT%H:%M:%SZ")
+    ),
     eventRemarks = NA_character_,
     minimumElevationInMeters = NA_real_,
     maximumElevationInMeters = NA_real_,
