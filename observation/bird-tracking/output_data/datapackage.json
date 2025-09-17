@@ -487,23 +487,6 @@
             }
           },
           {
-            "name": "assertionID",
-            "title": "Assertion ID",
-            "description": "An identifier for a dwc:Assertion.",
-            "comments": "Recommended best practice is to use a globally unique identifier.",
-            "examples": "",
-            "type": "string",
-            "format": "default",
-            "namespace": "dwc",
-            "iri": "",
-            "iri_version": "",
-            "rdfs:comment": "",
-            "constraints": {
-              "required": true,
-              "unique": true
-            }
-          },
-          {
             "name": "assertionType",
             "title": "Assertion Type",
             "description": "A category that best matches the nature of a dwc:Assertion.",
