@@ -260,8 +260,6 @@ ref_occurrence <-
     organismID = .data$`animal-id`,
     organismName = .data$`animal-nickname`,
     taxonID = .data$aphia_lsid,
-    higherClassificationName = "Animalia",
-    higherClassificationRank = "kingdom",
     scientificName = .data$`animal-taxon`,
     taxonRank = "species"
   )
@@ -287,8 +285,6 @@ gps_occurrence <-
     organismID = .data$`individual-local-identifier`,
     organismName = .data$`animal-nickname`,
     taxonID = .data$aphia_lsid,
-    higherClassificationName = "Animalia",
-    higherClassificationRank = "kingdom",
     scientificName = .data$`animal-taxon`,
     taxonRank = "species"
   )
@@ -354,17 +350,23 @@ occurrenceAssertion <-
 ### Prepare table schemas
 
 ```{r table schema event}
-schema_event <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/0.1/table-schemas/event.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
+schema_event <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/table-schemas/event.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
 
 schema_event$fields <- purrr::keep(schema_event$fields, ~ .x$name %in% names(event))
 schema_event$foreignKeys <- purrr::keep(schema_event$foreignKeys, ~ .x$fields %in% c("parentEventID"))
 ```
 
 ```{r table schema occurrence}
-schema_occurrence <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/0.1/table-schemas/occurrence.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
+schema_occurrence <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/table-schemas/occurrence.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
 
 schema_occurrence$fields <- purrr::keep(schema_occurrence$fields, ~ .x$name %in% names(occurrence))
 schema_occurrence$foreignKeys <- purrr::keep(schema_occurrence$foreignKeys, ~ .x$fields %in% c("eventID"))
+```
+
+```{r table schema occurrenceAssertion}
+schema_occurrence_assertion <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/table-schemas/occurrence-assertion.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
+
+schema_occurrence_assertion$fields <- purrr::keep(schema_occurrence_assertion$fields, ~ .x$name %in% names(occurrenceAssertion))
 ```
 
 ### Create DP
@@ -381,6 +383,11 @@ dwcDP <-
     resource_name = "occurrence",
     data = occurrence,
     schema = schema_occurrence
+    ) |>
+  frictionless::add_resource(
+    resource_name = "occurrence-assertion",
+    data = occurrenceAssertion,
+    schema = schema_occurrence_assertion
     ) |>
   append(
     c(
