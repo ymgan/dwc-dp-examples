@@ -7,7 +7,7 @@ output: html_document
 
 Transforms a Movebank dataset (formatted as a [Frictionless Data Package](https://specs.frictionlessdata.io/data-package/)) to a [Darwin Core Data Package](https://gbif.github.io/dwc-dp/) as part of the public review.
 
-# Initiation
+## Initiation
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -22,45 +22,57 @@ library(frictionless)
 library(here)
 ```
 
+Load example dataset [o_assen](https://inbo.github.io/movepub/reference/o_assen.html) included in movepub R package:
+
 ```{r dataset}
 movebank_package <- o_assen
 ```
 
-# Prepare data
+## Prepare data
+
+Read reference data:
 
 ```{r}
-ref <- movepub::read_resource(movebank_package, "reference-data") %>% 
+ref <- movepub::read_resource(movebank_package, "reference-data") |>
+  # Add missing columns
   dplyr::mutate(
     `tag-model` = NA_character_,
     `animal-reproductive-condition` = NA_character_
-    )
+  )
+```
 
-# Lookup AphiaIDs for taxa
+Lookup AphiaIDs for taxa:
+
+```{r}
 names <- dplyr::pull(dplyr::distinct(ref, .data$`animal-taxon`))
 taxa <- get_aphia_id(names)
+```
 
-# Read GPS data and subsample to 1 record per animal+tag+date+hour combination
-gps <- movepub::read_resource(movebank_package, "gps") %>% 
+Read GPS data and subsample to 1 record per animal+tag+date+hour combination:
+
+```{r}
+gps <- movepub::read_resource(movebank_package, "gps") |> 
+  # Add missing columns
   dplyr::mutate(
     comments = NA_character_,
     `height-above-ellipsoid` = NA_character_
-    ) %>% 
+    ) |> 
   # Exclude outliers & (rare) empty coordinates
-  dplyr::filter(.data$visible & !is.na(.data$`location-lat`)) %>%
+  dplyr::filter(.data$visible & !is.na(.data$`location-lat`)) |>
   dplyr::mutate(
     time_per_hour = strftime(.data$timestamp, "%y-%m-%d %H %Z", tz = "UTC")
-  ) %>%
+  ) |>
   # Group by animal+tag+date+hour combination
   dplyr::group_by(
     .data$`individual-local-identifier`,
     .data$`tag-local-identifier`,
     .data$time_per_hour
-  ) %>%
-  dplyr::arrange(.data$timestamp) %>%
-  dplyr::mutate(subsample_count = dplyr::n()) %>%
+  ) |>
+  dplyr::arrange(.data$timestamp) |>
+  dplyr::mutate(subsample_count = dplyr::n()) |>
   # Take first record/timestamp within group
-  dplyr::filter(dplyr::row_number() == 1) %>%
-  dplyr::ungroup() %>%
+  dplyr::filter(dplyr::row_number() == 1) |>
+  dplyr::ungroup() |>
   # Join with reference data
   dplyr::left_join(
     ref,
@@ -68,19 +80,19 @@ gps <- movepub::read_resource(movebank_package, "gps") %>%
       "individual-local-identifier" == "animal-id",
       "tag-local-identifier" == "tag-id"
     )
-  ) %>%
+  ) |>
   # Exclude (rare) records outside a deployment
-  dplyr::filter(!is.na(.data$`animal-taxon`)) %>%
+  dplyr::filter(!is.na(.data$`animal-taxon`)) |>
   dplyr::left_join(taxa, by = dplyr::join_by("animal-taxon" == "name")) 
 ```
 
-# Data transformation
+## Data transformation
 
-## Event
+### Event
 
 ```{r ref_event}
 ref_event <-
-  ref %>%
+  ref |>
   dplyr::mutate(
     .keep = "none",
     eventID = paste(.data$`animal-id`, .data$`tag-id`, "start", sep = "_"),
@@ -134,7 +146,7 @@ ref_event <-
 
 ```{r gps_event}
 gps_event <-
-  gps %>%
+  gps |>
   dplyr::mutate(
     .keep = "none",
     eventID = as.character(.data$`event-id`),
@@ -175,7 +187,7 @@ gps_event <-
 
 ```{r}
 parent_event <-
-  ref %>% 
+  ref |> 
   dplyr::mutate(
     .keep = "none", 
     eventID = paste(.data$`animal-id`, .data$`tag-id`, sep = "_"),
@@ -198,29 +210,28 @@ parent_event <-
   )
 ```
 
-
 ```{r event}
 event <-
-  parent_event %>%
-  dplyr::bind_rows(ref_event) %>%
-  dplyr::bind_rows(gps_event) %>% 
-  distinct() %>% 
+  parent_event |>
+  dplyr::bind_rows(ref_event) |>
+  dplyr::bind_rows(gps_event) |> 
+  distinct() |> 
   dplyr::mutate(
       # DATASET-LEVEL
       datasetName = movebank_package$title,
       datasetID = movebank_package$id,
       .before = "eventDate"
-    ) %>% 
+    ) |> 
   dplyr::arrange(.data$parentEventID, .data$eventDate)
 ```
 
-## Occurrence
+### Occurrence
 
 ```{r ref_occurrence}
 ref_occurrence <-
-  ref %>% 
-  dplyr::filter(!is.na(.data$`deploy-on-date`)) %>% 
-  dplyr::left_join(taxa, by = dplyr::join_by("animal-taxon" == "name")) %>% 
+  ref |> 
+  dplyr::filter(!is.na(.data$`deploy-on-date`)) |> 
+  dplyr::left_join(taxa, by = dplyr::join_by("animal-taxon" == "name")) |> 
   dplyr::mutate(
     .keep = "none",
     occurrenceID = paste(
@@ -246,7 +257,7 @@ ref_occurrence <-
 
 ```{r}
 gps_occurrence <-
-  gps %>% 
+  gps |> 
   dplyr::mutate(
     .keep = "none",
     occurrenceID = as.character(.data$`event-id`),
@@ -269,19 +280,18 @@ gps_occurrence <-
   )
 ```
 
-
 ```{r occurrence}
 occurrence <-
-  ref_occurrence %>%
-  dplyr::bind_rows(gps_occurrence) %>%
+  ref_occurrence |>
+  dplyr::bind_rows(gps_occurrence) |>
   dplyr::arrange(eventID)
 ```
 
-## OccurrenceAssertion
+### OccurrenceAssertion
 
 ```{r occurrenceAssertion}
 sex <-
-  ref_occurrence %>%
+  ref_occurrence |>
   dplyr::mutate(
     .keep = "none",
     occurrenceID = .data$occurrenceID,
@@ -301,7 +311,7 @@ sex <-
   )
 
 lifestage <-
-  ref_occurrence %>%
+  ref_occurrence |>
   dplyr::mutate(
     .keep = "none",
     occurrenceID = .data$occurrenceID,
@@ -321,13 +331,13 @@ lifestage <-
   )
 
 occurrenceAssertion <-
-  dplyr::bind_rows(sex, lifestage) %>%
+  dplyr::bind_rows(sex, lifestage) |>
   dplyr::arrange(.data$occurrenceID)
 ```
 
-# Create Darwin Core Data Package
+## Create Darwin Core Data Package
 
-## Prepare table schema's
+### Prepare table schemas
 
 ```{r table schema event}
 schema_event <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/table-schemas/event.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
@@ -349,26 +359,26 @@ schema_occurrence_assertion <- jsonlite::fromJSON("https://raw.githubusercontent
 schema_occurrence_assertion$fields <- purrr::keep(schema_occurrence_assertion$fields, ~ .x$name %in% names(occurrenceAssertion))
 ```
 
-## Create DP
+### Create DP
 
 ```{r dwcDP}
 dwcDP <-
-  frictionless::create_package() %>% 
+  frictionless::create_package() |> 
   frictionless::add_resource(
     resource_name = "event",
     data = event,
     schema = schema_event
-    ) %>% 
+    ) |> 
   frictionless::add_resource(
     resource_name = "occurrence",
     data = occurrence,
     schema = schema_occurrence
-    ) %>%
+    ) |>
   frictionless::add_resource(
     resource_name = "occurrence-assertion",
     data = occurrenceAssertion,
     schema = schema_occurrence_assertion
-  ) %>%
+    ) |>
   append(
     c(
       profile = "tabular-data-package",
@@ -376,19 +386,17 @@ dwcDP <-
       title = "Bird tracking (Movebank) Observation Example"
     ),
     after = 0
-  ) %>% 
+  ) |> 
   frictionless::create_package()
 ```
 
-
-# Write data
+## Write data
 
 ```{r}
 frictionless::write_package(dwcDP, here::here("observation", "bird-tracking", "output_data"))
 ```
 
-
-# Compare with Darwin Core Archive
+## Compare with Darwin Core Archive
 
 ```{r}
 dwc <- movepub::write_dwc(movebank_package, directory = "my_directory")
@@ -397,7 +405,3 @@ unlink("my_directory", recursive = TRUE)
 nrow(dwc$occurrence) == nrow(occurrence)
 nrow(dwc$emof) == nrow(occurrenceAssertion)
 ```
-
-
-
-
