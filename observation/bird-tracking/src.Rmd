@@ -197,20 +197,17 @@ parent_event <-
   dplyr::mutate(
     .keep = "none", 
     eventID = paste(.data$`animal-id`, .data$`tag-id`, sep = "_"),
-    parentEventID = NA_character_,
+    parentEventID = paste(.data$`animal-id`, .data$`tag-id`, sep = "_"), # Will be set to NA later
     eventType = "deployment",
     eventDate = format(.data$`deploy-on-date`, format = "%Y-%m-%dT%H:%M:%SZ"),
+    # TODO: include deploy-off-date if available as start/end
     eventRemarks = NA_character_,
     minimumElevationInMeters = NA_real_,
     maximumElevationInMeters = NA_real_,
     locationRemarks = NA_character_,
     decimalLatitude = NA_real_,
     decimalLongitude = NA_real_,
-    geodeticDatum = dplyr::if_else(
-      !is.na(.data$`deploy-on-latitude`),
-      "EPSG:4326",
-      NA_character_
-    ),
+    geodeticDatum = NA_character_,
     coordinateUncertaintyInMeters = NA_real_,
     dataGeneralizations = NA_character_
   )
@@ -220,15 +217,22 @@ parent_event <-
 event <-
   parent_event |>
   dplyr::bind_rows(ref_event) |>
-  dplyr::bind_rows(gps_event) |> 
+  dplyr::bind_rows(gps_event) |>
   distinct() |> 
   dplyr::mutate(
-      # DATASET-LEVEL
-      datasetName = movebank_package$title,
-      datasetID = movebank_package$id,
-      .before = "eventDate"
-    ) |> 
-  dplyr::arrange(.data$parentEventID, .data$eventDate)
+    # DATASET-LEVEL
+    datasetName = movebank_package$title,
+    datasetID = movebank_package$id,
+    .before = "eventDate"
+  ) |>
+  dplyr::arrange(.data$parentEventID, .data$eventDate) |>
+  dplyr::mutate(
+    parentEventID = dplyr::if_else(
+      .data$eventID == .data$parentEventID,
+      NA_character_,
+      .data$parentEventID
+    )
+  )
 ```
 
 ### Occurrence
