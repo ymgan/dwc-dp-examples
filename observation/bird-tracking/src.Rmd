@@ -22,25 +22,37 @@ library(frictionless)
 library(here)
 ```
 
+Load example dataset [o_assen](https://inbo.github.io/movepub/reference/o_assen.html) included in movepub R package:
+
 ```{r dataset}
 movebank_package <- o_assen
 ```
 
 ## Prepare data
 
+Read reference data:
+
 ```{r}
 ref <- movepub::read_resource(movebank_package, "reference-data") |>
+  # Add missing columns
   dplyr::mutate(
     `tag-model` = NA_character_,
     `animal-reproductive-condition` = NA_character_
-    )
+  )
+```
 
-# Lookup AphiaIDs for taxa
+Lookup AphiaIDs for taxa:
+
+```{r}
 names <- dplyr::pull(dplyr::distinct(ref, .data$`animal-taxon`))
 taxa <- get_aphia_id(names)
+```
 
-# Read GPS data and subsample to 1 record per animal+tag+date+hour combination
+Read GPS data and subsample to 1 record per animal+tag+date+hour combination:
+
+```{r}
 gps <- movepub::read_resource(movebank_package, "gps") |> 
+  # Add missing columns
   dplyr::mutate(
     comments = NA_character_,
     `height-above-ellipsoid` = NA_character_
