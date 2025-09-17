@@ -129,7 +129,7 @@ ref_event <-
         ""
       )
     ),
-    minimumElevationInMeters = NA_real_,
+    minimumElevationInMeters = NA_real_, # subject to discussion: https://github.com/inbo/movepub/issues/109
     maximumElevationInMeters = NA_real_,
     locationRemarks = NA_character_,
     decimalLatitude = as.numeric(.data$`deploy-on-latitude`),
@@ -139,7 +139,13 @@ ref_event <-
       "EPSG:4326",
       NA_character_
     ),
-    coordinateUncertaintyInMeters = NA_real_,
+    coordinateUncertaintyInMeters = dplyr::if_else(
+      !is.na(.data$`deploy-on-latitude`),
+      # Assume coordinate precision of 0.001 degree (157m) and recording
+      # by GPS (30m)
+      187,
+      NA_real_
+    ),
     dataGeneralizations = NA_character_
   )
 ```
