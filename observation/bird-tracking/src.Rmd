@@ -7,7 +7,7 @@ output: html_document
 
 Transforms a Movebank dataset (formatted as a [Frictionless Data Package](https://specs.frictionlessdata.io/data-package/)) to a [Darwin Core Data Package](https://gbif.github.io/dwc-dp/) as part of the public review.
 
-# Initiation
+## Initiation
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -26,7 +26,7 @@ library(here)
 movebank_package <- o_assen
 ```
 
-# Prepare data
+## Prepare data
 
 ```{r}
 ref <- movepub::read_resource(movebank_package, "reference-data") |>
@@ -74,9 +74,9 @@ gps <- movepub::read_resource(movebank_package, "gps") |>
   dplyr::left_join(taxa, by = dplyr::join_by("animal-taxon" == "name")) 
 ```
 
-# Data transformation
+## Data transformation
 
-## Event
+### Event
 
 ```{r ref_event}
 ref_event <-
@@ -198,7 +198,6 @@ parent_event <-
   )
 ```
 
-
 ```{r event}
 event <-
   parent_event |>
@@ -214,7 +213,7 @@ event <-
   dplyr::arrange(.data$parentEventID, .data$eventDate)
 ```
 
-## Occurrence
+### Occurrence
 
 ```{r ref_occurrence}
 ref_occurrence <-
@@ -273,7 +272,6 @@ gps_occurrence <-
   )
 ```
 
-
 ```{r occurrence}
 occurrence <-
   ref_occurrence |>
@@ -281,7 +279,7 @@ occurrence <-
   dplyr::arrange(eventID)
 ```
 
-## OccurrenceAssertion
+### OccurrenceAssertion
 
 ```{r occurrenceAssertion}
 sex <-
@@ -329,9 +327,9 @@ occurrenceAssertion <-
   dplyr::arrange(.data$occurrenceID)
 ```
 
-# Create Darwin Core Data Package
+## Create Darwin Core Data Package
 
-## Prepare table schema's
+### Prepare table schemas
 
 ```{r table schema event}
 schema_event <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/0.1/table-schemas/event.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
@@ -347,8 +345,7 @@ schema_occurrence$fields <- purrr::keep(schema_occurrence$fields, ~ .x$name %in%
 schema_occurrence$foreignKeys <- purrr::keep(schema_occurrence$foreignKeys, ~ .x$fields %in% c("eventID"))
 ```
 
-
-## Create DP
+### Create DP
 
 ```{r dwcDP}
 dwcDP <-
@@ -374,15 +371,13 @@ dwcDP <-
   frictionless::create_package()
 ```
 
-
-# Write data
+## Write data
 
 ```{r}
 frictionless::write_package(dwcDP, here::here("observation", "bird-tracking", "output_data"))
 ```
 
-
-# Compare with Darwin Core Archive
+## Compare with Darwin Core Archive
 
 ```{r}
 dwc <- movepub::write_dwc(movebank_package, directory = "my_directory")
@@ -391,7 +386,3 @@ unlink("my_directory", recursive = TRUE)
 nrow(dwc$occurrence) == nrow(occurrence)
 nrow(dwc$emof) == nrow(occurrenceAssertion)
 ```
-
-
-
-
