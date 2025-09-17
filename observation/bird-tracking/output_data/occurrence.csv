@@ -1,4 +1,4 @@
-occurrenceID,eventID,sex,lifeStage,reproductiveCondition,occurrenceStatus,organismID,organismName,taxonID,scientificName,taxonRank
+occurrenceID,eventID,sex,lifeStage,reproductiveCondition,occurrenceStatus,organismID,organismName,scientificNameID,scientificName,taxonRank
 20432407112,20432407112,unknown,,,present,5515867,,urn:lsid:marinespecies.org:taxname:147436,Haematopus ostralegus,species
 20432407113,20432407113,unknown,,,present,5515867,,urn:lsid:marinespecies.org:taxname:147436,Haematopus ostralegus,species
 20432407115,20432407115,unknown,,,present,5515867,,urn:lsid:marinespecies.org:taxname:147436,Haematopus ostralegus,species

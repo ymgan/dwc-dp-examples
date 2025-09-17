@@ -252,21 +252,21 @@ ref_occurrence <-
   dplyr::mutate(
     .keep = "none",
     occurrenceID = paste(
-        .data$`animal-id`, .data$`tag-id`, "start", sep = "_" # Same as eventID
-      ),
+      .data$`animal-id`, .data$`tag-id`, "start", sep = "_" # Same as eventID
+    ),
     eventID = paste(.data$`animal-id`, .data$`tag-id`, "start", sep = "_"),
     sex = dplyr::recode(
-        .data$`animal-sex`,
-        "m" = "male",
-        "f" = "female",
-        "u" = "unknown"
-      ),
+      .data$`animal-sex`,
+      "m" = "male",
+      "f" = "female",
+      "u" = "unknown"
+    ),
     lifeStage = .data$`animal-life-stage`,
     reproductiveCondition = .data$`animal-reproductive-condition`,
     occurrenceStatus = "present",
     organismID = .data$`animal-id`,
     organismName = .data$`animal-nickname`,
-    taxonID = .data$aphia_lsid,
+    scientificNameID = .data$aphia_lsid,
     scientificName = .data$`animal-taxon`,
     taxonRank = "species"
   )
@@ -280,18 +280,18 @@ gps_occurrence <-
     occurrenceID = as.character(.data$`event-id`),
     eventID = as.character(.data$`event-id`),
     sex = dplyr::recode(
-        .data$`animal-sex`,
-        "m" = "male",
-        "f" = "female",
-        "u" = "unknown"
-      ),
+      .data$`animal-sex`,
+      "m" = "male",
+      "f" = "female",
+      "u" = "unknown"
+    ),
     # Value at start of deployment might not apply to all records
     lifeStage = NA_character_,
     reproductiveCondition = NA_character_,
     occurrenceStatus = "present",
     organismID = .data$`individual-local-identifier`,
     organismName = .data$`animal-nickname`,
-    taxonID = .data$aphia_lsid,
+    scientificNameID = .data$aphia_lsid,
     scientificName = .data$`animal-taxon`,
     taxonRank = "species"
   )
@@ -312,7 +312,6 @@ sex <-
   dplyr::mutate(
     .keep = "none",
     occurrenceID = .data$occurrenceID,
-    assertionID = NA_character_, # Required
     assertionType = "sex",
     assertionTypeIRI =
       "http://vocab.nerc.ac.uk/collection/P01/current/ENTSEX01/",
@@ -347,7 +346,7 @@ lifestage <-
     )
   )
 
-occurrenceAssertion <-
+occurrence_assertion <-
   dplyr::bind_rows(sex, lifestage) |>
   dplyr::arrange(.data$occurrenceID)
 ```
@@ -373,29 +372,29 @@ schema_occurrence$foreignKeys <- purrr::keep(schema_occurrence$foreignKeys, ~ .x
 ```{r table schema occurrenceAssertion}
 schema_occurrence_assertion <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/table-schemas/occurrence-assertion.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
 
-schema_occurrence_assertion$fields <- purrr::keep(schema_occurrence_assertion$fields, ~ .x$name %in% names(occurrenceAssertion))
+schema_occurrence_assertion$fields <- purrr::keep(schema_occurrence_assertion$fields, ~ .x$name %in% names(occurrence_assertion))
 ```
 
 ### Create DP
 
 ```{r dwcDP}
-dwcDP <-
+dwc_dp <-
   frictionless::create_package() |> 
   frictionless::add_resource(
     resource_name = "event",
     data = event,
     schema = schema_event
-    ) |> 
+  ) |> 
   frictionless::add_resource(
     resource_name = "occurrence",
     data = occurrence,
     schema = schema_occurrence
-    ) |>
+  ) |>
   frictionless::add_resource(
     resource_name = "occurrence-assertion",
-    data = occurrenceAssertion,
+    data = occurrence_assertion,
     schema = schema_occurrence_assertion
-    ) |>
+  ) |>
   append(
     c(
       profile = "tabular-data-package",
@@ -410,7 +409,7 @@ dwcDP <-
 ## Write data
 
 ```{r}
-frictionless::write_package(dwcDP, here::here("observation", "bird-tracking", "output_data"))
+frictionless::write_package(dwc_dp, here::here("observation", "bird-tracking", "output_data"))
 ```
 
 ## Compare with Darwin Core Archive
