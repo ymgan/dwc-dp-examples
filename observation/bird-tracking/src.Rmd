@@ -129,8 +129,8 @@ ref_event <-
         ""
       )
     ),
-    minimumElevationInMeters = NA_real_, # subject to discussion: https://github.com/inbo/movepub/issues/109
-    maximumElevationInMeters = NA_real_,
+    minimumDistanceAboveSurfaceInMeters = NA_real_, # subject to discussion: https://github.com/inbo/movepub/issues/109
+    maximumDistanceAboveSurfaceInMeters = NA_real_,
     locationRemarks = NA_character_,
     decimalLatitude = as.numeric(.data$`deploy-on-latitude`),
     decimalLongitude = as.numeric(.data$`deploy-on-longitude`),
@@ -164,21 +164,21 @@ gps_event <-
     eventType = "gps",
     eventDate = format(.data$timestamp, format = "%Y-%m-%dT%H:%M:%SZ"),
     eventRemarks = dplyr::coalesce(.data$`comments`, ""),
-    minimumElevationInMeters = dplyr::coalesce(
+    minimumDistanceAboveSurfaceInMeters = dplyr::coalesce(
       .data$`height-above-msl`,
       as.numeric(.data$`height-above-ellipsoid`),
       NA_real_
     ),
-    maximumElevationInMeters = dplyr::coalesce(
+    maximumDistanceAboveSurfaceInMeters = dplyr::coalesce(
       .data$`height-above-msl`,
       as.numeric(.data$`height-above-ellipsoid`),
       NA_real_
     ),
     locationRemarks = dplyr::case_when(
       !is.na(.data$`height-above-msl`) ~
-        "elevations are altitude above mean sea level",
+        "distance above surface are altitude above mean sea level",
       !is.na(.data$`height-above-ellipsoid`) ~
-        "elevations are altitude above ellipsoid"
+        "distance above surface are altitude above ellipsoid"
     ),
     decimalLatitude = as.numeric(.data$`location-lat`),
     decimalLongitude = as.numeric(.data$`location-long`),
@@ -209,8 +209,8 @@ parent_event <-
         .default = format(.data$`deploy-on-date`, format = "%Y-%m-%dT%H:%M:%SZ")
     ),
     eventRemarks = NA_character_,
-    minimumElevationInMeters = NA_real_,
-    maximumElevationInMeters = NA_real_,
+    minimumDistanceAboveSurfaceInMeters = NA_real_,
+    maximumDistanceAboveSurfaceInMeters = NA_real_,
     locationRemarks = NA_character_,
     decimalLatitude = NA_real_,
     decimalLongitude = NA_real_,

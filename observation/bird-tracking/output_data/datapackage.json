@@ -123,38 +123,30 @@
             "rdfs:comment": "Comments or notes about the dwc:Event."
           },
           {
-            "name": "minimumElevationInMeters",
-            "title": "Minimum Elevation In Meters",
-            "description": "A lower limit of a range of elevation in meters above a dwc:verticalDatum.",
+            "name": "minimumDistanceAboveSurfaceInMeters",
+            "title": "Minimum Distance Above Surface In Meters",
+            "description": "The lesser distance in a range of distance from a reference surface in the vertical direction, in meters. Use positive values for locations above the surface, negative values for locations below. If depth measures are given, the reference surface is the location given by the depth, otherwise the reference surface is the location given by the elevation.",
             "comments": "See https://docs.gbif.org/georeferencing-best-practices/1.0/en/#img-depth-elevation-distance-above-surface.",
-            "examples": "`-100`; `802`",
+            "examples": "`-1.5` (below the surface); `4.2` (above the surface); For a 1.5 meter sediment core from the bottom of a lake (at depth 20m) at 300m elevation: verbatimElevation: `300m` minimumElevationInMeters: `300`, maximumElevationInMeters: `300`, verbatimDepth: `20m`, minimumDepthInMeters: `20`, maximumDepthInMeters: `20`, minimumDistanceAboveSurfaceInMeters: `0`, maximumDistanceAboveSurfaceInMeters: `-1.5`.",
             "type": "number",
             "format": "default",
             "namespace": "dwc",
-            "dcterms:isVersionOf": "http://rs.tdwg.org/dwc/terms/minimumElevationInMeters",
-            "dcterms:references": "http://rs.tdwg.org/dwc/terms/version/minimumElevationInMeters-2023-06-28",
-            "rdfs:comment": "The lower limit of the range of elevation (altitude, usually above sea level), in meters.",
-            "constraints": {
-              "minimum": -430,
-              "maximum": 8850
-            }
+            "dcterms:isVersionOf": "http://rs.tdwg.org/dwc/terms/minimumDistanceAboveSurfaceInMeters",
+            "dcterms:references": "http://rs.tdwg.org/dwc/terms/version/minimumDistanceAboveSurfaceInMeters-2023-06-28",
+            "rdfs:comment": "The lesser distance in a range of distance from a reference surface in the vertical direction, in meters. Use positive values for locations above the surface, negative values for locations below. If depth measures are given, the reference surface is the location given by the depth, otherwise the reference surface is the location given by the elevation."
           },
           {
-            "name": "maximumElevationInMeters",
-            "title": "Maximum Elevation In Meters",
-            "description": "An upper limit of a range of elevation in meters above a dwc:verticalDatum.",
+            "name": "maximumDistanceAboveSurfaceInMeters",
+            "title": "Maximum Distance Above Surface In Meters",
+            "description": "The greater distance in a range of distance from a reference surface in the vertical direction, in meters. Use positive values for locations above the surface, negative values for locations below. If depth measures are given, the reference surface is the location given by the depth, otherwise the reference surface is the location given by the elevation.",
             "comments": "See https://docs.gbif.org/georeferencing-best-practices/1.0/en/#img-depth-elevation-distance-above-surface.",
-            "examples": "`-205`; `1236`",
+            "examples": "`-1.5` (below the surface); `4.2` (above the surface); For a 1.5 meter sediment core from the bottom of a lake (at depth 20m) at 300m elevation: verbatimElevation: `300m` minimumElevationInMeters: `300`, maximumElevationInMeters: `300`, verbatimDepth: `20m`, minimumDepthInMeters: `20`, maximumDepthInMeters: `20`, minimumDistanceAboveSurfaceInMeters: `0`, maximumDistanceAboveSurfaceInMeters: `-1.5`.",
             "type": "number",
             "format": "default",
             "namespace": "dwc",
-            "dcterms:isVersionOf": "http://rs.tdwg.org/dwc/terms/maximumElevationInMeters",
-            "dcterms:references": "http://rs.tdwg.org/dwc/terms/version/maximumElevationInMeters-2023-06-28",
-            "rdfs:comment": "The upper limit of the range of elevation (altitude, usually above sea level), in meters.",
-            "constraints": {
-              "minimum": -430,
-              "maximum": 8850
-            }
+            "dcterms:isVersionOf": "http://rs.tdwg.org/dwc/terms/maximumDistanceAboveSurfaceInMeters",
+            "dcterms:references": "http://rs.tdwg.org/dwc/terms/version/maximumDistanceAboveSurfaceInMeters-2023-06-28",
+            "rdfs:comment": "The greater distance in a range of distance from a reference surface in the vertical direction, in meters. Use positive values for locations above the surface, negative values for locations below. If depth measures are given, the reference surface is the location given by the depth, otherwise the reference surface is the location given by the elevation."
           },
           {
             "name": "locationRemarks",
