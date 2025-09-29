@@ -304,9 +304,9 @@ occurrence <-
   dplyr::arrange(eventID)
 ```
 
-### OccurrenceAssertion
+### Occurrence Assertion
 
-```{r occurrenceAssertion}
+```{r occurrence-assertion}
 sex <-
   ref_occurrence |>
   dplyr::mutate(
@@ -356,21 +356,21 @@ occurrence_assertion <-
 ### Prepare table schemas
 
 ```{r table schema event}
-schema_event <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/table-schemas/event.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
+schema_event <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/0.1/dwc-dp/table-schemas/event.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
 
 schema_event$fields <- purrr::keep(schema_event$fields, ~ .x$name %in% names(event))
 schema_event$foreignKeys <- purrr::keep(schema_event$foreignKeys, ~ .x$fields %in% c("parentEventID"))
 ```
 
 ```{r table schema occurrence}
-schema_occurrence <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/table-schemas/occurrence.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
+schema_occurrence <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/0.1/dwc-dp/table-schemas/occurrence.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
 
 schema_occurrence$fields <- purrr::keep(schema_occurrence$fields, ~ .x$name %in% names(occurrence))
 schema_occurrence$foreignKeys <- purrr::keep(schema_occurrence$foreignKeys, ~ .x$fields %in% c("eventID"))
 ```
 
 ```{r table schema occurrenceAssertion}
-schema_occurrence_assertion <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/refs/heads/master/dwc-dp/table-schemas/occurrence-assertion.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
+schema_occurrence_assertion <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/0.1/dwc-dp/table-schemas/occurrence-assertion.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
 
 schema_occurrence_assertion$fields <- purrr::keep(schema_occurrence_assertion$fields, ~ .x$name %in% names(occurrence_assertion))
 schema_occurrence_assertion$primaryKey <- NULL
@@ -399,7 +399,7 @@ dwc_dp <-
   ) |>
   append(
     c(
-      profile = "tabular-data-package",
+      profile = "https://raw.githubusercontent.com/gbif/dwc-dp/0.1/dwc-dp/dwc-dp-profile.json",
       name = "bird-tracking-example",
       title = "Bird tracking (Movebank) Observation Example"
     ),
@@ -421,5 +421,5 @@ dwc <- movepub::write_dwc(movebank_package, directory = "my_directory")
 unlink("my_directory", recursive = TRUE)
 
 nrow(dwc$occurrence) == nrow(occurrence)
-nrow(dwc$emof) == nrow(occurrenceAssertion)
+nrow(dwc$emof) == nrow(occurrence_assertion)
 ```
