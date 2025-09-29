@@ -488,7 +488,6 @@
             "format": "default",
             "namespace": "dwc",
             "dcterms:isVersionOf": "http://example.com/term-pending/dwc/assertionType",
-            "dcterms:references": "",
             "rdfs:comment": ""
           },
           {
@@ -501,7 +500,6 @@
             "format": "default",
             "namespace": "dwciri",
             "dcterms:isVersionOf": "http://example.com/term-pending/dwciri/assertionTypeIRI",
-            "dcterms:references": "",
             "rdfs:comment": ""
           },
           {
@@ -514,7 +512,6 @@
             "format": "default",
             "namespace": "dwc",
             "dcterms:isVersionOf": "http://example.com/term-pending/dwc/assertionValue",
-            "dcterms:references": "",
             "rdfs:comment": ""
           },
           {
@@ -527,7 +524,6 @@
             "format": "default",
             "namespace": "dwciri",
             "dcterms:isVersionOf": "http://example.com/term-pending/dwciri/assertionValueIRI",
-            "dcterms:references": "",
             "rdfs:comment": ""
           }
         ],
