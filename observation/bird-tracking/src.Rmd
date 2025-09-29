@@ -373,8 +373,8 @@ schema_occurrence$foreignKeys <- purrr::keep(schema_occurrence$foreignKeys, ~ .x
 schema_occurrence_assertion <- jsonlite::fromJSON("https://raw.githubusercontent.com/gbif/dwc-dp/0.1/dwc-dp/table-schemas/occurrence-assertion.json", simplifyDataFrame = FALSE, simplifyVector = TRUE)
 
 schema_occurrence_assertion$fields <- purrr::keep(schema_occurrence_assertion$fields, ~ .x$name %in% names(occurrence_assertion))
-schema_occurrence_assertion$primaryKey <- NULL
-schema_occurrence_assertion$foreignKeys <- purrr::keep(schema_occurrence$foreignKeys, ~ .x$fields %in% c("occurrenceID"))
+schema_occurrence_assertion$primaryKey <- NULL # Not defined
+schema_occurrence_assertion$foreignKeys <- purrr::keep(schema_occurrence_assertion$foreignKeys, ~ .x$fields %in% c("occurrenceID"))
 ```
 
 ### Create DP

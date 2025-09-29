@@ -539,7 +539,16 @@
             "rdfs:comment": ""
           }
         ],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "fields": "occurrenceID",
+            "predicate": "about",
+            "reference": {
+              "resource": "occurrence",
+              "fields": "occurrenceID"
+            }
+          }
+        ]
       }
     }
   ]
