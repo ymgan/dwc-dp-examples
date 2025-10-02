@@ -1,10 +1,16 @@
 # iNaturalist organism interaction test dataset for the DwC-DP publishing model
 
-This example is based on DwC-DP version 2025-06-10.
+This example is based on Release DwC-DP 0.1.
 
-This is dataset is an example of dwc:Organism interactions, with observations captured by the iNaturalist California Pollination Project.
+This is dataset is an example of dwc:Organism interactions, with observations captured by the iNaturalist California Pollination Project. The data used to do this mapping we acquired from iNaturalist using the following query:
+
+quality_grade=any&identifications=any&captive=false&place_id=962&projects%5B%5D=18530&spam=false
 
 The process to create the output dataset for the DwC-DP publishing model is as follows:
+
+## Unzip the downloaded zip file (input_data/observations-568611.csv.zip).
+
+## Copy the CSV file from the zip file to input_data/inat_interactions.csv.
 
 ## Create a postgreSQL database to hold the input data and the output data mapped to the DwC-DP publishing model:
 ```cd organism_interaction/inaturalist```
